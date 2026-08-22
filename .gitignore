@@ -399,3 +399,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+
+
+#added
+*.bak
+/brackeys/raylib-6.0_win64_msvc16
