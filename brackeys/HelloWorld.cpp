@@ -6,7 +6,7 @@
 #include "MainMenuScene.hpp"
 
 int main() {
-	InitWindow(Constants::g_ScreenWidth, Constants::g_ScreenHeight, "brackeys 2026 2");
+	InitWindow(Constants::g_ScreenWidth, Constants::g_ScreenHeight, Constants::g_DefaultTitle.data());
 
 	SetTargetFPS(60);
 
