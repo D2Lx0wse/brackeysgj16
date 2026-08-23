@@ -1,25 +1,30 @@
 #include <iostream>
+
 #include "raylib.h"
 
-int main() {
-	constexpr int screenWidth{800};
-	constexpr int screenHeigth{600};
+#include "Constants.hpp"
+#include "MainMenuScene.hpp"
 
-	InitWindow(screenWidth, screenHeigth, "brackeys 2026 2");
+int main() {
+	InitWindow(Constants::g_ScreenWidth, Constants::g_ScreenHeight, "brackeys 2026 2");
 
 	SetTargetFPS(60);
 
+	MainMenuScene scene{};
+	scene.init();
+
 	while (!WindowShouldClose()) {
+		// Handle input
+		// ...
 
+		// Logic
+		// ...
 
-
-		BeginDrawing();
-
-		ClearBackground(RAYWHITE);
-
-		EndDrawing();
+		// Render
+		scene.render();
 	}
 
+	scene.exit();
 
 	return 0;
 }
