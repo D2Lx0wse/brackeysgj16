@@ -43,11 +43,11 @@ void PlayingScene::renderWorld(Camera2D& camera) {
 
 	//lil test teehee
 	
-	
-	m_test.render(5.0f, 5.0f);
+	DrawRectangle(Constants::g_ScreenWidth / 2, Constants::g_ScreenWidth / 2, 10, 10, BLACK);
+	m_test.render(Constants::g_ScreenWidth/2, Constants::g_ScreenWidth/2);
 	EndMode2D();
 }
 
 void PlayingScene::renderUI() {
-
+	//m_test.render(0.0f, 0.0f);
 }
