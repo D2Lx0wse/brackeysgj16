@@ -3,6 +3,7 @@
 #include "Brackeys2DTexture.hpp"
 #include "Constants.hpp"
 #include "SceneTypes.hpp"
+#include "Entity.hpp"
 
 struct Scenes;
 
@@ -27,6 +28,7 @@ private:
 	Camera2D m_camera{ };
 	Brackeys2DTexture m_test{};
 	float m_testRot{};
+	Entity m_testEntity;
 
 	void renderWorld(Camera2D& camera);
 	void renderUI();
