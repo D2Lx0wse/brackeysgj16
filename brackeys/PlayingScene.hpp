@@ -19,8 +19,9 @@ public:
 
 private:
 	Font m_font{};
-	Camera2D m_camera{ Vector2{ Constants::g_ScreenWidth / 2.0f, Constants::g_ScreenHeight / 2.0f }, Vector2{0.0f, 0.0f}, 0.0f, 1.0f };
+	Camera2D m_camera{ };
 	Brackeys2DTexture m_test{};
+	float m_testRot{};
 
 	void renderWorld(Camera2D& camera);
 	void renderUI();
