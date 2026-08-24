@@ -9,5 +9,4 @@ namespace Constants {
 	constexpr float g_ScalingSize{ 5.0f }; // All textures size is multiplied by this value
 
 	constexpr float g_FontSize64{ 64.0f };
-	constexpr float g_Spacing{ g_FontSize64 / 10.0f };
 }

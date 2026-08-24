@@ -6,6 +6,7 @@
 
 #include "Constants.hpp"
 #include "Brackeys2DTexture.hpp"
+#include "BrackeysText.hpp"
 
 class MainMenuScene {
 public:
@@ -32,9 +33,7 @@ private:
 	// Assets (fonts, images, sounds, etc.)
 	Brackeys2DTexture m_titleTexture{};
 
-	Font m_font{};
+	Font m_font{ GetFontDefault() };
 
-	std::vector<std::string_view> m_menuOptionsText{ {
-		"Start Game", "Credits", "Close Game"
-		} };
+	std::vector<BrackeysText> m_menuOptions{};
 };

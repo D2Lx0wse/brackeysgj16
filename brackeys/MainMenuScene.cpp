@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MainMenuScene.hpp"
+
 #include <iostream>
 
 MainMenuScene::MainMenuScene()
@@ -31,13 +32,8 @@ void MainMenuScene::render() {
 
 	m_titleTexture.render((Constants::g_ScreenWidth - m_titleTexture.width()) / 2.0f, (m_sceneHeight / 100.0f) * 5.0f);
 
-	float fontSize{ 64.0f };
-	float fontSpacing{ fontSize / 10.0f };
-	for (unsigned int i{ 0 }; i < m_menuOptionsText.size(); ++i) {
-		Vector2 textSize{ MeasureTextEx(m_font, m_menuOptionsText[i].data(), fontSize, fontSpacing) };
-		Vector2 textLocation{ (Constants::g_ScreenWidth - textSize.x) / 2.0f, ((Constants::g_ScreenHeight - textSize.y) / 2.0f) + fontSize * i };
-
-		DrawTextEx(m_font, m_menuOptionsText[i].data(), textLocation, fontSize, fontSpacing, BLACK);
+	for (const auto& menuOption : m_menuOptions) {
+		menuOption.render(m_font);
 	}
 
 	EndDrawing();
@@ -48,6 +44,19 @@ void MainMenuScene::init() {
 	m_titleTexture.loadFromFile(titleImageFilePath.data());
 
 	m_font = GetFontDefault();
+
+	m_menuOptions = {
+		{ "Start Game", m_font }, { "Credits", m_font }, { "Close Game", m_font }
+	};
+
+	float verticalSpaceBetweenOptions{ Constants::g_FontSize64 / 2.0f };
+	for (auto& menuOption : m_menuOptions) {
+		menuOption.setPosition(
+			Vector2{ (Constants::g_ScreenWidth - menuOption.textSize().x) / 2.0f, (Constants::g_ScreenHeight - menuOption.textSize().y) / 2.0f + verticalSpaceBetweenOptions }
+		);
+
+		verticalSpaceBetweenOptions += Constants::g_FontSize64;
+	}
 }
 
 void MainMenuScene::exit() {

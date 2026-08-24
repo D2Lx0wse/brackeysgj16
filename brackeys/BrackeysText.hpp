@@ -9,17 +9,28 @@
 
 class BrackeysText {
 public:
+	// Constructors
 	BrackeysText();
+	// Calls setText()
+	BrackeysText(std::string_view text, const Font& font);
 
-	void render();
+	// Render using given font
+	void render(const Font& font) const;
 
 	// Setters
-	void setText(std::string_view text);
+	// Uses font to gauge the size of the font (also based on font size and spacing)
+	void setText(std::string_view text, const Font& font);
 	void setPosition(const Vector2& textPosition);
+
+	// Spacing is one tenth of the font size
+	void setFontSize(float fontSize);
+	void setColor(const Color& color);
 
 	// Getters
 	std::string_view text() const;
-	Vector2 textSize() const;
+	const Vector2& textSize() const;
+
+	const Vector2& textPosition() const;
 
 	float fontSize() const;
 	float spacing() const;
@@ -27,9 +38,9 @@ public:
 
 private:
 	std::string m_text{};
+	Vector2 m_textSize{};
 
 	Vector2 m_textPosition{};
-	Vector2 m_textSize{};
 
 	float m_fontSize{ Constants::g_FontSize64 };
 	float m_spacing{ m_fontSize / 10.0f };
