@@ -42,6 +42,10 @@ bool Brackeys2DTexture::render(float x, float y, Vector2 scalingSize, float rota
 	return true;
 }
 
+bool Brackeys2DTexture::render(Vector2 pos, Vector2 scalingSize, float rotation) {
+	return render(pos.x, pos.y, scalingSize, rotation);
+}
+
 Texture2D Brackeys2DTexture::texture() const {
 	return m_texture;
 }
