@@ -49,7 +49,7 @@ int main() {
 
 		case SceneTypes::Credits:  break;
 
-		case SceneTypes::Playing: scenes.playing.logic(); break;
+		case SceneTypes::Playing: currentScene = scenes.playing.logic(scenes); break;
 
 		default: break;
 		}

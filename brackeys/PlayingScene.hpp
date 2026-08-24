@@ -2,15 +2,20 @@
 #include "raylib.h"
 #include "Brackeys2DTexture.hpp"
 #include "Constants.hpp"
+#include "SceneTypes.hpp"
+
+struct Scenes;
 
 class PlayingScene
 {
 public:
+	static constexpr SceneTypes s_Scene{ SceneTypes::Playing };
+
 	PlayingScene();
 
 	// Main loop methods
 	void handleInput();
-	void logic();
+	SceneTypes logic(Scenes& scenes);
 	void render();
 
 	// Readies/closes scene

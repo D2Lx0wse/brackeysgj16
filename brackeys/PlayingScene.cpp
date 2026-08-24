@@ -1,5 +1,6 @@
 #include "PlayingScene.hpp"
 #include "Brackeys2DTexture.hpp"
+#include "Scenes.hpp"
 
 PlayingScene::PlayingScene()
 	: m_font{}
@@ -11,8 +12,10 @@ PlayingScene::PlayingScene()
 void PlayingScene::handleInput() {
 
 }
-void PlayingScene::logic() {
+SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scene) {
 	m_camera.target = Vector2{ 5.0f, 5.0f };
+	
+	return SceneTypes::Playing;
 }
 void PlayingScene::render() {
 

@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="Brackeys2DTexture.cpp" />
     <ClCompile Include="BrackeysText.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
     <ClCompile Include="PlayingScene.cpp" />
