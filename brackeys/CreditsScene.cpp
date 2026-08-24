@@ -1,5 +1,6 @@
 #include "CreditsScene.hpp"
-#include "scenes.hpp"
+#include "Scenes.hpp"
+#include "Helper.hpp"
 
 CreditsScene::CreditsScene()
 	: m_nextScene{ SceneTypes::MaxValue }
@@ -13,8 +14,9 @@ CreditsScene::CreditsScene()
 }
 
 void CreditsScene::handleInput() {
+	const Vector2 mousePosition{ GetMousePosition() };
+
 	if (IsMouseButtonPressed(0)) {
-		const Vector2 mousePosition{ GetMousePosition() };
 
 		if (CheckCollisionRecs(
 			Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f },
@@ -22,6 +24,14 @@ void CreditsScene::handleInput() {
 			)
 			m_nextScene = SceneTypes::MainMenu;
 	}
+
+	if (CheckCollisionRecs(
+		Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f },
+		Rectangle{ m_goBackText.textPosition().x, m_goBackText.textPosition().y, m_goBackText.textSize().x, m_goBackText.textSize().y })
+		)
+		m_goBackText.setColor(RAYWHITE);
+	else if (!Helper::isColorTheSameBetween(m_goBackText.color(), BLACK))
+		m_goBackText.setColor(BLACK);
 }
 
 SceneTypes CreditsScene::logic(Scenes& scenes) {

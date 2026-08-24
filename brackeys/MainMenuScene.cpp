@@ -2,6 +2,7 @@
 
 #include "MainMenuScene.hpp"
 #include "Scenes.hpp" // To make InitNextScene() visible
+#include "Helper.hpp"
 
 #include <iostream>
 
@@ -16,9 +17,9 @@ MainMenuScene::MainMenuScene()
 }
 
 void MainMenuScene::handleInput() {
-	if (IsMouseButtonPressed(0)) {
-		const Vector2 mousePosition{ GetMousePosition() };
+	const Vector2 mousePosition{ GetMousePosition() };
 
+	if (IsMouseButtonPressed(0)) {
 		if (CheckCollisionRecs(
 			Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f },
 			Rectangle{ m_menuOptions[0].textPosition().x, m_menuOptions[0].textPosition().y, m_menuOptions[0].textSize().x, m_menuOptions[0].textSize().y })
@@ -37,6 +38,16 @@ void MainMenuScene::handleInput() {
 			Rectangle{ m_menuOptions[2].textPosition().x, m_menuOptions[2].textPosition().y, m_menuOptions[2].textSize().x, m_menuOptions[2].textSize().y })
 			)
 			m_quitGame = true;
+	}
+
+	for (auto& menuOption : m_menuOptions) {
+		if (CheckCollisionRecs(
+			Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f },
+			Rectangle{ menuOption.textPosition().x, menuOption.textPosition().y, menuOption.textSize().x, menuOption.textSize().y })
+			)
+			menuOption.setColor(RAYWHITE);
+		else if (!Helper::isColorTheSameBetween(menuOption.color(), BLACK))
+			menuOption.setColor(BLACK);
 	}
 }
 
