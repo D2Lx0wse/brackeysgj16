@@ -14,6 +14,7 @@ private:
 
 public:
 	Entity(Vector2 position, std::string_view path_horiz, std::string_view path_vert, Direction dir = up);
+	Entity() = default;
 	~Entity();
 	void Render();
 	void Move(Vector2 vector);
