@@ -23,7 +23,8 @@ void MainMenuScene::render() {
 
 	ClearBackground(LIGHTGRAY);
 
-	DrawTexture(m_titleTexture, (Constants::g_ScreenWidth - m_titleTexture.width) / 2, 0, WHITE);
+	const Vector2 scalingSize{ m_titleTexture.width() * 5.0f, m_titleTexture.height() * 5.0f };
+	m_titleTexture.render((Constants::g_ScreenWidth - scalingSize.x) / 2.0f, (m_sceneHeight / 100.0f) * 5.0f, scalingSize);
 
 	float fontSize{ 64.0f };
 	float fontSpacing{ fontSize / 10.0f };
@@ -39,14 +40,13 @@ void MainMenuScene::render() {
 
 void MainMenuScene::init() {
 	constexpr std::string_view titleImageFilePath{ "assets/images/title.png" };
-	m_titleTexture = LoadTexture(titleImageFilePath.data());
+	m_titleTexture.loadFromFile(titleImageFilePath.data());
 
 	m_font = GetFontDefault();
 }
 
 void MainMenuScene::exit() {
-	UnloadTexture(m_titleTexture);
-	m_titleTexture = Texture2D{};
+	m_titleTexture.exit();
 
 	m_font = Font{};
 }

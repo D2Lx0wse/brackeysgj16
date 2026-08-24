@@ -4,7 +4,8 @@
 
 #include "raylib.h"
 
-#include "constants.hpp"
+#include "Constants.hpp"
+#include "Brackeys2DTexture.hpp"
 
 class MainMenuScene {
 public:
@@ -29,7 +30,7 @@ private:
 	};
 
 	// Assets (fonts, images, sounds, etc.)
-	Texture2D m_titleTexture{};
+	Brackeys2DTexture m_titleTexture{};
 
 	Font m_font{};
 

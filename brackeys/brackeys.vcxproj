@@ -141,10 +141,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Brackeys2DTexture.cpp" />
     <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Brackeys2DTexture.hpp" />
     <ClInclude Include="Constants.hpp" />
     <ClInclude Include="MainMenuScene.hpp" />
   </ItemGroup>
