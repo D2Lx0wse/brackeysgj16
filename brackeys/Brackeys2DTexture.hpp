@@ -4,6 +4,8 @@
 
 #include "raylib.h"
 
+#include "Constants.hpp"
+
 class Brackeys2DTexture {
 public:
 	// Constructors
@@ -28,8 +30,9 @@ public:
 	Texture2D texture() const;
 	bool isLoaded() const;
 	
-	int width() const;
-	int height() const;
+	// Multiplied by Constants::g_scalingSize
+	float width() const;
+	float height() const;
 
 private:
 	Texture2D m_texture{};

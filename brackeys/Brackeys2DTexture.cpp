@@ -50,10 +50,10 @@ bool Brackeys2DTexture::isLoaded() const {
 	return IsTextureValid(m_texture);
 }
 
-int Brackeys2DTexture::width() const {
-	return m_texture.width;
+float Brackeys2DTexture::width() const {
+	return m_texture.width * Constants::g_ScalingSize;
 }
 
-int Brackeys2DTexture::height() const {
-	return m_texture.height;
+float Brackeys2DTexture::height() const {
+	return m_texture.height * Constants::g_ScalingSize;
 }

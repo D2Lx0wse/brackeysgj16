@@ -5,6 +5,11 @@
 #include "Constants.hpp"
 #include "MainMenuScene.hpp"
 
+class CreditsScene {
+
+
+};
+
 int main() {
 	InitWindow(Constants::g_ScreenWidth, Constants::g_ScreenHeight, Constants::g_DefaultTitle.data());
 
@@ -15,10 +20,10 @@ int main() {
 
 	while (!WindowShouldClose()) {
 		// Handle input
-		// ...
+		scene.handleInput();
 
 		// Logic
-		// ...
+		scene.logic();
 
 		// Render
 		scene.render();
