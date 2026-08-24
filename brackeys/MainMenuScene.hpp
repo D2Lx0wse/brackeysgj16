@@ -9,7 +9,7 @@
 #include "BrackeysText.hpp"
 #include "SceneTypes.hpp"
 
-#include "Scenes.hpp"
+struct Scenes; // Needed to make struct Scene in here work
 
 class MainMenuScene {
 public:

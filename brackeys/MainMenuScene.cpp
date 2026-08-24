@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MainMenuScene.hpp"
+#include "Scenes.hpp" // To make InitNextScene() visible
 
 #include <iostream>
 
@@ -16,12 +17,14 @@ MainMenuScene::MainMenuScene()
 }
 
 void MainMenuScene::handleInput() {
-	const Vector2 mousePosition{ GetMousePosition() };
-	if (CheckCollisionRecs(
-		Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f },
-		Rectangle{ (Constants::g_ScreenWidth - m_titleTexture.width()) / 2.0f, (m_sceneHeight / 100.0f) * 5.0f,  m_titleTexture.width(), m_titleTexture.height() })
-		)
-		m_nextScene = SceneTypes::Playing;
+	if (IsMouseButtonPressed(0)) {
+		const Vector2 mousePosition{ GetMousePosition() };
+		if (CheckCollisionRecs(
+			Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f },
+			Rectangle{ m_menuOptions[0].textPosition().x, m_menuOptions[0].textPosition().y, m_menuOptions[0].textSize().x, m_menuOptions[0].textSize().y })
+			)
+			m_nextScene = SceneTypes::Playing;
+	}
 }
 
 SceneTypes MainMenuScene::logic(Scenes& scenes) {

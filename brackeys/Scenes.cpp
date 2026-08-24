@@ -1,6 +1,6 @@
 #include "Scenes.hpp"
 
-void initNextScene(SceneTypes nextScene, Scenes scenes) {
+void initNextScene(SceneTypes nextScene, Scenes& scenes) {
 	switch (nextScene) {
 	case SceneTypes::MainMenu: scenes.mainMenu.init(); break;
 

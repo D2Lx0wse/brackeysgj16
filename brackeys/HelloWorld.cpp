@@ -6,7 +6,6 @@
 #include "Scenes.hpp"
 #include "SceneTypes.hpp"
 
-
 int main() {
 	InitWindow(Constants::g_ScreenWidth, Constants::g_ScreenHeight, Constants::g_DefaultTitle.data());
 

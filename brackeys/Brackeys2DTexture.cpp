@@ -29,7 +29,7 @@ bool Brackeys2DTexture::render(float x, float y, Vector2 scalingSize, float rota
 		return false;
 
 	const Rectangle sourceRectangle{ 0.0f, 0.0f, static_cast<float>(m_texture.width), static_cast<float>(m_texture.height) };
-	Rectangle destinationRectangle{ x, y, static_cast<float>(width()), static_cast<float>(height()) };
+	Rectangle destinationRectangle{ x + width() / 2.0f, y + height() / 2.0f, static_cast<float>(width()), static_cast<float>(height())};
 
 	// If the scaling size was chosen, go with that
 	if (scalingSize.x != 0.0f)
