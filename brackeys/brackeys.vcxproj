@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brackeys2DTexture.hpp" />
+    <ClInclude Include="BrackeysText.hpp" />
     <ClInclude Include="Constants.hpp" />
     <ClInclude Include="MainMenuScene.hpp" />
     <ClInclude Include="PlayingScene.hpp" />

@@ -4,32 +4,53 @@
 
 #include "Constants.hpp"
 #include "MainMenuScene.hpp"
-
-class CreditsScene {
-
-
-};
+#include "PlayingScene.hpp"
 
 int main() {
 	InitWindow(Constants::g_ScreenWidth, Constants::g_ScreenHeight, Constants::g_DefaultTitle.data());
 
 	SetTargetFPS(60);
 
-	MainMenuScene scene{};
-	scene.init();
+	MainMenuScene mainMenuScene{};
+	PlayingScene playingScene{};
+
+	int choice{};
+	std::cout << "Choose scene: ";
+	std::cin >> choice;
+
+	if (choice == 1)
+		mainMenuScene.init();
+	else if (choice == 2)
+		playingScene.init();
 
 	while (!WindowShouldClose()) {
-		// Handle input
-		scene.handleInput();
+		if (choice == 1) {
+			// Handle input
+			mainMenuScene.handleInput();
 
-		// Logic
-		scene.logic();
+			// Logic
+			mainMenuScene.logic();
 
-		// Render
-		scene.render();
+			// Render
+			mainMenuScene.render();
+		}
+
+		else if (choice == 2) {
+			// Handle input
+			playingScene.handleInput();
+
+			// Logic
+			playingScene.logic();
+
+			// Render
+			playingScene.render();
+		}
 	}
 
-	scene.exit();
+	if (choice == 1)
+		mainMenuScene.exit();
+	else if (choice == 2)
+		playingScene.exit();
 
 	return 0;
 }
