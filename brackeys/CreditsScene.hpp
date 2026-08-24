@@ -1,21 +1,20 @@
 #pragma once
-#include <string_view>
+
 #include <vector>
 
 #include "raylib.h"
 
 #include "Constants.hpp"
-#include "Brackeys2DTexture.hpp"
 #include "BrackeysText.hpp"
 #include "SceneTypes.hpp"
 
-struct Scenes; // Needed to make struct Scene in here work
+struct Scenes;
 
-class MainMenuScene {
+class CreditsScene {
 public:
-	static constexpr SceneTypes s_Scene{ SceneTypes::MainMenu };
+	static constexpr SceneTypes s_Scene{ SceneTypes::Credits };
 
-	MainMenuScene();
+	CreditsScene();
 
 	// Main loop methods
 	void handleInput();
@@ -27,16 +26,17 @@ public:
 	void exit();
 private:
 	SceneTypes m_nextScene{ SceneTypes::MaxValue };
-	bool m_quitGame{ false };
 
 	// Scene size
 	int m_sceneWidth{ Constants::g_ScreenWidth };
 	int m_sceneHeight{ Constants::g_ScreenHeight };
 
-	// Assets (fonts, images, sounds, etc.)
-	Brackeys2DTexture m_titleTexture{};
-
+	// Assets
 	Font m_font{ GetFontDefault() };
 
-	std::vector<BrackeysText> m_menuOptions{};
+	BrackeysText m_creditsTitle{};
+
+	std::vector<BrackeysText> m_credits{};
+
+	BrackeysText m_goBackText{};
 };

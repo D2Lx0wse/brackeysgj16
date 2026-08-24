@@ -22,22 +22,27 @@ int main() {
 		currentScene = SceneTypes::MainMenu;
 	else if (choice == 2)
 		currentScene = SceneTypes::Playing;
+	else if (choice == 3)
+		currentScene = SceneTypes::Credits;
 
 	switch (currentScene) {
 	case SceneTypes::MainMenu: scenes.mainMenu.init(); break;
 
-	case SceneTypes::Credits:  break;
+	case SceneTypes::Credits: scenes.credits.init(); break;
 
 	case SceneTypes::Playing: scenes.playing.init(); break;
 
 	default: break;
 	}
 
-	while (!WindowShouldClose()) {
+	while (!scenes.quitGame) {
+		if (WindowShouldClose())
+			scenes.quitGame = true;
+
 		switch (currentScene) {
 		case SceneTypes::MainMenu: scenes.mainMenu.handleInput(); break;
 
-		case SceneTypes::Credits:  break;
+		case SceneTypes::Credits: scenes.credits.handleInput(); break;
 
 		case SceneTypes::Playing: scenes.playing.handleInput(); break;
 
@@ -47,7 +52,7 @@ int main() {
 		switch (currentScene) {
 		case SceneTypes::MainMenu: currentScene = scenes.mainMenu.logic(scenes); break;
 
-		case SceneTypes::Credits:  break;
+		case SceneTypes::Credits: currentScene = scenes.credits.logic(scenes);  break;
 
 		case SceneTypes::Playing: currentScene = scenes.playing.logic(scenes); break;
 
@@ -57,7 +62,7 @@ int main() {
 		switch (currentScene) {
 		case SceneTypes::MainMenu: scenes.mainMenu.render(); break;
 
-		case SceneTypes::Credits:  break;
+		case SceneTypes::Credits: scenes.credits.render(); break;
 
 		case SceneTypes::Playing: scenes.playing.render(); break;
 
@@ -68,12 +73,14 @@ int main() {
 	switch (currentScene) {
 	case SceneTypes::MainMenu: scenes.mainMenu.exit(); break;
 
-	case SceneTypes::Credits:  break;
+	case SceneTypes::Credits: scenes.credits.exit(); break;
 
 	case SceneTypes::Playing: scenes.playing.exit(); break;
 
 	default: break;
 	}
+
+	CloseWindow();
 
 	return 0;
 }

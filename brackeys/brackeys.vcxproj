@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="Brackeys2DTexture.cpp" />
     <ClCompile Include="BrackeysText.cpp" />
+    <ClCompile Include="CreditsScene.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Brackeys2DTexture.hpp" />
     <ClInclude Include="BrackeysText.hpp" />
     <ClInclude Include="Constants.hpp" />
+    <ClInclude Include="CreditsScene.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="MainMenuScene.hpp" />
     <ClInclude Include="PlayingScene.hpp" />

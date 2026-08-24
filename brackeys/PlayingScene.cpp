@@ -35,6 +35,8 @@ void PlayingScene::render() {
 
 // Readies/closes scene
 void PlayingScene::init() {
+	*this = PlayingScene{};
+
 	m_font = GetFontDefault();
 	m_test.loadFromFile("assets/images/player_vert.png");
 	m_camera = Camera2D{ Vector2{0.0f,0.0f }, Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, 0.0f, 1.0f };

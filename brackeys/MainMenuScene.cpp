@@ -7,23 +7,36 @@
 
 MainMenuScene::MainMenuScene()
 	: m_nextScene{ SceneTypes::MaxValue }
+	, m_quitGame{ false }
 	, m_sceneWidth{ Constants::g_ScreenWidth }
 	, m_sceneHeight{ Constants::g_ScreenHeight }
-	, m_camera{}
 	, m_titleTexture{}
 	, m_font{}
 {
-	init();
 }
 
 void MainMenuScene::handleInput() {
 	if (IsMouseButtonPressed(0)) {
 		const Vector2 mousePosition{ GetMousePosition() };
+
 		if (CheckCollisionRecs(
 			Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f },
 			Rectangle{ m_menuOptions[0].textPosition().x, m_menuOptions[0].textPosition().y, m_menuOptions[0].textSize().x, m_menuOptions[0].textSize().y })
 			)
 			m_nextScene = SceneTypes::Playing;
+
+
+		if (CheckCollisionRecs(
+			Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f },
+			Rectangle{ m_menuOptions[1].textPosition().x, m_menuOptions[1].textPosition().y, m_menuOptions[1].textSize().x, m_menuOptions[1].textSize().y })
+		)
+			m_nextScene = SceneTypes::Credits;
+
+		if (CheckCollisionRecs(
+			Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f },
+			Rectangle{ m_menuOptions[2].textPosition().x, m_menuOptions[2].textPosition().y, m_menuOptions[2].textSize().x, m_menuOptions[2].textSize().y })
+			)
+			m_quitGame = true;
 	}
 }
 
@@ -36,6 +49,8 @@ SceneTypes MainMenuScene::logic(Scenes& scenes) {
 		return m_nextScene;
 	}
 
+	if (m_quitGame)
+		scenes.quitGame = true;
 
 	return s_Scene;
 }
@@ -55,7 +70,7 @@ void MainMenuScene::render() {
 }
 
 void MainMenuScene::init() {
-	m_nextScene = SceneTypes::MaxValue;
+	*this = MainMenuScene{};
 
 	constexpr std::string_view titleImageFilePath{ "assets/images/title.png" };
 	m_titleTexture.loadFromFile(titleImageFilePath.data());
