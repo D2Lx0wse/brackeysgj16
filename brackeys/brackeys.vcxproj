@@ -146,6 +146,7 @@
     <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
     <ClCompile Include="PlayingScene.cpp" />
+    <ClCompile Include="Scenes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brackeys2DTexture.hpp" />
@@ -153,6 +154,8 @@
     <ClInclude Include="Constants.hpp" />
     <ClInclude Include="MainMenuScene.hpp" />
     <ClInclude Include="PlayingScene.hpp" />
+    <ClInclude Include="Scenes.hpp" />
+    <ClInclude Include="SceneTypes.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

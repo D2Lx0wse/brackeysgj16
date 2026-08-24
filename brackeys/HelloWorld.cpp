@@ -3,54 +3,78 @@
 #include "raylib.h"
 
 #include "Constants.hpp"
-#include "MainMenuScene.hpp"
-#include "PlayingScene.hpp"
+#include "Scenes.hpp"
+#include "SceneTypes.hpp"
+
 
 int main() {
 	InitWindow(Constants::g_ScreenWidth, Constants::g_ScreenHeight, Constants::g_DefaultTitle.data());
 
 	SetTargetFPS(60);
 
-	MainMenuScene mainMenuScene{};
-	PlayingScene playingScene{};
+	Scenes scenes{};
+	SceneTypes currentScene{ SceneTypes::MainMenu };
 
 	int choice{};
 	std::cout << "Choose scene: ";
 	std::cin >> choice;
 
 	if (choice == 1)
-		mainMenuScene.init();
+		currentScene = SceneTypes::MainMenu;
 	else if (choice == 2)
-		playingScene.init();
+		currentScene = SceneTypes::Playing;
+
+	switch (currentScene) {
+	case SceneTypes::MainMenu: scenes.mainMenu.init(); break;
+
+	case SceneTypes::Credits:  break;
+
+	case SceneTypes::Playing: scenes.playing.init(); break;
+
+	default: break;
+	}
 
 	while (!WindowShouldClose()) {
-		if (choice == 1) {
-			// Handle input
-			mainMenuScene.handleInput();
+		switch (currentScene) {
+		case SceneTypes::MainMenu: scenes.mainMenu.handleInput(); break;
 
-			// Logic
-			mainMenuScene.logic();
+		case SceneTypes::Credits:  break;
 
-			// Render
-			mainMenuScene.render();
+		case SceneTypes::Playing: scenes.playing.handleInput(); break;
+
+		default: break;
 		}
 
-		else if (choice == 2) {
-			// Handle input
-			playingScene.handleInput();
+		switch (currentScene) {
+		case SceneTypes::MainMenu: currentScene = scenes.mainMenu.logic(scenes); break;
 
-			// Logic
-			playingScene.logic();
+		case SceneTypes::Credits:  break;
 
-			// Render
-			playingScene.render();
+		case SceneTypes::Playing: scenes.playing.logic(); break;
+
+		default: break;
+		}
+
+		switch (currentScene) {
+		case SceneTypes::MainMenu: scenes.mainMenu.render(); break;
+
+		case SceneTypes::Credits:  break;
+
+		case SceneTypes::Playing: scenes.playing.render(); break;
+
+		default: break;
 		}
 	}
 
-	if (choice == 1)
-		mainMenuScene.exit();
-	else if (choice == 2)
-		playingScene.exit();
+	switch (currentScene) {
+	case SceneTypes::MainMenu: scenes.mainMenu.exit(); break;
+
+	case SceneTypes::Credits:  break;
+
+	case SceneTypes::Playing: scenes.playing.exit(); break;
+
+	default: break;
+	}
 
 	return 0;
 }

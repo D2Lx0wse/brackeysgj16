@@ -37,7 +37,7 @@ bool Brackeys2DTexture::render(float x, float y, Vector2 scalingSize, float rota
 	if (scalingSize.y != 0.0f)
 		destinationRectangle.height = scalingSize.y;
 
-	DrawTexturePro(m_texture, sourceRectangle, destinationRectangle, Vector2{}, rotation, WHITE);
+	DrawTexturePro(m_texture, sourceRectangle, destinationRectangle, Vector2{ width() / 2.0f, height() / 2.0f}, rotation, WHITE);
 
 	return true;
 }
