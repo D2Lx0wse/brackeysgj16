@@ -18,6 +18,16 @@ void Entity::Render() {
 	}
 }
 
+void Entity::Move(float vectorX, float vectorY) {
+	Move(Vector2{ vectorX, vectorY });
+}
+
+void Entity::Move(Vector2 vector) {
+	m_position.x += vector.x;
+	m_position.y += vector.y;
+
+}
+
 Entity::Entity(Vector2 position, std::string_view path_horiz, std::string_view path_vert, Direction dir)
 	:m_position{position}, m_direction {dir}
 {
