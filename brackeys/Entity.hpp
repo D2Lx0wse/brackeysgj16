@@ -13,24 +13,19 @@ private:
 	};
 
 public:
-	Entity();
+	Entity(Vector2 position, std::string_view path_horiz, std::string_view path_vert, Direction dir = up);
 	~Entity();
+	void Render();
 
 private:
 	Vector2 m_position{};
-	Brackeys2DTexture m_texture{};
+	Brackeys2DTexture m_textureHoriz{};
+	Brackeys2DTexture m_textureVert{};
 	Direction m_direction{};
 
-
+	
 	
 
 	
 };
 
-Entity::Entity()
-{
-}
-
-Entity::~Entity()
-{
-}
