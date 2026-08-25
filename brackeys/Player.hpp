@@ -5,17 +5,25 @@
 class Player
 {
 public:
-	Player();
+	Player() = default;
+	Player(Entity ent);
 	~Player();
 
+	void takeInput();
+	void think();
+	void render();
+
 	//getters
-	Entity getEntity() const { return m_entity; }
+
+	//returns REFERENCE to player entity
+	Entity& getEntity() { return m_entity; }
 
 private:
 	Entity m_entity;
-	int m_xp;
-	int m_level;
-	int m_hp;
-
+	int m_xp{};
+	int m_level{};
+	int m_hp{};
+	Vector2 m_inputVector{};
+	Vector2 m_movementVector{};
 };
 
