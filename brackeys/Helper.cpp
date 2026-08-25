@@ -19,3 +19,9 @@ Vector2 Helper::Normalized(const Vector2& vec) {
 	}
 	else{ return vec; }
 }
+
+Vector2 Helper::Lerp(const Vector2& vecA, const Vector2& vecB, float lerp) {
+	Vector2 diff{ vecA.x - vecB.x, vecA.y - vecA.y };
+	Vector2 scaledDiff{ diff.x * lerp, diff.y * lerp };
+	return Vector2{ vecB.x + scaledDiff.x, vecB.y + scaledDiff.y };
+}
