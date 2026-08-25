@@ -32,8 +32,8 @@ void Player::takeInput()
 
 void Player::think()
 {
-	if (Helper::vec2Length(m_inputVector) > 1) {
-		m_inputVector = Helper::vec2Normalized(m_inputVector);
+	if (Helper::Length(m_inputVector) > 1) {
+		m_inputVector = Helper::Normalized(m_inputVector);
 	}
 	m_movementVector = Vector2{ 
 		m_inputVector.x * GetFrameTime() * 50.0f, 
