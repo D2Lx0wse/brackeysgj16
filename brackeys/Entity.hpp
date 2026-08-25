@@ -29,6 +29,7 @@ public:
 	float getRadius() const { return m_radius; }
 	void setRadius( float radius);
 	Vector2 getPosition() const { return m_position; }
+	void setPosition(const Vector2& position) { m_position = position; }
 
 private:
 	Vector2 m_position{};

@@ -13,6 +13,9 @@ class PlayingScene
 public:
 	static constexpr SceneTypes s_Scene{ SceneTypes::Playing };
 
+	constexpr static float s_SceneWidth{ Constants::g_ScreenWidth * 4.0f };
+	constexpr static float s_SceneHeight{ Constants::g_ScreenWidth * 4.0f  };
+
 	PlayingScene();
 
 	// Main loop methods
@@ -31,9 +34,6 @@ private:
 	Brackeys2DTexture m_test{};
 	float m_testRot{};
 	Entity m_testEntity;*/
-
-	constexpr float m_SceneWidth{};
-	constexpr float m_SceneHeight{};
 
 	Player m_player;
 

@@ -15,13 +15,36 @@ void PlayingScene::handleInput() {
 	m_player.takeInput();
 }
 SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scene) {
-	m_camera.target = Vector2{ 5.0f, 5.0f };
 	m_player.think();
+
+	// Keeps player character in bounds of the level
+	if (m_player.getEntity().getPosition().x < 0.0f)
+		m_player.getEntity().setPosition(Vector2{ 0.0f, m_player.getEntity().getPosition().y });
+	else if (m_player.getEntity().getPosition().x + m_player.getEntity().getRadius() * Constants::g_ScalingSize * 2.0f > s_SceneWidth)
+		m_player.getEntity().setPosition(Vector2{ s_SceneWidth - m_player.getEntity().getRadius() * Constants::g_ScalingSize * 2.0f, m_player.getEntity().getPosition().y});
+
+	if (m_player.getEntity().getPosition().y < 0.0f)
+		m_player.getEntity().setPosition(Vector2{ m_player.getEntity().getPosition().x, 0.0f });
+	else if (m_player.getEntity().getPosition().y + m_player.getEntity().getRadius() * Constants::g_ScalingSize * 2.0f > s_SceneHeight)
+		m_player.getEntity().setPosition(Vector2{ m_player.getEntity().getPosition().x, s_SceneHeight - m_player.getEntity().getRadius() * Constants::g_ScalingSize * 2.0f });
+
+	// Center camera on player character
+	m_camera.target = Vector2{ m_player.getEntity().getPosition().x - Constants::g_ScreenWidth / 2.0f + m_player.getEntity().getRadius() * Constants::g_ScalingSize, m_player.getEntity().getPosition().y - Constants::g_ScreenHeight / 2.0f + m_player.getEntity().getRadius() * Constants::g_ScalingSize };
+	
+	// Keeps camera in bounds of the level
+	if (m_camera.target.x < 0.0f)
+		m_camera.target.x = 0.0f;
+	else if (m_camera.target.x + Constants::g_ScreenWidth > s_SceneWidth)
+		m_camera.target.x = s_SceneWidth - Constants::g_ScreenWidth;
+
+	if (m_camera.target.y < 0.0f)
+		m_camera.target.y = 0.0f;
+	else if (m_camera.target.y + Constants::g_ScreenHeight > s_SceneHeight)
+		m_camera.target.y = s_SceneHeight - Constants::g_ScreenHeight;
+
 	return SceneTypes::Playing;
 }
 void PlayingScene::render() {
-
-
 	BeginDrawing();
 
 	ClearBackground(RAYWHITE);
@@ -31,7 +54,6 @@ void PlayingScene::render() {
 	renderUI();
 
 	EndDrawing();
-
 }
 
 // Readies/closes scene
