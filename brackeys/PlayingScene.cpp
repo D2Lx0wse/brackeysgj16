@@ -13,7 +13,18 @@ PlayingScene::PlayingScene()
 }
 
 void PlayingScene::handleInput() {
-
+	if (IsKeyPressedRepeat(KEY_W)){
+		m_testEntity.Move({ 0.0f,-1.0f });
+	}
+	if (IsKeyPressedRepeat(KEY_S)) {
+		m_testEntity.Move({ 0.0f,1.0f });
+	}
+	if (IsKeyPressedRepeat(KEY_A)) {
+		m_testEntity.Move({ -1.0f, 0 });
+	}
+	if (IsKeyPressedRepeat(KEY_D)) {
+		m_testEntity.Move({ 1.0f, 0.0f });
+	}
 }
 SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scene) {
 	m_camera.target = Vector2{ 5.0f, 5.0f };

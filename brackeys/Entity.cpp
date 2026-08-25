@@ -8,7 +8,7 @@ void Entity::Render() {
 		m_textureVert.render(m_position, Vector2{}, 180.f);
 		return;
 	case right:
-		m_textureHoriz.render(m_position, Vector2{ -static_cast<float>(m_textureHoriz.texture().width),0 });
+		m_textureHoriz.render(m_position, Vector2{ -static_cast<float>(m_textureHoriz.texture().width),0 });//BROKEN!
 		return;
 	case down:
 		m_textureVert.render(m_position);
@@ -38,7 +38,7 @@ void Entity::Move(Vector2 vector) {
 		}
 	}
 	else {
-		if (vector.y > 0) {
+		if (vector.y < 0) {
 			m_direction = up;
 		}
 		else {
