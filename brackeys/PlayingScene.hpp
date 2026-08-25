@@ -28,6 +28,10 @@ public:
 	void exit();
 
 private:
+	void keepPlayerInBounds();
+
+	void keepCameraInBounds();
+
 	Font m_font{};
 	Camera2D m_camera{ };
 	/*
