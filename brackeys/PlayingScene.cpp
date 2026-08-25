@@ -8,6 +8,7 @@
 PlayingScene::PlayingScene()
 	: m_font{}
 	, m_camera{}
+	, m_background{}
 {
 }
 
@@ -72,6 +73,8 @@ void PlayingScene::init() {
 	m_player.getEntity().reloadTextures();
 
 	std::cout << "player birth" << std::endl;
+
+	m_background.loadFromFile("assets/images/grass.png");
 }
 void PlayingScene::exit() {
 
@@ -80,9 +83,27 @@ void PlayingScene::exit() {
 //rendering stuff
 void PlayingScene::renderWorld(Camera2D& camera) {
 	BeginMode2D(camera);
+	//actual poopshit
+#if _DEBUG
+	int counter{};
+#endif
+	//s_SceneWidth*scalingsize + m_background.width()
+	constexpr float epsilon{ 0.001f };
+	for (float i{0}; i <= (s_SceneWidth - m_background.width()+epsilon); i += m_background.width()) {
+		for (float j{ 0 }; j <= (s_SceneHeight - m_background.height()+epsilon) ; j += m_background.height()) {
+			m_background.render(Vector2{ static_cast<float>(i),static_cast<float>(j) });
+#if _DEBUG
+			++counter;
+#endif
+		}
+	}
+#if _DEBUG
+	std::cout << "Rendered background " << counter << " times, should be 25 times\n";
+#endif // DEBUG
+
+	
 
 	//lil test teehee
-	
 	DrawRectangle(Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2, 10, 10, BLACK);
 	//m_test.render(Constants::g_ScreenWidth/2, Constants::g_ScreenHeight / 2, {}, m_testRot);
 	m_player.render();

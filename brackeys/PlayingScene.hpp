@@ -37,6 +37,8 @@ private:
 
 	Player m_player;
 
+	Brackeys2DTexture m_background;
+
 	void renderWorld(Camera2D& camera);
 	void renderUI();
 };
