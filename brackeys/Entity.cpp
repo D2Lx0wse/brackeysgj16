@@ -47,8 +47,13 @@ void Entity::Move(Vector2 vector) {
 	}
 }
 
+void Entity::reloadTextures() {
+	m_textureHoriz.loadFromFile(m_textureHorizPath);
+	m_textureVert.loadFromFile(m_textureVertPath);
+}
+
 Entity::Entity(Vector2 position, std::string_view path_horiz, std::string_view path_vert, Direction dir)
-	:m_position{position}, m_direction {dir}
+	:m_position{ position }, m_direction{ dir }, m_textureHorizPath{ path_horiz }, m_textureVertPath{ path_vert }
 {
 	m_textureHoriz.loadFromFile(path_horiz);
 	m_textureVert.loadFromFile(path_vert);

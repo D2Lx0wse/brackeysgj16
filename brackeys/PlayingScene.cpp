@@ -2,6 +2,9 @@
 #include "Brackeys2DTexture.hpp"
 #include "Scenes.hpp"
 
+//this is so sad
+#include <iostream>
+
 PlayingScene::PlayingScene()
 	: m_font{}
 	, m_camera{}
@@ -41,6 +44,8 @@ void PlayingScene::init() {
 	m_test.loadFromFile("assets/images/player_vert.png");
 	m_camera = Camera2D{ Vector2{0.0f,0.0f }, Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, 0.0f, 1.0f };
 	m_testEntity = Entity{ Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, "assets/images/player_horiz.png", "assets/images/player_vert.png" };
+	m_testEntity.reloadTextures();
+	std::cout << "entity birth" << std::endl;
 }
 void PlayingScene::exit() {
 

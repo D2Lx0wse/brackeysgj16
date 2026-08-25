@@ -1,6 +1,7 @@
 #pragma once
 #include "raylib.h"
 #include "Brackeys2DTexture.hpp"
+#include <string_view>
 
 class Entity
 {
@@ -19,13 +20,15 @@ public:
 	void Render();
 	void Move(Vector2 vector);
 	void Move(float vectorX, float vectorY);
+	void reloadTextures();
 
 private:
 	Vector2 m_position{};
 	Brackeys2DTexture m_textureHoriz{};
 	Brackeys2DTexture m_textureVert{};
 	Direction m_direction{};
-
+	std::string_view m_textureHorizPath{};
+	std::string_view m_textureVertPath{};
 	
 	
 
