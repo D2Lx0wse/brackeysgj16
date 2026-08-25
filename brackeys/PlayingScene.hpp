@@ -32,6 +32,9 @@ private:
 	float m_testRot{};
 	Entity m_testEntity;*/
 
+	constexpr float m_SceneWidth{};
+	constexpr float m_SceneHeight{};
+
 	Player m_player;
 
 	void renderWorld(Camera2D& camera);

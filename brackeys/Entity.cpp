@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cmath>
 
+#include "Vector2Overloads.hpp"
+
 void Entity::Render() {
 	switch (m_direction) {
 	case up:
@@ -28,6 +30,9 @@ void Entity::Move(float vectorX, float vectorY) {
 }
 
 void Entity::Move(Vector2 vector) {
+	if (vector == Vector2{ 0.0f, 0.0f })
+		return;
+
 	m_position.x += vector.x;
 	m_position.y += vector.y;
 	if (std::abs(vector.x) > std::abs(vector.y)) {

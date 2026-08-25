@@ -6,7 +6,6 @@
 Player::Player(Entity ent)
 	:m_entity{ent}
 {
-
 }
 
 Player::~Player()
@@ -16,16 +15,16 @@ Player::~Player()
 void Player::takeInput()
 {
 	m_inputVector = Vector2{};
-	if (IsKeyDown(KEY_W)) {
+	if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) {
 		m_inputVector += Vector2{ 0.0f,-1.0f };
 	}
-	if (IsKeyDown(KEY_S)) {
+	if (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)) {
 		m_inputVector += { 0.0f,1.0f };
 	}
-	if (IsKeyDown(KEY_A)) {
+	if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
 		m_inputVector += { -1.0f, 0 };
 	}
-	if (IsKeyDown(KEY_D)) {
+	if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
 		m_inputVector += { 1.0f, 0.0f };
 	}
 }
@@ -36,8 +35,8 @@ void Player::think()
 		m_inputVector = Helper::Normalized(m_inputVector);
 	}
 	m_movementVector = Vector2{ 
-		m_inputVector.x * GetFrameTime() * 50.0f, 
-		m_inputVector.y* GetFrameTime() * 50.0f }; //placholder speed scaling
+		m_inputVector.x * GetFrameTime() * m_speed,
+		m_inputVector.y * GetFrameTime() * m_speed }; //placholder speed scaling
 	m_entity.Move(m_movementVector);
 }
 

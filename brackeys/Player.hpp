@@ -20,9 +20,13 @@ public:
 
 private:
 	Entity m_entity;
+
 	int m_xp{};
 	int m_level{};
 	int m_hp{};
+
+	float m_speed{ Constants::g_SpeedSlow };
+
 	Vector2 m_inputVector{};
 	Vector2 m_movementVector{};
 };
