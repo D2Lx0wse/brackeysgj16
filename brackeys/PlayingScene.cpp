@@ -46,6 +46,7 @@ void PlayingScene::init() {
 	m_testEntity.reloadTextures();*/
 
 	m_player = Player{ Entity{Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, "assets/images/player_horiz.png", "assets/images/player_vert.png"} };
+	m_player.getEntity().setRadius(8.0f);
 	m_player.getEntity().reloadTextures();
 
 	std::cout << "player birth" << std::endl;
