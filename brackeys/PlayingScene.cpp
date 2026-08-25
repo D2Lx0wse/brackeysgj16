@@ -83,15 +83,15 @@ void PlayingScene::exit() {
 //rendering stuff
 void PlayingScene::renderWorld(Camera2D& camera) {
 	BeginMode2D(camera);
-	//actual poopshit
+	
 #if _DEBUG
 	int counter{};
 #endif
-	//s_SceneWidth*scalingsize + m_background.width()
-	constexpr float epsilon{ 0.001f };
-	for (float i{0}; i <= (s_SceneWidth - m_background.width()+epsilon); i += m_background.width()) {
-		for (float j{ 0 }; j <= (s_SceneHeight - m_background.height()+epsilon) ; j += m_background.height()) {
-			m_background.render(Vector2{ static_cast<float>(i),static_cast<float>(j) });
+	
+	constexpr float epsilon{ 0.001f }; // Used for rendering the grass texture specificially as many times as it needed, avoiding float accuracy issues
+	for (float i{ 0.0f }; i <= (s_SceneWidth - m_background.width() + epsilon); i += m_background.width()) {
+		for (float j{ 0.0f }; j <= (s_SceneHeight - m_background.height() + epsilon); j += m_background.height()) {
+			m_background.render(Vector2{ i, j });
 #if _DEBUG
 			++counter;
 #endif
