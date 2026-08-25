@@ -1,6 +1,7 @@
 #include "Entity.hpp"
 #include <string_view>
 #include <iostream>
+#include <cmath>
 
 void Entity::Render() {
 	switch (m_direction) {
@@ -52,11 +53,20 @@ void Entity::reloadTextures() {
 	m_textureVert.loadFromFile(m_textureVertPath);
 }
 
-Entity::Entity(Vector2 position, std::string_view path_horiz, std::string_view path_vert, Direction dir)
+void Entity::setRadius(float radius) {
+	m_radius = std::abs(radius);
+}
+
+Circle Entity::getCircle() {
+	return Circle(getPosition(), getRadius());
+}
+
+Entity::Entity(Vector2 position, std::string_view path_horiz, std::string_view path_vert, Direction dir, float radius)
 	:m_position{ position }, m_direction{ dir }, m_textureHorizPath{ path_horiz }, m_textureVertPath{ path_vert }
 {
 	m_textureHoriz.loadFromFile(path_horiz);
 	m_textureVert.loadFromFile(path_vert);
+	setRadius(radius);
 }
 
 Entity::~Entity()

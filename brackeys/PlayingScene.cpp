@@ -8,32 +8,19 @@
 PlayingScene::PlayingScene()
 	: m_font{}
 	, m_camera{}
-	, m_test{}
 {
 }
 
 void PlayingScene::handleInput() {
-	if (IsKeyDown(KEY_W)){
-		m_testEntity.Move({ 0.0f,-1.0f });
-	}
-	if (IsKeyDown(KEY_S)) {
-		m_testEntity.Move({ 0.0f,1.0f });
-	}
-	if (IsKeyDown(KEY_A)) {
-		m_testEntity.Move({ -1.0f, 0 });
-	}
-	if (IsKeyDown(KEY_D)) {
-		m_testEntity.Move({ 1.0f, 0.0f });
-	}
+	m_player.takeInput();
 }
 SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scene) {
 	m_camera.target = Vector2{ 5.0f, 5.0f };
-	
+	m_player.think();
 	return SceneTypes::Playing;
 }
 void PlayingScene::render() {
 
-	m_testRot += 5.0f;
 
 	BeginDrawing();
 
@@ -52,11 +39,16 @@ void PlayingScene::init() {
 	*this = PlayingScene{};
 
 	m_font = GetFontDefault();
-	m_test.loadFromFile("assets/images/player_vert.png");
 	m_camera = Camera2D{ Vector2{0.0f,0.0f }, Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, 0.0f, 1.0f };
+	/*
+	m_test.loadFromFile("assets/images/player_vert.png");
 	m_testEntity = Entity{ Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, "assets/images/player_horiz.png", "assets/images/player_vert.png" };
-	m_testEntity.reloadTextures();
-	std::cout << "entity birth" << std::endl;
+	m_testEntity.reloadTextures();*/
+
+	m_player = Player{ Entity{Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, "assets/images/player_horiz.png", "assets/images/player_vert.png"} };
+	m_player.getEntity().reloadTextures();
+
+	std::cout << "player birth" << std::endl;
 }
 void PlayingScene::exit() {
 
@@ -70,7 +62,7 @@ void PlayingScene::renderWorld(Camera2D& camera) {
 	
 	DrawRectangle(Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2, 10, 10, BLACK);
 	//m_test.render(Constants::g_ScreenWidth/2, Constants::g_ScreenHeight / 2, {}, m_testRot);
-	m_testEntity.Render();
+	m_player.render();
 	EndMode2D();
 }
 

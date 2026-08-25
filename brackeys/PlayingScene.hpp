@@ -4,6 +4,7 @@
 #include "Constants.hpp"
 #include "SceneTypes.hpp"
 #include "Entity.hpp"
+#include "Player.hpp"
 
 struct Scenes;
 
@@ -26,9 +27,12 @@ public:
 private:
 	Font m_font{};
 	Camera2D m_camera{ };
+	/*
 	Brackeys2DTexture m_test{};
 	float m_testRot{};
-	Entity m_testEntity;
+	Entity m_testEntity;*/
+
+	Player m_player;
 
 	void renderWorld(Camera2D& camera);
 	void renderUI();
