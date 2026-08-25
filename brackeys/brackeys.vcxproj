@@ -148,6 +148,7 @@
     <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayingScene.cpp" />
     <ClCompile Include="Scenes.cpp" />
   </ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Helper.hpp" />
     <ClInclude Include="MainMenuScene.hpp" />
+    <ClInclude Include="Player.hpp" />
     <ClInclude Include="PlayingScene.hpp" />
     <ClInclude Include="Scenes.hpp" />
     <ClInclude Include="SceneTypes.hpp" />

@@ -13,16 +13,16 @@ PlayingScene::PlayingScene()
 }
 
 void PlayingScene::handleInput() {
-	if (IsKeyPressedRepeat(KEY_W)){
+	if (IsKeyDown(KEY_W)){
 		m_testEntity.Move({ 0.0f,-1.0f });
 	}
-	if (IsKeyPressedRepeat(KEY_S)) {
+	if (IsKeyDown(KEY_S)) {
 		m_testEntity.Move({ 0.0f,1.0f });
 	}
-	if (IsKeyPressedRepeat(KEY_A)) {
+	if (IsKeyDown(KEY_A)) {
 		m_testEntity.Move({ -1.0f, 0 });
 	}
-	if (IsKeyPressedRepeat(KEY_D)) {
+	if (IsKeyDown(KEY_D)) {
 		m_testEntity.Move({ 1.0f, 0.0f });
 	}
 }
