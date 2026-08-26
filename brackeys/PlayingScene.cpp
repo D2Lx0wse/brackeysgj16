@@ -1,6 +1,7 @@
 #include "PlayingScene.hpp"
 #include "Brackeys2DTexture.hpp"
 #include "Scenes.hpp"
+#include "Vector2Overloads.hpp"
 
 //this is so sad
 #include <iostream>
@@ -83,6 +84,7 @@ void PlayingScene::init() {
 	std::cout << "player birth" << std::endl;
 
 	m_background.loadFromFile("assets/images/grass.png");
+	initUI();
 }
 void PlayingScene::exit() {
 
@@ -109,15 +111,39 @@ void PlayingScene::renderWorld(Camera2D& camera) {
 	std::cout << "Rendered background " << counter << " times, should be 25 times\n";
 #endif // DEBUG
 
-	
-
 	//lil test teehee
 	DrawRectangle(Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2, 10, 10, BLACK);
 	//m_test.render(Constants::g_ScreenWidth/2, Constants::g_ScreenHeight / 2, {}, m_testRot);
+
 	m_player.render();
 	EndMode2D();
 }
 
+void PlayingScene::initUI() {
+	xpBackgroundPos = { (Constants::g_ScreenWidth - s_xpBarWidth) / 2,
+						Constants::g_ScreenHeight - (s_xpBarHeight + s_xpBarBtmDistance) };
+	xpBackgroundSize = { s_xpBarWidth , s_xpBarHeight };
+	xpBackgroundInnerPos = { xpBackgroundPos + Vector2{Constants::g_ScalingSize, Constants::g_ScalingSize} };
+	xpBackgroundInnerSize = { xpBackgroundSize - Vector2{Constants::g_ScalingSize * 2, Constants::g_ScalingSize * 2} };
+
+	hpBackgroundPos = { s_hpBarSideDistance, (Constants::g_ScreenHeight - s_hpBarHeight) / 2 };
+	hpBackgroundSize = { s_hpBarWidth , s_hpBarHeight };
+	hpBackgroundInnerPos = { hpBackgroundPos + Vector2{Constants::g_ScalingSize, Constants::g_ScalingSize} };
+	hpBackgroundInnerSize = { hpBackgroundSize - Vector2{Constants::g_ScalingSize * 2, Constants::g_ScalingSize * 2} };
+
+}
+
 void PlayingScene::renderUI() {
 	//m_test.render(0.0f, 0.0f);
+
+	//xp bar
+	xpBarLength = m_player.getXP() / static_cast<float>(m_player.getMaxXP()) *xpBackgroundInnerSize.x;
+	DrawRectangleV(xpBackgroundPos, xpBackgroundSize, ORANGE);
+	DrawRectangleV(xpBackgroundInnerPos, xpBackgroundInnerSize, GRAY);
+	DrawRectangleV(xpBackgroundInnerPos, Vector2{ xpBarLength, xpBackgroundInnerSize.y }, YELLOW);
+
+	hpBarLength = m_player.getXP() / static_cast<float>(m_player.getMaxXP()) * xpBackgroundInnerSize.x;
+	DrawRectangleV(hpBackgroundPos, hpBackgroundSize, Constants::g_DARKRED);
+	DrawRectangleV(hpBackgroundInnerPos, hpBackgroundInnerSize, GRAY);
+	DrawRectangleV(hpBackgroundInnerPos, Vector2{ hpBackgroundInnerSize.x, hpBarLength }, RED);
 }

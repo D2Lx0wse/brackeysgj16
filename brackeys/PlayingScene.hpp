@@ -15,6 +15,14 @@ public:
 
 	constexpr static float s_SceneWidth{ Constants::g_ScreenWidth * 4.0f };
 	constexpr static float s_SceneHeight{ Constants::g_ScreenWidth * 4.0f  };
+	
+	constexpr static float s_xpBarWidth{ Constants::g_ScreenWidth / 2.0f };
+	constexpr static float s_xpBarHeight{50.0f};
+	constexpr static float s_xpBarBtmDistance{10.0f};
+	constexpr static float s_hpBarWidth{ 50.0f };
+	constexpr static float s_hpBarHeight{ Constants::g_ScreenHeight / 2.0f };
+	constexpr static float s_hpBarSideDistance{ 10.0f };
+
 
 	PlayingScene();
 
@@ -43,6 +51,19 @@ private:
 
 	Brackeys2DTexture m_background;
 
+	Vector2 xpBackgroundPos{};
+	Vector2 xpBackgroundSize{};
+	Vector2 xpBackgroundInnerPos{};
+	Vector2 xpBackgroundInnerSize{};
+	float xpBarLength{};
+
+	Vector2 hpBackgroundPos{};
+	Vector2 hpBackgroundSize{};
+	Vector2 hpBackgroundInnerPos{};
+	Vector2 hpBackgroundInnerSize{};
+	float hpBarLength{};
+
 	void renderWorld(Camera2D& camera);
 	void renderUI();
+	void initUI();
 };

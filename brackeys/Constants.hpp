@@ -13,4 +13,6 @@ namespace Constants {
 	constexpr float g_SpeedSlow{ 100.0f };
 	constexpr float g_SpeedMedium{ g_SpeedSlow * 1.5f };
 	constexpr float g_SpeedFast{ g_SpeedMedium * 1.5f };
+
+	constexpr Color g_DARKRED{ 100, 0, 0 ,255 };
 }
