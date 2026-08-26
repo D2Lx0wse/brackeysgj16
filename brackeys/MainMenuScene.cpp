@@ -77,11 +77,16 @@ void MainMenuScene::render() {
 		menuOption.render(m_font);
 	}
 
+	HideCursor();
+	m_cursorTexture.render(GetMousePosition(), Vector2{24.0f, 24.0f});
+
 	EndDrawing();
 }
 
 void MainMenuScene::init() {
 	*this = MainMenuScene{};
+
+	m_cursorTexture.loadFromFile("assets/images/cursor.png");
 
 	constexpr std::string_view titleImageFilePath{ "assets/images/title.png" };
 	m_titleTexture.loadFromFile(titleImageFilePath.data());
@@ -104,6 +109,9 @@ void MainMenuScene::init() {
 
 void MainMenuScene::exit() {
 	m_titleTexture.exit();
+
+	m_cursorTexture.exit();
+	ShowCursor();
 
 	m_font = Font{};
 }

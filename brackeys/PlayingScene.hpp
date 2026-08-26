@@ -51,17 +51,17 @@ private:
 
 	Brackeys2DTexture m_background;
 
-	Vector2 xpBackgroundPos{};
-	Vector2 xpBackgroundSize{};
-	Vector2 xpBackgroundInnerPos{};
-	Vector2 xpBackgroundInnerSize{};
-	float xpBarLength{};
+	Vector2 m_xpBackgroundPos{};
+	Vector2 m_xpBackgroundSize{};
+	Vector2 m_xpBackgroundInnerPos{};
+	Vector2 m_xpBackgroundInnerSize{};
+	float m_xpBarLength{};
 
-	Vector2 hpBackgroundPos{};
-	Vector2 hpBackgroundSize{};
-	Vector2 hpBackgroundInnerPos{};
-	Vector2 hpBackgroundInnerSize{};
-	float hpBarLength{};
+	Vector2 m_hpBackgroundPos{};
+	Vector2 m_hpBackgroundSize{};
+	Vector2 m_hpBackgroundInnerPos{};
+	Vector2 m_hpBackgroundInnerSize{};
+	float m_hpBarLength{};
 
 	void renderWorld(Camera2D& camera);
 	void renderUI();

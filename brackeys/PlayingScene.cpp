@@ -62,6 +62,9 @@ void PlayingScene::render() {
 	renderWorld(m_camera);
 
 	renderUI();
+#if _DEBUG
+	std::cout << "FPS: " << GetFPS() << '\n';
+#endif
 
 	EndDrawing();
 }
@@ -94,56 +97,48 @@ void PlayingScene::exit() {
 void PlayingScene::renderWorld(Camera2D& camera) {
 	BeginMode2D(camera);
 	
-#if _DEBUG
-	int counter{};
-#endif
-	
 	constexpr float epsilon{ 0.001f }; // Used for rendering the grass texture specificially as many times as it needed, avoiding float accuracy issues
 	for (float i{ 0.0f }; i <= (s_SceneWidth - m_background.width() + epsilon); i += m_background.width()) {
 		for (float j{ 0.0f }; j <= (s_SceneHeight - m_background.height() + epsilon); j += m_background.height()) {
 			m_background.render(Vector2{ i, j });
-#if _DEBUG
-			++counter;
-#endif
 		}
 	}
-#if _DEBUG
-	std::cout << "Rendered background " << counter << " times, should be 25 times\n";
-#endif // DEBUG
 
 	//lil test teehee
 	DrawRectangle(Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2, 10, 10, BLACK);
 	//m_test.render(Constants::g_ScreenWidth/2, Constants::g_ScreenHeight / 2, {}, m_testRot);
 
 	m_player.render();
+
 	EndMode2D();
 }
 
 void PlayingScene::initUI() {
-	xpBackgroundPos = { (Constants::g_ScreenWidth - s_xpBarWidth) / 2,
+	m_xpBackgroundPos = { (Constants::g_ScreenWidth - s_xpBarWidth) / 2,
 						Constants::g_ScreenHeight - (s_xpBarHeight + s_xpBarBtmDistance) };
-	xpBackgroundSize = { s_xpBarWidth , s_xpBarHeight };
-	xpBackgroundInnerPos = { xpBackgroundPos + Vector2{Constants::g_ScalingSize, Constants::g_ScalingSize} };
-	xpBackgroundInnerSize = { xpBackgroundSize - Vector2{Constants::g_ScalingSize * 2, Constants::g_ScalingSize * 2} };
+	m_xpBackgroundSize = { s_xpBarWidth , s_xpBarHeight };
+	m_xpBackgroundInnerPos = { m_xpBackgroundPos + Vector2{Constants::g_ScalingSize, Constants::g_ScalingSize} };
+	m_xpBackgroundInnerSize = { m_xpBackgroundSize - Vector2{Constants::g_ScalingSize * 2, Constants::g_ScalingSize * 2} };
 
-	hpBackgroundPos = { s_hpBarSideDistance, (Constants::g_ScreenHeight - s_hpBarHeight) / 2 };
-	hpBackgroundSize = { s_hpBarWidth , s_hpBarHeight };
-	hpBackgroundInnerPos = { hpBackgroundPos + Vector2{Constants::g_ScalingSize, Constants::g_ScalingSize} };
-	hpBackgroundInnerSize = { hpBackgroundSize - Vector2{Constants::g_ScalingSize * 2, Constants::g_ScalingSize * 2} };
+	m_hpBackgroundPos = { s_hpBarSideDistance, (Constants::g_ScreenHeight - s_hpBarHeight) / 2 };
+	m_hpBackgroundSize = { s_hpBarWidth , s_hpBarHeight };
+	m_hpBackgroundInnerPos = { m_hpBackgroundPos + Vector2{Constants::g_ScalingSize, Constants::g_ScalingSize} };
+	m_hpBackgroundInnerSize = { m_hpBackgroundSize - Vector2{Constants::g_ScalingSize * 2, Constants::g_ScalingSize * 2} };
 
 }
 
 void PlayingScene::renderUI() {
-	//m_test.render(0.0f, 0.0f);
+	// XP bar
+	m_xpBarLength = m_player.getXP() / static_cast<float>(m_player.getMaxXP()) *m_xpBackgroundInnerSize.x;
+	DrawRectangleV(m_xpBackgroundPos, m_xpBackgroundSize, ORANGE);
+	DrawRectangleV(m_xpBackgroundInnerPos, m_xpBackgroundInnerSize, GRAY);
+	DrawRectangleV(m_xpBackgroundInnerPos, Vector2{ m_xpBarLength, m_xpBackgroundInnerSize.y }, YELLOW);
 
-	//xp bar
-	xpBarLength = m_player.getXP() / static_cast<float>(m_player.getMaxXP()) *xpBackgroundInnerSize.x;
-	DrawRectangleV(xpBackgroundPos, xpBackgroundSize, ORANGE);
-	DrawRectangleV(xpBackgroundInnerPos, xpBackgroundInnerSize, GRAY);
-	DrawRectangleV(xpBackgroundInnerPos, Vector2{ xpBarLength, xpBackgroundInnerSize.y }, YELLOW);
-
-	hpBarLength = m_player.getXP() / static_cast<float>(m_player.getMaxXP()) * xpBackgroundInnerSize.x;
-	DrawRectangleV(hpBackgroundPos, hpBackgroundSize, Constants::g_DARKRED);
-	DrawRectangleV(hpBackgroundInnerPos, hpBackgroundInnerSize, GRAY);
-	DrawRectangleV(hpBackgroundInnerPos, Vector2{ hpBackgroundInnerSize.x, hpBarLength }, RED);
+	// HP bar
+	//m_hpBarLength = m_player.getXP() / static_cast<float>(m_player.getMaxXP()) * m_xpBackgroundInnerSize.x;
+	m_hpBarLength = m_player.getHP() / static_cast<float>(m_player.getMaxHP()) * m_hpBackgroundInnerSize.y;
+	DrawRectangleV(m_hpBackgroundPos, m_hpBackgroundSize, Constants::g_DARKRED);
+	DrawRectangleV(m_hpBackgroundInnerPos, m_hpBackgroundInnerSize, GRAY);
+	// To-Do (Polish): Make it start from the bottom (requires math to change pos and size)
+	DrawRectangleV(m_hpBackgroundInnerPos, Vector2{m_hpBackgroundInnerSize.x, m_hpBarLength}, RED);
 }

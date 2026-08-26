@@ -28,8 +28,8 @@ private:
 	int m_xp{20};
 	int m_maxXp{100};
 	int m_level{};
-	int m_hp{};
-	int m_maxHp{};
+	int m_hp{75};
+	int m_maxHp{100};
 
 	float m_speed{ Constants::g_SpeedSlow };
 

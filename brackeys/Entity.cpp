@@ -6,25 +6,44 @@
 #include "Vector2Overloads.hpp"
 
 void Entity::Render() {
+	float weaponRotation{};
+	// Starts off from player position, is moved based on where the player is facing
+	Vector2 weaponPosition{ m_position };
+	Vector2 weaponSize{ m_weapon.texture().width(), m_weapon.texture().height() }; // Used to mirror the texture
+
 	switch (m_direction) {
 	case up:
 		m_textureVert.render(m_position, Vector2{}, 180.f);
+
+		weaponRotation = 0.0f;
+		weaponPosition += Vector2{ getRadius() * Constants::g_ScalingSize * -1.0f, getRadius() * Constants::g_ScalingSize * -1.0f };
+		weaponSize.x *= -1.0f;
 		break;
 	case right:
 		m_textureHoriz.render(m_position, Vector2{ -m_textureHoriz.width(), 0.0f });
+
+		weaponRotation = 90.0f;
+		weaponPosition += Vector2{ getRadius() * Constants::g_ScalingSize, getRadius() * Constants::g_ScalingSize };
 		break;
 	case down:
 		m_textureVert.render(m_position);
+		
+		weaponRotation = 180.0f;
+		weaponPosition += Vector2{ getRadius() * Constants::g_ScalingSize, getRadius() * Constants::g_ScalingSize };
 		break;
 	case left:
 		m_textureHoriz.render(m_position);
+
+		weaponRotation = -90.0f;
+		weaponPosition += Vector2{ getRadius() * Constants::g_ScalingSize * -1.0f, getRadius() * Constants::g_ScalingSize };
+		weaponSize.x *= -1.0f;
 		break;
 	default:
 		std::cerr << "impossible direction!!!";
 		break;
 	}
 
-	m_weapon.texture().render(m_position.x + getRadius() * Constants::g_ScalingSize, m_position.y + getRadius() * Constants::g_ScalingSize);
+	m_weapon.texture().render(weaponPosition, weaponSize, weaponRotation);
 }
 
 void Entity::Move(float vectorX, float vectorY) {

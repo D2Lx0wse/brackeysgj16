@@ -10,7 +10,7 @@ const std::vector<int> Weapon::s_WeaponDamages{
 };
 
 const std::vector<std::string_view> Weapon::s_TextureFilepaths{ {
-	"assets/images/weapon_placeholder.png",			// Fist
+	"assets/images/sword.png",			// Fist
 	"", "", "", // Swords
 	"", "", "", // Wands
 	"assets/images/weapon_placeholder.png"	// Placeholder

@@ -39,4 +39,6 @@ private:
 	Font m_font{ GetFontDefault() };
 
 	std::vector<BrackeysText> m_menuOptions{};
+
+	Brackeys2DTexture m_cursorTexture{};
 };

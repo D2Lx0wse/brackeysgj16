@@ -9,7 +9,7 @@
 int main() {
 	InitWindow(Constants::g_ScreenWidth, Constants::g_ScreenHeight, Constants::g_DefaultTitle.data());
 
-	SetTargetFPS(60);
+	//SetTargetFPS(60);
 
 	Scenes scenes{};
 	SceneTypes currentScene{ SceneTypes::MainMenu };
