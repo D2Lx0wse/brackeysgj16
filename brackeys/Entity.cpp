@@ -44,6 +44,9 @@ void Entity::Render() {
 	}
 
 	m_weapon.texture().render(weaponPosition, weaponSize, weaponRotation);
+
+	if (m_isAttacking)
+		m_weapon.attackTexture().render(weaponPosition, Vector2{}, weaponRotation);
 }
 
 void Entity::Move(float vectorX, float vectorY) {
@@ -74,11 +77,32 @@ void Entity::Move(Vector2 vector) {
 	}
 }
 
+void Entity::attack() {
+	if (!m_isAttacking)
+		return;
+
+	static bool shouldGetTime{ true };
+	static double currentTime{};
+
+	if (shouldGetTime)
+	currentTime = GetTime();
+
+	if (GetTime() < currentTime + 0.5) {
+		shouldGetTime = false;
+
+	}
+	else {
+		m_isAttacking = false;
+		shouldGetTime = true;
+	}
+}
+
 void Entity::reloadTextures() {
 	m_textureHoriz.loadFromFile(m_textureHorizPath);
 	m_textureVert.loadFromFile(m_textureVertPath);
 
-	m_weapon.texture().loadFromFile(Weapon::s_TextureFilepaths[m_weapon.type()]);
+	m_weapon.setWeapon(Weapon::Sword_2A);
+	//m_weapon.texture().loadFromFile(Weapon::s_TextureFilepaths[m_weapon.type()]);
 }
 
 void Entity::setRadius(float radius) {

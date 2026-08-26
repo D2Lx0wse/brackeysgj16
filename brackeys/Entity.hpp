@@ -36,6 +36,8 @@ public:
 	void setWeapon(Weapon::Type weaponType) { m_weapon.setWeapon(weaponType); }
 	void setTextures(std::string_view path_horizontal, std::string_view path_vertical);
 
+	void shouldAttack() { m_isAttacking = true; }
+
 	void attack();
 
 private:
@@ -48,6 +50,8 @@ private:
 	float m_radius{};
 	
 	Weapon m_weapon{};
-	
+	bool m_isAttacking{ false };
+
+	bool m_renderAttack{ false };
 };
 

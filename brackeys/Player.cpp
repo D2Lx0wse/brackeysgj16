@@ -28,10 +28,23 @@ void Player::takeInput()
 		m_inputVector += { 1.0f, 0.0f };
 	}
 
-	if (IsKeyDown(KEY_TWO))
+	if (IsKeyDown(KEY_ONE))
+		m_entity.setWeapon(Weapon::Fist_1);
+	else if (IsKeyDown(KEY_TWO))
 		m_entity.setWeapon(Weapon::Sword_2A);
 	else if (IsKeyDown(KEY_THREE))
 		m_entity.setWeapon(Weapon::Wand_2B);
+	else if (IsKeyDown(KEY_FOUR))
+		m_entity.setWeapon(Weapon::Sword_3A);
+	else if (IsKeyDown(KEY_FIVE))
+		m_entity.setWeapon(Weapon::Sword_3B);
+	else if (IsKeyDown(KEY_SIX))
+		m_entity.setWeapon(Weapon::Wand_3C);
+	else if (IsKeyDown(KEY_SEVEN))
+		m_entity.setWeapon(Weapon::Wand_3D);
+	
+	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+		m_willAttack = true;
 }
 
 void Player::think()
@@ -43,6 +56,13 @@ void Player::think()
 		m_inputVector.x * GetFrameTime() * m_speed,
 		m_inputVector.y * GetFrameTime() * m_speed }; //placholder speed scaling
 	m_entity.Move(m_movementVector);
+
+	if (m_willAttack) {
+		m_entity.shouldAttack();
+		m_willAttack = false;
+	}
+
+	m_entity.attack();
 }
 
 void Player::render()

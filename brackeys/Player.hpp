@@ -35,5 +35,7 @@ private:
 
 	Vector2 m_inputVector{};
 	Vector2 m_movementVector{};
+
+	bool m_willAttack{ false };
 };
 

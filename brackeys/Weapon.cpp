@@ -11,20 +11,21 @@ const std::vector<int> Weapon::s_WeaponDamages{
 
 const std::vector<std::string_view> Weapon::s_TextureFilepaths{ {
 	"",			// Fist
-	"assets/images/sword.png", "", "", // Swords
-	"assets/images/magic_staff.png", "", "", // Staffs
+	"assets/images/sword_2a.png", "assets/images/sword_3a.png", "assets/images/sword_3b.png",	// Swords
+	"assets/images/staff_2b.png", "assets/images/staff_3c.png", "assets/images/staff_3d.png",	// Staffs
 	"assets/images/weapon_placeholder.png"	// Placeholder
 } };
 
 const std::vector<std::string_view> Weapon::s_AttackTextureFilepaths{
-	"",											// Fist
-	"assets/images/sword_swing.png", "", "",	// Swords
-	"assets/images/magic_pellet.png", "", "",	// Staffs
+	"assets/images/punch_blue_1.png",											// Fist
+	"assets/images/slash_2a.png", "assets/images/slash_3a.png", "assets/images/slash_3b.png",		// Swords
+	"assets/images/pellet_2b.png", "assets/images/pellet_3c.png", "assets/images/pellet_3d.png",		// Staffs
 	"",											// Placeholder
+	"assets/images/pellet_3b.png", // Magic sword pellet
 };
 
 Weapon::Weapon()
-	: m_type{ Type::Sword_2A }
+	: m_type{}
 	, m_weaponDamage{}
 	, m_currentTexture{}
 {
@@ -41,7 +42,7 @@ void Weapon::setWeapon(Weapon::Type weaponType) {
 void Weapon::load() {
 	assert(s_WeaponDamages.size() - 1 == Type::MaxType && "Error: s_WeaponDamages doesn't have as many damage values as there are weapon types\n");
 	assert(s_TextureFilepaths.size() - 1 == Type::MaxType && "Error: s_TextureFilepaths doesn't have as many file paths as there are weapon types\n");
-	assert(s_AttackTextureFilepaths.size() - 1 == Type::MaxType && "Error: s_AttackTextureFilepaths doesn't have as many file paths as there are weapon types\n");	
+	//assert(s_AttackTextureFilepaths.size() - 1 == Type::MaxType && "Error: s_AttackTextureFilepaths doesn't have as many file paths as there are weapon types\n");	
 
 	m_weaponDamage = s_WeaponDamages[m_type];
 		
