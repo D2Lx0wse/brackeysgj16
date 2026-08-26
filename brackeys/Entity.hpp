@@ -4,6 +4,8 @@
 #include "Circle.hpp"
 #include <string_view>
 
+#include "Weapon.hpp"
+
 class Entity
 {
 private:
@@ -40,7 +42,7 @@ private:
 	std::string_view m_textureVertPath{};
 	float m_radius{};
 	
-
+	Weapon m_weapon{};
 	
 };
 

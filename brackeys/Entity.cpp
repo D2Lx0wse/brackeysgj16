@@ -9,20 +9,22 @@ void Entity::Render() {
 	switch (m_direction) {
 	case up:
 		m_textureVert.render(m_position, Vector2{}, 180.f);
-		return;
+		break;
 	case right:
-		m_textureHoriz.render(m_position, Vector2{ -m_textureHoriz.width(),0 });
-		return;
+		m_textureHoriz.render(m_position, Vector2{ -m_textureHoriz.width(), 0.0f });
+		break;
 	case down:
 		m_textureVert.render(m_position);
-		return;
+		break;
 	case left:
 		m_textureHoriz.render(m_position);
-		return;
+		break;
 	default:
 		std::cerr << "impossible direction!!!";
-		return;
+		break;
 	}
+
+	m_weapon.texture().render(m_position.x + getRadius() * Constants::g_ScalingSize, m_position.y + getRadius() * Constants::g_ScalingSize);
 }
 
 void Entity::Move(float vectorX, float vectorY) {
@@ -54,6 +56,8 @@ void Entity::Move(Vector2 vector) {
 }
 
 void Entity::reloadTextures() {
+	m_weapon.texture().loadFromFile(Weapon::s_TextureFilepaths[m_weapon.type()]);
+
 	m_textureHoriz.loadFromFile(m_textureHorizPath);
 	m_textureVert.loadFromFile(m_textureVertPath);
 }
@@ -68,6 +72,7 @@ Circle Entity::getCircle() {
 
 Entity::Entity(Vector2 position, std::string_view path_horiz, std::string_view path_vert, Direction dir, float radius)
 	:m_position{ position }, m_direction{ dir }, m_textureHorizPath{ path_horiz }, m_textureVertPath{ path_vert }
+	, m_weapon{}
 {
 	m_textureHoriz.loadFromFile(path_horiz);
 	m_textureVert.loadFromFile(path_vert);

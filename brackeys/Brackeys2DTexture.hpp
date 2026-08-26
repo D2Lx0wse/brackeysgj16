@@ -24,13 +24,13 @@ public:
 	//  - Optionally can choose the width/height seen on screen
 	//  - Optionally can choose the degrees of rotation (counter-clockwise).
 	// Returns true/false based on if texture is loaded or not
-	bool render(float x, float y, Vector2 scalingSize = Vector2{ 0.0f, 0.0f }, float rotation = 0.0f);
+	bool render(float x, float y, Vector2 scalingSize = Vector2{ 0.0f, 0.0f }, float rotation = 0.0f) const;
 
 	// Renders the texture to Vector2 coordinates. 
 	//  - Optionally can choose the width/height seen on screen
 	//  - Optionally can choose the degrees of rotation (counter-clockwise).
 	// Returns true/false based on if texture is loaded or not
-	bool render(Vector2 pos, Vector2 scalingSize = Vector2{ 0.0f, 0.0f }, float rotation = 0.0f);
+	bool render(Vector2 pos, Vector2 scalingSize = Vector2{ 0.0f, 0.0f }, float rotation = 0.0f) const;
 
 	// Getters
 	Texture2D texture() const;

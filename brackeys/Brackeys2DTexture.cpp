@@ -24,7 +24,7 @@ void Brackeys2DTexture::exit() {
 	m_texture = Texture2D{};
 }
 
-bool Brackeys2DTexture::render(float x, float y, Vector2 scalingSize, float rotation) {
+bool Brackeys2DTexture::render(float x, float y, Vector2 scalingSize, float rotation) const {
 	if (!isLoaded())
 		return false;
 
@@ -51,7 +51,7 @@ bool Brackeys2DTexture::render(float x, float y, Vector2 scalingSize, float rota
 	return true;
 }
 
-bool Brackeys2DTexture::render(Vector2 pos, Vector2 scalingSize, float rotation) {
+bool Brackeys2DTexture::render(Vector2 pos, Vector2 scalingSize, float rotation) const {
 	return render(pos.x, pos.y, scalingSize, rotation);
 }
 
