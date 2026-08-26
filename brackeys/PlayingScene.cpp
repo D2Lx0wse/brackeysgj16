@@ -35,8 +35,7 @@ void PlayingScene::keepCameraInBounds() {
 PlayingScene::PlayingScene()
 	: m_font{}
 	, m_camera{}
-	, m_background{}
-{
+	, m_background{}{
 }
 
 void PlayingScene::handleInput() {
@@ -80,7 +79,12 @@ void PlayingScene::init() {
 	m_testEntity = Entity{ Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, "assets/images/player_horiz.png", "assets/images/player_vert.png" };
 	m_testEntity.reloadTextures();*/
 
+	// The line below may pose some trouble
 	m_player = Player{ Entity{Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, "assets/images/player_horiz.png", "assets/images/player_vert.png"} };
+	m_player.getEntity().setPosition(Vector2{ Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2 });
+	m_player.getEntity().setTextures("assets/images/player_horiz.png", "assets/images/player_vert.png");
+	//m_player.getEntity().getWeapon().texture().loadFromFile(Weapon::s_TextureFilepaths[m_player.getEntity().getWeapon().type()]);
+
 	m_player.getEntity().setRadius(8.0f);
 	m_player.getEntity().reloadTextures();
 
@@ -90,7 +94,7 @@ void PlayingScene::init() {
 	initUI();
 }
 void PlayingScene::exit() {
-
+	
 }
 
 //rendering stuff

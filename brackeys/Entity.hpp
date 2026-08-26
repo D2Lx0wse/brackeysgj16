@@ -32,6 +32,11 @@ public:
 	void setRadius( float radius);
 	Vector2 getPosition() const { return m_position; }
 	void setPosition(const Vector2& position) { m_position = position; }
+	Weapon& getWeapon() { return m_weapon; }
+	void setWeapon(Weapon::Type weaponType) { m_weapon.setWeapon(weaponType); }
+	void setTextures(std::string_view path_horizontal, std::string_view path_vertical);
+
+	void attack();
 
 private:
 	Vector2 m_position{};

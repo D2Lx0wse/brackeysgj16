@@ -10,8 +10,7 @@ Brackeys2DTexture::~Brackeys2DTexture() {
 }
 
 bool Brackeys2DTexture::loadFromFile(std::string_view filepath) {
-	if (isLoaded())
-		exit();
+	exit();
 
 	m_texture = LoadTexture(filepath.data());
 

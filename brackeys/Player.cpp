@@ -27,6 +27,11 @@ void Player::takeInput()
 	if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
 		m_inputVector += { 1.0f, 0.0f };
 	}
+
+	if (IsKeyDown(KEY_TWO))
+		m_entity.setWeapon(Weapon::Sword_2A);
+	else if (IsKeyDown(KEY_THREE))
+		m_entity.setWeapon(Weapon::Wand_2B);
 }
 
 void Player::think()
