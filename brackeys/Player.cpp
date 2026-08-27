@@ -21,7 +21,7 @@ Player::~Player()
 {
 }
 
-void Player::takeInput()
+void Player::takeInput(const Camera2D& camera)
 {
 	m_inputVector = Vector2{};
 	if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) {
@@ -56,6 +56,12 @@ void Player::takeInput()
 	
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
 		m_willAttack = true;
+
+	Vector2 currpos{ getEntity().getPosition() };
+	Vector2 centerOffset{ getEntity().getRadius(), getEntity().getRadius() };
+	Vector2 mouseWorldPos{ GetScreenToWorld2D(GetMousePosition(), camera) };//unoptimal
+	m_aimVector = Vector2 { Helper::Normalized(mouseWorldPos-(currpos+centerOffset))};
+
 }
 
 void Player::think()
@@ -79,4 +85,5 @@ void Player::think()
 void Player::render()
 {
 	m_entity.Render();
+	DrawRectangleV(getEntity().getPosition() + Vector2 { getEntity().getRadius(), getEntity().getRadius() } + (m_aimVector * Constants::g_ScalingSize*10 ), Vector2{ Constants::g_ScalingSize, Constants::g_ScalingSize }, RED);
 }

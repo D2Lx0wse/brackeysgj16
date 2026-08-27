@@ -13,13 +13,13 @@
 void PlayingScene::keepEntityInBounds(Entity& entity) {
 	if (entity.getPosition().x < 0.0f)
 		entity.setPosition(Vector2{ 0.0f, entity.getPosition().y });
-	else if (entity.getPosition().x + entity.getRadius() * Constants::g_ScalingSize * 2.0f > s_SceneWidth)
-		entity.setPosition(Vector2{ s_SceneWidth - entity.getRadius() * Constants::g_ScalingSize * 2.0f, entity.getPosition().y });
+	else if (entity.getPosition().x + entity.getRadius() * 2.0f > s_SceneWidth)
+		entity.setPosition(Vector2{ s_SceneWidth - entity.getRadius() * 2.0f, entity.getPosition().y });
 
 	if (entity.getPosition().y < 0.0f)
 		entity.setPosition(Vector2{ entity.getPosition().x, 0.0f });
-	else if (entity.getPosition().y + entity.getRadius() * Constants::g_ScalingSize * 2.0f > s_SceneHeight)
-		entity.setPosition(Vector2{ entity.getPosition().x, s_SceneHeight - entity.getRadius() * Constants::g_ScalingSize * 2.0f });
+	else if (entity.getPosition().y + entity.getRadius() * 2.0f > s_SceneHeight)
+		entity.setPosition(Vector2{ entity.getPosition().x, s_SceneHeight - entity.getRadius() * 2.0f });
 }
 
 // Keeps camera in bounds of the level
@@ -53,7 +53,7 @@ PlayingScene::PlayingScene()
 }
 
 void PlayingScene::handleInput() {
-	m_player.takeInput();
+	m_player.takeInput(m_camera);
 
 	for (auto& enemy : m_enemies)
 		enemy.generateInput();
@@ -79,7 +79,7 @@ SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scene) {
 	}
 
 	// Center camera on player character
-	m_camera.target = Vector2{ m_player.getEntity().getPosition().x - Constants::g_ScreenWidth / 2.0f + m_player.getEntity().getRadius() * Constants::g_ScalingSize, m_player.getEntity().getPosition().y - Constants::g_ScreenHeight / 2.0f + m_player.getEntity().getRadius() * Constants::g_ScalingSize };
+	m_camera.target = Vector2{ m_player.getEntity().getPosition().x - Constants::g_ScreenWidth / 2.0f + m_player.getEntity().getRadius(), m_player.getEntity().getPosition().y - Constants::g_ScreenHeight / 2.0f + m_player.getEntity().getRadius() };
 	
 	keepCameraInBounds();
 
