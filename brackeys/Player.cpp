@@ -4,8 +4,21 @@
 
 
 Player::Player(Entity ent)
-	:m_entity{ent}
+	:m_entity{}
 {
+	m_entity.setPosition(ent.getPosition());
+
+	m_entity.setTextures(s_HorizontalTexture, s_VerticalTexture);
+	m_entity.reloadTextures();
+}
+
+Player::Player(Vector2 position)
+	:m_entity{}
+{
+	m_entity.setPosition(position);
+
+	m_entity.setTextures(s_HorizontalTexture, s_VerticalTexture);
+	m_entity.reloadTextures();
 }
 
 Player::~Player()

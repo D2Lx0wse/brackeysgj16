@@ -7,6 +7,7 @@ class Player
 public:
 	Player() = default;
 	Player(Entity ent);
+	Player(Vector2 position);
 	~Player();
 
 	void takeInput();
@@ -37,5 +38,9 @@ private:
 	Vector2 m_movementVector{};
 
 	bool m_willAttack{ false };
+
+	constexpr static std::string_view s_HorizontalTexture{ "assets/images/player_horiz.png" };
+	constexpr static std::string_view s_VerticalTexture{ "assets/images/player_vert.png" };
+
 };
 

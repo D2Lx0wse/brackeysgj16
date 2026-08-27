@@ -129,7 +129,3 @@ Entity::Entity(Vector2 position, std::string_view path_horiz, std::string_view p
 	m_textureVert.loadFromFile(m_textureVertPath);
 	setRadius(radius);
 }
-
-Entity::~Entity()
-{
-}

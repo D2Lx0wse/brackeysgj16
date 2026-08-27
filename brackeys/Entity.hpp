@@ -3,6 +3,7 @@
 #include "Brackeys2DTexture.hpp"
 #include "Circle.hpp"
 #include <string_view>
+#include <string>
 
 #include "Weapon.hpp"
 
@@ -18,8 +19,12 @@ private:
 
 public:
 	Entity(Vector2 position, std::string_view path_horiz, std::string_view path_vert, Direction dir = up, float radius = 5.0f);
+	//Entity(const Entity& entity);
+	Entity(const Entity& entity) = delete;
+	Entity(Entity& entity) = default;
+
 	Entity() = default;
-	~Entity();
+	//~Entity();
 	void Render();
 	void Move(Vector2 vector);
 	void Move(float vectorX, float vectorY);
@@ -45,8 +50,8 @@ private:
 	Brackeys2DTexture m_textureHoriz{};
 	Brackeys2DTexture m_textureVert{};
 	Direction m_direction{};
-	std::string_view m_textureHorizPath{};
-	std::string_view m_textureVertPath{};
+	std::string m_textureHorizPath{};
+	std::string m_textureVertPath{};
 	float m_radius{};
 	
 	Weapon m_weapon{};

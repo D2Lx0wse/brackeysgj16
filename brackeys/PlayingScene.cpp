@@ -7,7 +7,8 @@
 #include <iostream>
 
 // Keeps player character in bounds of the level
-void PlayingScene::keepPlayerInBounds() {
+void PlayingScene::keepEntityInBounds(Entity& entity) {
+	/*
 	if (m_player.getEntity().getPosition().x < 0.0f)
 		m_player.getEntity().setPosition(Vector2{ 0.0f, m_player.getEntity().getPosition().y });
 	else if (m_player.getEntity().getPosition().x + m_player.getEntity().getRadius() * Constants::g_ScalingSize * 2.0f > s_SceneWidth)
@@ -17,6 +18,18 @@ void PlayingScene::keepPlayerInBounds() {
 		m_player.getEntity().setPosition(Vector2{ m_player.getEntity().getPosition().x, 0.0f });
 	else if (m_player.getEntity().getPosition().y + m_player.getEntity().getRadius() * Constants::g_ScalingSize * 2.0f > s_SceneHeight)
 		m_player.getEntity().setPosition(Vector2{ m_player.getEntity().getPosition().x, s_SceneHeight - m_player.getEntity().getRadius() * Constants::g_ScalingSize * 2.0f });
+	*/
+
+	if (entity.getPosition().x < 0.0f)
+		entity.setPosition(Vector2{ 0.0f, entity.getPosition().y });
+	else if (entity.getPosition().x + entity.getRadius() * Constants::g_ScalingSize * 2.0f > s_SceneWidth)
+		entity.setPosition(Vector2{ s_SceneWidth - entity.getRadius() * Constants::g_ScalingSize * 2.0f, entity.getPosition().y });
+
+	if (entity.getPosition().y < 0.0f)
+		entity.setPosition(Vector2{ entity.getPosition().x, 0.0f });
+	else if (entity.getPosition().y + entity.getRadius() * Constants::g_ScalingSize * 2.0f > s_SceneHeight)
+		entity.setPosition(Vector2{ entity.getPosition().x, s_SceneHeight - entity.getRadius() * Constants::g_ScalingSize * 2.0f });
+
 }
 
 // Keeps camera in bounds of the level
@@ -35,17 +48,30 @@ void PlayingScene::keepCameraInBounds() {
 PlayingScene::PlayingScene()
 	: m_font{}
 	, m_camera{}
-	, m_background{}{
+	, m_background{}
+	, m_player{}
+	, m_enemies{ {}, {} }
+{
+	//m_enemies.push_back(static_cast<std::string_view>("test"));
 }
 
 void PlayingScene::handleInput() {
 	m_player.takeInput();
+
+	for (auto& enemy : m_enemies)
+		enemy.generateInput();
 }
 SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scene) {
 	m_player.think();
 	
-	keepPlayerInBounds();
+	for (auto& enemy : m_enemies)
+		enemy.think();
+
+	keepEntityInBounds(m_player.getEntity());
 	
+	for (auto& enemy : m_enemies)
+		keepEntityInBounds(enemy.entity());
+
 	// Center camera on player character
 	m_camera.target = Vector2{ m_player.getEntity().getPosition().x - Constants::g_ScreenWidth / 2.0f + m_player.getEntity().getRadius() * Constants::g_ScalingSize, m_player.getEntity().getPosition().y - Constants::g_ScreenHeight / 2.0f + m_player.getEntity().getRadius() * Constants::g_ScalingSize };
 	
@@ -80,13 +106,20 @@ void PlayingScene::init() {
 	m_testEntity.reloadTextures();*/
 
 	// The line below may pose some trouble
-	m_player = Player{ Entity{Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, "assets/images/player_horiz.png", "assets/images/player_vert.png"} };
+	//m_player = Player{ Entity{Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, "assets/images/player_horiz.png", "assets/images/player_vert.png"}};
+	//m_player = Player{ Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2} };
 	m_player.getEntity().setPosition(Vector2{ Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2 });
 	m_player.getEntity().setTextures("assets/images/player_horiz.png", "assets/images/player_vert.png");
 	//m_player.getEntity().getWeapon().texture().loadFromFile(Weapon::s_TextureFilepaths[m_player.getEntity().getWeapon().type()]);
 
 	m_player.getEntity().setRadius(8.0f);
 	m_player.getEntity().reloadTextures();
+
+
+	std::vector<Vector2> enemyPositions{ Vector2{1.0f, 1.0f}, { 200.0f, 150.0f } };
+	for (unsigned int i{ 0 }; i < m_enemies.size(); ++i) {
+		m_enemies[i].init(enemyPositions[i]);
+	}
 
 	std::cout << "player birth" << std::endl;
 
@@ -113,6 +146,9 @@ void PlayingScene::renderWorld(Camera2D& camera) {
 	//m_test.render(Constants::g_ScreenWidth/2, Constants::g_ScreenHeight / 2, {}, m_testRot);
 
 	m_player.render();
+
+	for (auto& enemy : m_enemies)
+		enemy.render();
 
 	EndMode2D();
 }

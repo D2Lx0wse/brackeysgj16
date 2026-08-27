@@ -5,6 +5,7 @@
 #include "SceneTypes.hpp"
 #include "Entity.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
 
 struct Scenes;
 
@@ -36,7 +37,7 @@ public:
 	void exit();
 
 private:
-	void keepPlayerInBounds();
+	void keepEntityInBounds(Entity& entity);
 
 	void keepCameraInBounds();
 
@@ -48,6 +49,8 @@ private:
 	Entity m_testEntity;*/
 
 	Player m_player;
+
+	std::vector<Enemy> m_enemies{};
 
 	Brackeys2DTexture m_background;
 
