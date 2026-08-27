@@ -20,7 +20,7 @@ const std::vector<std::string_view> Weapon::s_AttackTextureFilepaths{
 	"assets/images/punch_blue_1.png",																// Fist
 	"assets/images/slash_2a.png", "assets/images/slash_3a.png", "assets/images/slash_3b.png",		// Swords
 	"assets/images/pellet_2b.png", "assets/images/pellet_3c.png", "assets/images/pellet_3d.png",	// Staffs
-	"",																								// Placeholder
+	"assets/images/attack_placeholder.png",															// Placeholder
 	"assets/images/pellet_3b.png",																	// Magic sword pellet
 };
 

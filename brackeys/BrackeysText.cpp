@@ -29,26 +29,6 @@ void BrackeysText::render(const Font& font) const {
 }
 
 
-void BrackeysText::setText(std::string_view text, const Font& font) {
-	m_text = text;
-
-	m_textSize = MeasureTextEx(font, BrackeysText::text().data(), fontSize(), spacing());
-}
-
-void BrackeysText::setPosition(const Vector2& textPosition) {
-	m_textPosition = textPosition;
-}
-
-void BrackeysText::setFontSize(float fontSize) {
-	m_fontSize = fontSize;
-	m_spacing = m_fontSize / 10.0f;
-}
-
-void BrackeysText::setColor(const Color& color) {
-	m_color = color;
-}
-
-
 std::string_view BrackeysText::text() const {
 	return m_text;
 }
@@ -71,4 +51,26 @@ float BrackeysText::spacing() const {
 
 Color BrackeysText::color() const {
 	return m_color;
+}
+
+
+void BrackeysText::setText(std::string_view text, const Font& font) {
+	m_text = text;
+
+	m_textSize = MeasureTextEx(font, BrackeysText::text().data(), fontSize(), spacing());
+}
+
+void BrackeysText::setPosition(const Vector2& textPosition) {
+	m_textPosition = textPosition;
+}
+
+void BrackeysText::setFontSize(float fontSize, const Font& font) {
+	m_fontSize = fontSize;
+	m_spacing = m_fontSize / 10.0f;
+
+	m_textSize = MeasureTextEx(font, BrackeysText::text().data(), BrackeysText::fontSize(), spacing());
+}
+
+void BrackeysText::setColor(const Color& color) {
+	m_color = color;
 }

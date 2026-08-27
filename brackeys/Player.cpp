@@ -51,6 +51,8 @@ void Player::takeInput()
 		m_entity.setWeapon(Weapon::Wand_3C);
 	else if (IsKeyDown(KEY_SEVEN))
 		m_entity.setWeapon(Weapon::Wand_3D);
+	else if (IsKeyDown(KEY_ZERO))
+		m_entity.setWeapon(Weapon::MaxType);
 	
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
 		m_willAttack = true;

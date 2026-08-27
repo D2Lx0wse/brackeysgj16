@@ -1,22 +1,40 @@
 #include "Enemy.hpp"
-#include "Helper.hpp"
 
+#include <iostream>
+
+#include "Helper.hpp"
 #include "Vector2Overloads.hpp"
+
+#include "Random.h"
 
 Enemy::Enemy()
 	: m_mode{ Mode::Roaming }
+	, m_clock { -1.0 }
 {
 }
 
 Enemy::Enemy(const Enemy& enemy) {
 	m_mode = enemy.m_mode;
+	m_clock = enemy.m_clock;
 }
 
 void Enemy::generateInput() {
+	Vector2 randomDirection{};
+	static double randomDuration{};
+
 	switch (m_mode) {
 	case Mode::Roaming:
-		// Temporany functionality
-		m_inputVector += { 1.0f, 0.0f };
+		if (m_clock < 0.0) {
+			randomDirection = Vector2{ static_cast<float>(Random::get(-1, 1)), static_cast<float>(Random::get(-1, 1)) };
+			randomDuration = static_cast<double>(Random::get(1, 3));
+			m_clock = GetTime();
+			std::cout << m_clock << '\n';
+		}
+		else if (m_clock >= 0.0 && GetTime() < m_clock + randomDuration) {}
+		else
+			m_clock = -1.0;
+
+		m_inputVector += randomDirection;
 		break;
 	case Mode::Attacking:
 		

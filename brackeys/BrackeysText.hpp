@@ -17,15 +17,6 @@ public:
 	// Render using given font
 	void render(const Font& font) const;
 
-	// Setters
-	// Uses font to gauge the size of the font (also based on font size and spacing)
-	void setText(std::string_view text, const Font& font);
-	void setPosition(const Vector2& textPosition);
-
-	// Spacing is one tenth of the font size
-	void setFontSize(float fontSize);
-	void setColor(const Color& color);
-
 	// Getters
 	std::string_view text() const;
 	const Vector2& textSize() const;
@@ -35,6 +26,15 @@ public:
 	float fontSize() const;
 	float spacing() const;
 	Color color() const;
+
+	// Setters
+	// Uses font to gauge the size of the font (also based on font size and spacing)
+	void setText(std::string_view text, const Font& font);
+	void setPosition(const Vector2& textPosition);
+
+	// Spacing is one tenth of the font size
+	void setFontSize(float fontSize, const Font& font);
+	void setColor(const Color& color);
 
 private:
 	std::string m_text{};

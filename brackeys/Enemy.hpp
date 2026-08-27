@@ -47,4 +47,6 @@ private:
 	// Paths to the enemies sprites
 	constexpr static std::string_view s_HorizontalTexture{ "assets/images/enemy_horiz.png" };
 	constexpr static std::string_view s_VerticalTexture{ "assets/images/enemy_vert.png" };
+
+	double m_clock{ -1.0 };
 };

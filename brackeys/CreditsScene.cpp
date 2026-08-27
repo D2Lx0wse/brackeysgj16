@@ -66,25 +66,27 @@ void CreditsScene::init() {
 
 	m_font = GetFontDefault();
 
-	m_creditsTitle.setFontSize(Constants::g_FontSize64 * 2.0f);
+	m_creditsTitle.setFontSize(Constants::g_FontSize64 * 2.0f, m_font);
 	m_creditsTitle.setColor(DARKBROWN);
 	m_creditsTitle.setText("CREDITS", m_font);
 	
-	m_credits = { { "Game done by", m_font }, { "Hypah and D2_Lx0wse", m_font }, { "With RayLib", m_font } };
+	m_credits = { { "Game done by", m_font }, { "Hypah and D2_Lx0wse", m_font }, { "With RayLib", m_font }, { "Random library from learncpp.com", m_font } };
 
 	m_goBackText.setText("Go back to main menu", m_font);
 
 
 	m_creditsTitle.setPosition(Vector2{ (m_sceneWidth - m_creditsTitle.textSize().x) / 2.0f, (m_sceneHeight / 100.0f) * 5.0f });
 
-	float verticalSpaceBetweenCredits{ Constants::g_FontSize64 / 6.0f };
+	constexpr float creditsFontSize{ Constants::g_FontSize64 / 1.5f };
+	float verticalSpaceBetweenCredits{ creditsFontSize / 6.0f };
 	for (auto& credit : m_credits) {
+		credit.setFontSize(creditsFontSize, m_font);
 		credit.setColor(DARKGRAY);
 		credit.setPosition(
 			Vector2{ (Constants::g_ScreenWidth - credit.textSize().x) / 2.0f, (Constants::g_ScreenHeight - credit.textSize().y) / 2.0f + verticalSpaceBetweenCredits }
 		);
 
-		verticalSpaceBetweenCredits += Constants::g_FontSize64;
+		verticalSpaceBetweenCredits += credit.fontSize();
 	}
 
 	m_goBackText.setPosition(Vector2{ (m_sceneWidth / 100.0f) * 2.0f, m_sceneHeight - m_goBackText.textSize().y});

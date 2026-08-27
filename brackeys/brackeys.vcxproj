@@ -167,6 +167,7 @@
     <ClInclude Include="MainMenuScene.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="PlayingScene.hpp" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="Scenes.hpp" />
     <ClInclude Include="SceneTypes.hpp" />
     <ClInclude Include="Vector2Overloads.hpp" />
