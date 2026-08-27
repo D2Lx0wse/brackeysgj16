@@ -21,20 +21,22 @@ Enemy::Enemy(const Enemy& enemy) {
 void Enemy::generateInput() {
 	Vector2 randomDirection{};
 	static double randomDuration{};
-
+	
 	switch (m_mode) {
 	case Mode::Roaming:
 		if (m_clock < 0.0) {
+			m_inputVector = Vector2{};
 			randomDirection = Vector2{ static_cast<float>(Random::get(-1, 1)), static_cast<float>(Random::get(-1, 1)) };
 			randomDuration = static_cast<double>(Random::get(1, 3));
 			m_clock = GetTime();
 			std::cout << m_clock << '\n';
+			m_inputVector += randomDirection;
 		}
 		else if (m_clock >= 0.0 && GetTime() < m_clock + randomDuration) {}
 		else
 			m_clock = -1.0;
 
-		m_inputVector += randomDirection;
+		
 		break;
 	case Mode::Attacking:
 		
