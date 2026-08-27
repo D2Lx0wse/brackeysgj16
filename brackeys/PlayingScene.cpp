@@ -6,6 +6,7 @@
 //this is so sad
 #include <iostream>
 
+#include <cmath>
 #include <cassert>
 
 // Keeps player character in bounds of the level
@@ -34,6 +35,14 @@ void PlayingScene::keepCameraInBounds() {
 		m_camera.target.y = s_SceneHeight - Constants::g_ScreenHeight;
 }
 
+bool PlayingScene::areTwoEntitiesNear(Vector2 position1, Vector2 position2, const Vector2& distanceBetween) {
+	// Centers the positions
+	position1 += {m_player.getEntity().getRadius() * Constants::g_ScalingSize, m_player.getEntity().getRadius()* Constants::g_ScalingSize };
+	position2 += {m_player.getEntity().getRadius()* Constants::g_ScalingSize, m_player.getEntity().getRadius()* Constants::g_ScalingSize };
+
+	return (std::abs(position1.x - position2.x) < distanceBetween.x && std::abs(position1.y - position2.y) < distanceBetween.y);
+}
+
 PlayingScene::PlayingScene()
 	: m_font{}
 	, m_camera{}
@@ -59,6 +68,15 @@ SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scene) {
 	
 	for (auto& enemy : m_enemies)
 		keepEntityInBounds(enemy.entity());
+	
+	constexpr Vector2 ScreenSize{ static_cast<float>(Constants::g_ScreenWidth) / 2.0f, static_cast<float>(Constants::g_ScreenHeight) / 2.0f };
+	for (auto& enemy : m_enemies) {
+		bool areNear{ areTwoEntitiesNear(m_player.getEntity().getPosition(), enemy.entity().getPosition(), ScreenSize) };
+		if (areNear)
+			enemy.setMode(Enemy::Attacking);
+		else
+			enemy.setMode(Enemy::Roaming);
+	}
 
 	// Center camera on player character
 	m_camera.target = Vector2{ m_player.getEntity().getPosition().x - Constants::g_ScreenWidth / 2.0f + m_player.getEntity().getRadius() * Constants::g_ScalingSize, m_player.getEntity().getPosition().y - Constants::g_ScreenHeight / 2.0f + m_player.getEntity().getRadius() * Constants::g_ScalingSize };
@@ -67,6 +85,7 @@ SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scene) {
 
 	return SceneTypes::Playing;
 }
+
 void PlayingScene::render() {
 	BeginDrawing();
 

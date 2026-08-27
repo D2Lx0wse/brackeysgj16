@@ -28,7 +28,7 @@ public:
 	// Getters / Setters
 	void setPosition(Vector2 position) { m_entity.setPosition(position); }
 	
-	void setMode(Mode mode) { m_mode = mode; }
+	void setMode(Mode mode);
 	Mode mode() const { return m_mode; }
 	Entity& entity() { return m_entity; } // Careful use
 private:
@@ -49,4 +49,5 @@ private:
 	constexpr static std::string_view s_VerticalTexture{ "assets/images/enemy_vert.png" };
 
 	double m_clock{ -1.0 };
+	double m_randomDuration{};
 };

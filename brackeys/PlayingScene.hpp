@@ -41,6 +41,9 @@ private:
 
 	void keepCameraInBounds();
 
+	// Tells if two entities are near, based on distanceBetween
+	bool areTwoEntitiesNear(Vector2 position1, Vector2 position2, const Vector2& distanceBetween);
+
 	Font m_font{};
 	Camera2D m_camera{ };
 	/*
