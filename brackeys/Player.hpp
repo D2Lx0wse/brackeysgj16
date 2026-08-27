@@ -6,13 +6,12 @@ class Player
 {
 public:
 	Player() = default;
-	Player(Entity ent);
-	Player(Vector2 position);
 	~Player();
 
 	void takeInput(const Camera2D& camera);
 	void think();
 	void render();
+	void init();
 
 	//getters
 	int getMaxXP(){ return m_maxXp; }
@@ -41,7 +40,10 @@ private:
 
 	bool m_willAttack{ false };
 
+	Brackeys2DTexture m_arrow{};
+
 	constexpr static std::string_view s_HorizontalTexture{ "assets/images/player_horiz.png" };
 	constexpr static std::string_view s_VerticalTexture{ "assets/images/player_vert.png" };
+	constexpr static std::string_view s_ArrowTexture{ "assets/images/arrow.png" };
 };
 
