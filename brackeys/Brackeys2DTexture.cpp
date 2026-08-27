@@ -23,7 +23,7 @@ void Brackeys2DTexture::exit() {
 	m_texture = Texture2D{};
 }
 
-bool Brackeys2DTexture::render(float x, float y, Vector2 scalingSize, float rotation) const {
+bool Brackeys2DTexture::render(float x, float y, Vector2 scalingSize, float rotation, Color tint) const {
 	if (!isLoaded())
 		return false;
 
@@ -45,13 +45,13 @@ bool Brackeys2DTexture::render(float x, float y, Vector2 scalingSize, float rota
 	if (scalingSize.y != 0.0f)
 		destinationRectangle.height = scalingSize.y;
 
-	DrawTexturePro(m_texture, sourceRectangle, destinationRectangle, Vector2{ width() / 2.0f, height() / 2.0f}, rotation, WHITE);
+	DrawTexturePro(m_texture, sourceRectangle, destinationRectangle, Vector2{ width() / 2.0f, height() / 2.0f}, rotation, tint);
 
 	return true;
 }
 
-bool Brackeys2DTexture::render(Vector2 pos, Vector2 scalingSize, float rotation) const {
-	return render(pos.x, pos.y, scalingSize, rotation);
+bool Brackeys2DTexture::render(Vector2 pos, Vector2 scalingSize, float rotation, Color tint) const {
+	return render(pos.x, pos.y, scalingSize, rotation, tint);
 }
 
 Texture2D Brackeys2DTexture::texture() const {

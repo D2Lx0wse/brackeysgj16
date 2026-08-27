@@ -98,9 +98,9 @@ void Player::think()
 void Player::render()
 {
 	//draw arrow here
-	
-	m_entity.Render();
-	DrawRectangleV(getEntity().getPosition() + Vector2 { getEntity().getRadius(), getEntity().getRadius() } + (m_aimVector * Constants::g_ScalingSize*10 ), Vector2{ Constants::g_ScalingSize, Constants::g_ScalingSize }, RED);
 	std::cout << "Aim angle CC: " << m_aimDegrees << "\n";
-	m_arrow.render(getEntity().getPosition() + Vector2{ getEntity().getRadius(), getEntity().getRadius() }, Vector2{}, m_aimDegrees);
+	m_arrow.render(getEntity().getPosition() + m_aimVector * Constants::g_ScalingSize * 10.0f , Vector2{}, m_aimDegrees, Constants::g_QUARTERALPHA);
+	m_entity.Render();
+	//DrawRectangleV(getEntity().getPosition() + Vector2 { getEntity().getRadius(), getEntity().getRadius() } + (m_aimVector * Constants::g_ScalingSize*10 ), Vector2{ Constants::g_ScalingSize, Constants::g_ScalingSize }, RED);
+	
 }
