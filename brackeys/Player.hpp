@@ -41,6 +41,5 @@ private:
 
 	constexpr static std::string_view s_HorizontalTexture{ "assets/images/player_horiz.png" };
 	constexpr static std::string_view s_VerticalTexture{ "assets/images/player_vert.png" };
-
 };
 

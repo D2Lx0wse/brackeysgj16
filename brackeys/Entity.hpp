@@ -19,8 +19,7 @@ private:
 
 public:
 	Entity(Vector2 position, std::string_view path_horiz, std::string_view path_vert, Direction dir = up, float radius = 5.0f);
-	//Entity(const Entity& entity);
-	Entity(const Entity& entity) = delete;
+	Entity(const Entity& entity) = delete; // Currently, copy ctor/assignment does a shallow copy, which leads to corrupted/duplicated textures
 	Entity(Entity& entity) = default;
 
 	Entity() = default;

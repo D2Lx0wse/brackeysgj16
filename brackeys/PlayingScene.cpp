@@ -6,20 +6,10 @@
 //this is so sad
 #include <iostream>
 
+#include <cassert>
+
 // Keeps player character in bounds of the level
 void PlayingScene::keepEntityInBounds(Entity& entity) {
-	/*
-	if (m_player.getEntity().getPosition().x < 0.0f)
-		m_player.getEntity().setPosition(Vector2{ 0.0f, m_player.getEntity().getPosition().y });
-	else if (m_player.getEntity().getPosition().x + m_player.getEntity().getRadius() * Constants::g_ScalingSize * 2.0f > s_SceneWidth)
-		m_player.getEntity().setPosition(Vector2{ s_SceneWidth - m_player.getEntity().getRadius() * Constants::g_ScalingSize * 2.0f, m_player.getEntity().getPosition().y });
-
-	if (m_player.getEntity().getPosition().y < 0.0f)
-		m_player.getEntity().setPosition(Vector2{ m_player.getEntity().getPosition().x, 0.0f });
-	else if (m_player.getEntity().getPosition().y + m_player.getEntity().getRadius() * Constants::g_ScalingSize * 2.0f > s_SceneHeight)
-		m_player.getEntity().setPosition(Vector2{ m_player.getEntity().getPosition().x, s_SceneHeight - m_player.getEntity().getRadius() * Constants::g_ScalingSize * 2.0f });
-	*/
-
 	if (entity.getPosition().x < 0.0f)
 		entity.setPosition(Vector2{ 0.0f, entity.getPosition().y });
 	else if (entity.getPosition().x + entity.getRadius() * Constants::g_ScalingSize * 2.0f > s_SceneWidth)
@@ -29,7 +19,6 @@ void PlayingScene::keepEntityInBounds(Entity& entity) {
 		entity.setPosition(Vector2{ entity.getPosition().x, 0.0f });
 	else if (entity.getPosition().y + entity.getRadius() * Constants::g_ScalingSize * 2.0f > s_SceneHeight)
 		entity.setPosition(Vector2{ entity.getPosition().x, s_SceneHeight - entity.getRadius() * Constants::g_ScalingSize * 2.0f });
-
 }
 
 // Keeps camera in bounds of the level
@@ -50,9 +39,8 @@ PlayingScene::PlayingScene()
 	, m_camera{}
 	, m_background{}
 	, m_player{}
-	, m_enemies{ {}, {} }
+	, m_enemies{ {}, {} } // Number of enemies is a placeholder
 {
-	//m_enemies.push_back(static_cast<std::string_view>("test"));
 }
 
 void PlayingScene::handleInput() {
@@ -109,14 +97,13 @@ void PlayingScene::init() {
 	//m_player = Player{ Entity{Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, "assets/images/player_horiz.png", "assets/images/player_vert.png"}};
 	//m_player = Player{ Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2} };
 	m_player.getEntity().setPosition(Vector2{ Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2 });
-	m_player.getEntity().setTextures("assets/images/player_horiz.png", "assets/images/player_vert.png");
-	//m_player.getEntity().getWeapon().texture().loadFromFile(Weapon::s_TextureFilepaths[m_player.getEntity().getWeapon().type()]);
-
 	m_player.getEntity().setRadius(8.0f);
+
+	m_player.getEntity().setTextures("assets/images/player_horiz.png", "assets/images/player_vert.png");
 	m_player.getEntity().reloadTextures();
 
-
-	std::vector<Vector2> enemyPositions{ Vector2{1.0f, 1.0f}, { 200.0f, 150.0f } };
+	const std::vector<Vector2> enemyPositions{ Vector2{1.0f, 1.0f}, { 200.0f, 150.0f } };
+	assert(enemyPositions.size() == m_enemies.size() && "Error: There aren't as many enemies as there are positions for them.\n");
 	for (unsigned int i{ 0 }; i < m_enemies.size(); ++i) {
 		m_enemies[i].init(enemyPositions[i]);
 	}

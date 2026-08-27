@@ -10,18 +10,18 @@ const std::vector<int> Weapon::s_WeaponDamages{
 };
 
 const std::vector<std::string_view> Weapon::s_TextureFilepaths{ {
-	"",			// Fist
+	"",																							// Fist
 	"assets/images/sword_2a.png", "assets/images/sword_3a.png", "assets/images/sword_3b.png",	// Swords
 	"assets/images/staff_2b.png", "assets/images/staff_3c.png", "assets/images/staff_3d.png",	// Staffs
-	"assets/images/weapon_placeholder.png"	// Placeholder
+	"assets/images/weapon_placeholder.png"														// Placeholder
 } };
 
 const std::vector<std::string_view> Weapon::s_AttackTextureFilepaths{
-	"assets/images/punch_blue_1.png",											// Fist
+	"assets/images/punch_blue_1.png",																// Fist
 	"assets/images/slash_2a.png", "assets/images/slash_3a.png", "assets/images/slash_3b.png",		// Swords
-	"assets/images/pellet_2b.png", "assets/images/pellet_3c.png", "assets/images/pellet_3d.png",		// Staffs
-	"",											// Placeholder
-	"assets/images/pellet_3b.png", // Magic sword pellet
+	"assets/images/pellet_2b.png", "assets/images/pellet_3c.png", "assets/images/pellet_3d.png",	// Staffs
+	"",																								// Placeholder
+	"assets/images/pellet_3b.png",																	// Magic sword pellet
 };
 
 Weapon::Weapon()

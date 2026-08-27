@@ -13,8 +13,16 @@ Enemy::Enemy(const Enemy& enemy) {
 }
 
 void Enemy::generateInput() {
-	m_inputVector += { 1.0f, 0.0f };
-	m_entity.setWeapon(Weapon::Wand_2B);
+	switch (m_mode) {
+	case Mode::Roaming:
+		// Temporany functionality
+		m_inputVector += { 1.0f, 0.0f };
+		break;
+	case Mode::Attacking:
+		
+		break;
+	default: break;
+	}
 }
 
 void Enemy::think() {
@@ -49,4 +57,6 @@ void Enemy::init(Vector2 position) {
 
 	m_entity.setTextures(s_HorizontalTexture, s_VerticalTexture);
 	m_entity.reloadTextures();
+
+	m_entity.setWeapon(Weapon::Sword_2A);
 }
