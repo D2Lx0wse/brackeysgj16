@@ -7,4 +7,5 @@ namespace Helper {
 	 float Length(const Vector2& vec);
 	 Vector2 Normalized(const Vector2& vec);
 	 Vector2 Lerp(const Vector2& vecA, const Vector2& vecB, float lerp);
+	 float Dot(const Vector2& vecA, const Vector2& vecB);
 }

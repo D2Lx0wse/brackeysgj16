@@ -33,6 +33,7 @@ private:
 	int m_maxHp{ 100 };
 
 	float m_speed{ Constants::g_SpeedSlow };
+	float m_aimDegrees{};
 
 	Vector2 m_inputVector{};
 	Vector2 m_movementVector{};

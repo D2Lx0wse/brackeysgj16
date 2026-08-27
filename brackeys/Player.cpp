@@ -1,6 +1,7 @@
 #include "Player.hpp"
 #include "Vector2Overloads.hpp"
 #include "Helper.hpp"
+#include <cmath>
 
 
 Player::Player(Entity ent)
@@ -59,8 +60,13 @@ void Player::takeInput(const Camera2D& camera)
 
 	Vector2 currpos{ getEntity().getPosition() };
 	Vector2 centerOffset{ getEntity().getRadius(), getEntity().getRadius() };
-	Vector2 mouseWorldPos{ GetScreenToWorld2D(GetMousePosition(), camera) };//unoptimal
+	Vector2 mouseWorldPos{ GetScreenToWorld2D(GetMousePosition(), camera) };//unoptimal?
 	m_aimVector = Vector2 { Helper::Normalized(mouseWorldPos-(currpos+centerOffset))};
+
+	float theta{ std::acos(Helper::Dot(Vector2{ 0.0f, 1.0f }, m_aimVector)) };
+	m_aimDegrees = 360.0f;
+	if (m_aimVector.x>0) { m_aimDegrees -= theta; }
+	else { m_aimDegrees = theta; }
 
 }
 

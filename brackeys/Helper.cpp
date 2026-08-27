@@ -25,3 +25,7 @@ Vector2 Helper::Lerp(const Vector2& vecA, const Vector2& vecB, float lerp) {
 	Vector2 scaledDiff{ diff.x * lerp, diff.y * lerp };
 	return Vector2{ vecB.x + scaledDiff.x, vecB.y + scaledDiff.y };
 }
+
+float Helper::Dot(const Vector2& vecA, const Vector2& vecB) {
+	return vecA.x * vecB.x + vecA.y * vecB.y;
+}
