@@ -2,24 +2,27 @@
 #include "Vector2Overloads.hpp"
 #include "Helper.hpp"
 #include <cmath>
+#include <iostream>
+#include <numbers>
 
 
-Player::Player(Entity ent)
-{
-	Player(ent.getPosition());
-}
-
-Player::Player(Vector2 position)
-	:m_entity{}
-{
-	m_entity.setPosition(position);
-
-	m_entity.setTextures(s_HorizontalTexture, s_VerticalTexture);
-	m_entity.reloadTextures();
-}
 
 Player::~Player()
 {
+}
+
+void Player::init() {
+
+	// The line below may pose some trouble
+	//m_player = Player{ Entity{Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, "assets/images/player_horiz.png", "assets/images/player_vert.png"}};
+	//m_player = Player{ Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2} };
+	getEntity().setPosition(Vector2{ Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2 });
+	getEntity().setRadius(8.0f);
+
+	getEntity().setTextures("assets/images/player_horiz.png", "assets/images/player_vert.png");
+	getEntity().reloadTextures();
+	std::cout << "player birth" << std::endl;
+	m_arrow.loadFromFile(s_ArrowTexture);
 }
 
 void Player::takeInput(const Camera2D& camera)
@@ -64,10 +67,14 @@ void Player::takeInput(const Camera2D& camera)
 	m_aimVector = Vector2 { Helper::Normalized(mouseWorldPos-(currpos+centerOffset))};
 
 	float theta{ std::acos(Helper::Dot(Vector2{ 0.0f, 1.0f }, m_aimVector)) };
-	m_aimDegrees = 360.0f;
-	if (m_aimVector.x>0) { m_aimDegrees -= theta; }
-	else { m_aimDegrees = theta; }
+	m_aimDegrees = std::numbers::pi_v<float>;
+	//right of player
+	if (m_aimVector.x>0) { m_aimDegrees += theta; }
+	//left of player
+	else { m_aimDegrees = std::numbers::pi_v<float> - theta; }
 
+	m_aimDegrees = m_aimDegrees / std::numbers::pi_v<float> * 180;
+	m_aimDegrees *= -1; //ideally remove this if time allows
 }
 
 void Player::think()
@@ -90,6 +97,10 @@ void Player::think()
 
 void Player::render()
 {
+	//draw arrow here
+	
 	m_entity.Render();
 	DrawRectangleV(getEntity().getPosition() + Vector2 { getEntity().getRadius(), getEntity().getRadius() } + (m_aimVector * Constants::g_ScalingSize*10 ), Vector2{ Constants::g_ScalingSize, Constants::g_ScalingSize }, RED);
+	std::cout << "Aim angle CC: " << m_aimDegrees << "\n";
+	m_arrow.render(getEntity().getPosition() + Vector2{ getEntity().getRadius(), getEntity().getRadius() }, Vector2{}, m_aimDegrees);
 }

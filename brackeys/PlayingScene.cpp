@@ -112,22 +112,13 @@ void PlayingScene::init() {
 	m_testEntity = Entity{ Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, "assets/images/player_horiz.png", "assets/images/player_vert.png" };
 	m_testEntity.reloadTextures();*/
 
-	// The line below may pose some trouble
-	//m_player = Player{ Entity{Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, "assets/images/player_horiz.png", "assets/images/player_vert.png"}};
-	//m_player = Player{ Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2} };
-	m_player.getEntity().setPosition(Vector2{ Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2 });
-	m_player.getEntity().setRadius(8.0f);
-
-	m_player.getEntity().setTextures("assets/images/player_horiz.png", "assets/images/player_vert.png");
-	m_player.getEntity().reloadTextures();
+	m_player.init();
 
 	const std::vector<Vector2> enemyPositions{ Vector2{1.0f, 1.0f}, { 200.0f, 150.0f } };
 	assert(enemyPositions.size() == m_enemies.size() && "Error: There aren't as many enemies as there are positions for them.\n");
 	for (unsigned int i{ 0 }; i < m_enemies.size(); ++i) {
 		m_enemies[i].init(enemyPositions[i]);
 	}
-
-	std::cout << "player birth" << std::endl;
 
 	m_background.loadFromFile("assets/images/grass.png");
 	initUI();
