@@ -19,7 +19,8 @@ public:
 	Enemy(const Enemy& enemy);
 
 	// Enemy input will be generated using a PRNG library, think and render will be very similar to Player
-	void generateInput();
+	// generateInput takes in the player position to determine how the enemy should move when in attack mode
+	void generateInput(const Vector2& playerPosition);
 	void think();
 	void render();
 

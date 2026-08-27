@@ -20,7 +20,7 @@ Enemy::Enemy(const Enemy& enemy) {
 	m_randomDuration = enemy.m_randomDuration;
 }
 
-void Enemy::generateInput() {
+void Enemy::generateInput(const Vector2& playerPosition) {
 	Vector2 randomDirection{};
 	
 	switch (m_mode) {
@@ -41,7 +41,22 @@ void Enemy::generateInput() {
 		
 		break;
 	case Mode::Attacking:
-		
+		// The enemy follows the player
+		if (m_entity.getPosition().x - playerPosition.x < 0.0f + m_entity.getRadius())
+			m_inputVector.x = 1.0f;
+		else if (m_entity.getPosition().x - playerPosition.x >= 0.0f - m_entity.getRadius())
+			m_inputVector.x = -1.0f;
+
+		if (m_entity.getPosition().y - playerPosition.y < 0.0f + m_entity.getRadius())
+			m_inputVector.y = 1.0f;
+		else if (m_entity.getPosition().y - playerPosition.y >= 0.0f - m_entity.getRadius())
+			m_inputVector.y = -1.0f;
+
+		// If the enemy and the player touch, the enemy stops moving
+		if (CheckCollisionRecs(Rectangle{ m_entity.getPosition().x, m_entity.getPosition().y, m_entity.getRadius() * 2.0f, m_entity.getRadius() * 2.0f },
+			Rectangle{ playerPosition.x, playerPosition.y, m_entity.getRadius() * 2.0f, m_entity.getRadius() * 2.0f }))
+			m_inputVector = Vector2{ 0.0f, 0.0f };
+
 		break;
 	default: break;
 	}

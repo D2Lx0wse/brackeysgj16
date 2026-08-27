@@ -56,7 +56,7 @@ void PlayingScene::handleInput() {
 	m_player.takeInput(m_camera);
 
 	for (auto& enemy : m_enemies)
-		enemy.generateInput();
+		enemy.generateInput(m_player.getEntity().getPosition());
 }
 SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scene) {
 	m_player.think();
