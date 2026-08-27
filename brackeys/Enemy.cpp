@@ -73,6 +73,8 @@ void Enemy::generateInput(const Vector2& playerPosition) {
 }
 
 void Enemy::think() {
+	m_speed = Helper::getSpeedBasedOnWeaponLevel(m_entity.getWeapon().type());
+
 	if (Helper::Length(m_inputVector) > 1) {
 		m_inputVector = Helper::Normalized(m_inputVector);
 	}

@@ -81,6 +81,8 @@ void Player::takeInput(const Camera2D& camera)
 
 void Player::think()
 {
+	m_speed = Helper::getSpeedBasedOnWeaponLevel(m_entity.getWeapon().type());
+
 	if (Helper::Length(m_inputVector) > 1) {
 		m_inputVector = Helper::Normalized(m_inputVector);
 	}

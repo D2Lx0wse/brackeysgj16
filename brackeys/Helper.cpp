@@ -1,4 +1,5 @@
 #include "Helper.hpp"
+#include "Constants.hpp"
 #include <cmath>
 
 bool Helper::isColorTheSameBetween(const Color& c1, const Color& c2) {
@@ -28,4 +29,25 @@ Vector2 Helper::Lerp(const Vector2& vecA, const Vector2& vecB, float lerp) {
 
 float Helper::Dot(const Vector2& vecA, const Vector2& vecB) {
 	return vecA.x * vecB.x + vecA.y * vecB.y;
+}
+
+float Helper::getSpeedBasedOnWeaponLevel(Weapon::Type weaponType) {
+	float speed{};
+
+	switch (weaponType) {
+	case Weapon::Fist_1:
+	case Weapon::MaxType:
+		speed = Constants::g_SpeedSlow; break;
+	case Weapon::Sword_2A:
+	case Weapon::Wand_2B:
+		speed = Constants::g_SpeedMedium; break;
+	case Weapon::Sword_3A:
+	case Weapon::Sword_3B:
+	case Weapon::Wand_3C:
+	case Weapon::Wand_3D:
+		speed = Constants::g_SpeedFast; break;
+	default: break;
+	}
+
+	return speed;
 }
