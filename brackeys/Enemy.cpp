@@ -60,6 +60,16 @@ void Enemy::generateInput(const Vector2& playerPosition) {
 		break;
 	default: break;
 	}
+	/*
+	switch(rand 1-4){
+	1
+	vector{0 1}
+	degrees = 0
+	2...
+
+	}
+
+	*/
 }
 
 void Enemy::think() {

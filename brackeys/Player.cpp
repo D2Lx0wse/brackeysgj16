@@ -75,6 +75,8 @@ void Player::takeInput(const Camera2D& camera)
 
 	m_aimDegrees = m_aimDegrees / std::numbers::pi_v<float> * 180;
 	m_aimDegrees *= -1; //ideally remove this if time allows
+
+	getEntity().setAimData(m_aimVector, m_aimDegrees);
 }
 
 void Player::think()

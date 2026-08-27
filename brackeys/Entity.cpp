@@ -46,7 +46,18 @@ void Entity::Render() {
 	m_weapon.texture().render(weaponPosition, weaponSize, weaponRotation);
 
 	if (m_isAttacking)
-		m_weapon.attackTexture().render(weaponPosition, Vector2{}, weaponRotation);
+		m_weapon.attackTexture().render(
+			getPosition()  +
+			(m_aimingVector *getRadius() * 3.0f) - //aiming vector first thing here
+			Vector2{ (
+				m_weapon.attackTexture().width() 
+				- (getRadius() * 2.0f)
+				)/ 2.0f
+			,	(m_weapon.attackTexture().height()
+				- (getRadius() * 2.0f)
+				) / 2.0f
+			}
+		, Vector2{}, m_aimingDegrees);//aiming degrees here last thing
 }
 
 void Entity::Move(float vectorX, float vectorY) {

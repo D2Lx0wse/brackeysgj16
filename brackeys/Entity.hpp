@@ -40,12 +40,16 @@ public:
 	void setWeapon(Weapon::Type weaponType) { m_weapon.setWeapon(weaponType); }
 	void setTextures(std::string_view path_horizontal, std::string_view path_vertical);
 
+	void setAimData(Vector2 vector, float degrees) { m_aimingVector = vector; m_aimingDegrees = degrees; }
+
 	void shouldAttack() { m_isAttacking = true; }
 
 	void attack();
 
 private:
 	Vector2 m_position{};
+	Vector2 m_aimingVector{};
+	float m_aimingDegrees{};
 	Brackeys2DTexture m_textureHoriz{};
 	Brackeys2DTexture m_textureVert{};
 	Direction m_direction{};
