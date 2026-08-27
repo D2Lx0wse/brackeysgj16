@@ -144,6 +144,7 @@
     <ClCompile Include="Brackeys2DTexture.cpp" />
     <ClCompile Include="BrackeysText.cpp" />
     <ClCompile Include="CreditsScene.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="Helper.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Circle.hpp" />
     <ClInclude Include="Constants.hpp" />
     <ClInclude Include="CreditsScene.hpp" />
+    <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Helper.hpp" />
     <ClInclude Include="MainMenuScene.hpp" />

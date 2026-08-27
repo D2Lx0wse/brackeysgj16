@@ -44,6 +44,9 @@ void Entity::Render() {
 	}
 
 	m_weapon.texture().render(weaponPosition, weaponSize, weaponRotation);
+
+	if (m_isAttacking)
+		m_weapon.attackTexture().render(weaponPosition, Vector2{}, weaponRotation);
 }
 
 void Entity::Move(float vectorX, float vectorY) {
@@ -74,11 +77,32 @@ void Entity::Move(Vector2 vector) {
 	}
 }
 
-void Entity::reloadTextures() {
-	m_weapon.texture().loadFromFile(Weapon::s_TextureFilepaths[m_weapon.type()]);
+void Entity::attack() {
+	if (!m_isAttacking)
+		return;
 
+	static bool shouldGetTime{ true };
+	static double currentTime{};
+
+	if (shouldGetTime)
+	currentTime = GetTime();
+
+	if (GetTime() < currentTime + 0.5) {
+		shouldGetTime = false;
+
+	}
+	else {
+		m_isAttacking = false;
+		shouldGetTime = true;
+	}
+}
+
+void Entity::reloadTextures() {
 	m_textureHoriz.loadFromFile(m_textureHorizPath);
 	m_textureVert.loadFromFile(m_textureVertPath);
+
+	m_weapon.setWeapon(Weapon::Sword_2A);
+	//m_weapon.texture().loadFromFile(Weapon::s_TextureFilepaths[m_weapon.type()]);
 }
 
 void Entity::setRadius(float radius) {
@@ -89,15 +113,19 @@ Circle Entity::getCircle() {
 	return Circle(getPosition(), getRadius());
 }
 
+void Entity::setTextures(std::string_view path_horizontal, std::string_view path_vertical) {
+	m_textureHorizPath = path_horizontal;
+	m_textureHoriz.loadFromFile(m_textureHorizPath);
+	
+	m_textureVertPath = path_vertical;
+	m_textureVert.loadFromFile(m_textureVertPath);
+}
+
 Entity::Entity(Vector2 position, std::string_view path_horiz, std::string_view path_vert, Direction dir, float radius)
 	:m_position{ position }, m_direction{ dir }, m_textureHorizPath{ path_horiz }, m_textureVertPath{ path_vert }
 	, m_weapon{}
 {
-	m_textureHoriz.loadFromFile(path_horiz);
-	m_textureVert.loadFromFile(path_vert);
+	m_textureHoriz.loadFromFile(m_textureHorizPath);
+	m_textureVert.loadFromFile(m_textureVertPath);
 	setRadius(radius);
-}
-
-Entity::~Entity()
-{
 }
