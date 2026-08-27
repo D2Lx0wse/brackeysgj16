@@ -10,7 +10,7 @@ public:
 	Player(Vector2 position);
 	~Player();
 
-	void takeInput();
+	void takeInput(const Camera2D& camera);
 	void think();
 	void render();
 
@@ -36,6 +36,7 @@ private:
 
 	Vector2 m_inputVector{};
 	Vector2 m_movementVector{};
+	Vector2 m_aimVector{};
 
 	bool m_willAttack{ false };
 

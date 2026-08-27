@@ -16,26 +16,26 @@ void Entity::Render() {
 		m_textureVert.render(m_position, Vector2{}, 180.f);
 
 		weaponRotation = 0.0f;
-		weaponPosition += Vector2{ getRadius() * Constants::g_ScalingSize * -1.0f, getRadius() * Constants::g_ScalingSize * -1.0f };
+		weaponPosition += Vector2{ getRadius() * -1.0f, getRadius() * -1.0f };
 		weaponSize.x *= -1.0f;
 		break;
 	case right:
 		m_textureHoriz.render(m_position, Vector2{ -m_textureHoriz.width(), 0.0f });
 
 		weaponRotation = 90.0f;
-		weaponPosition += Vector2{ getRadius() * Constants::g_ScalingSize, getRadius() * Constants::g_ScalingSize };
+		weaponPosition += Vector2{ getRadius(), getRadius() };
 		break;
 	case down:
 		m_textureVert.render(m_position);
 		
 		weaponRotation = 180.0f;
-		weaponPosition += Vector2{ getRadius() * Constants::g_ScalingSize, getRadius() * Constants::g_ScalingSize };
+		weaponPosition += Vector2{ getRadius(), getRadius() };
 		break;
 	case left:
 		m_textureHoriz.render(m_position);
 
 		weaponRotation = -90.0f;
-		weaponPosition += Vector2{ getRadius() * Constants::g_ScalingSize * -1.0f, getRadius() * Constants::g_ScalingSize };
+		weaponPosition += Vector2{ getRadius() * -1.0f, getRadius() };
 		weaponSize.x *= -1.0f;
 		break;
 	default:
@@ -106,7 +106,7 @@ void Entity::reloadTextures() {
 }
 
 void Entity::setRadius(float radius) {
-	m_radius = std::abs(radius);
+	m_radius = std::abs(radius) * Constants::g_ScalingSize;
 }
 
 Circle Entity::getCircle() {
