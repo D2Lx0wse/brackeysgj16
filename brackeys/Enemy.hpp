@@ -9,7 +9,7 @@ public:
 	// Used for deciding how the AI should behave. Roaming is for when the enemy is searching another opponent. Attacking is for when an enemy is attacking a foe
 	enum Mode {
 		Roaming,
-		Attacking, 
+		Attacking,
 		MaxModes,
 	};
 
@@ -28,15 +28,31 @@ public:
 
 	// Getters / Setters
 	void setPosition(Vector2 position) { m_entity.setPosition(position); }
-	
+
 	void setMode(Mode mode);
 	Mode mode() const { return m_mode; }
+	
 	Entity& entity() { return m_entity; } // Careful use
+
+	int getHP() { return m_hp; }
+	int getMaxHP() { return m_maxHp; }
+
+	void heal() { m_hp = m_maxHp; }
+	void kill() { m_hp = 0; }
+
 private:
+	void changeWeaponAndStatistics();
+
 	// The mode dictates how the AI will behave
 	Mode m_mode{};
 
 	Entity m_entity{};
+
+	Weapon::Type m_currentWeaponType{};
+
+	// Hp and speed technically don't need to have initializaiton values since they are assigned values properly in Enemy::init()
+	int m_hp{ 0 };
+	int m_maxHp{ 100 };
 
 	// Enemy speed
 	float m_speed{ Constants::g_SpeedSlow };

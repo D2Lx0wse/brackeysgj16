@@ -51,3 +51,45 @@ float Helper::getSpeedBasedOnWeaponLevel(Weapon::Type weaponType) {
 
 	return speed;
 }
+
+int Helper::getMaxHPBasedOnWeaponLevel(Weapon::Type weaponType) {
+	int hp{};
+
+	switch (weaponType) {
+	case Weapon::Fist_1:
+	case Weapon::MaxType:
+		hp = Constants::g_HpLow; break;
+	case Weapon::Sword_2A:
+	case Weapon::Wand_2B:
+		hp = Constants::g_HpMedium; break;
+	case Weapon::Sword_3A:
+	case Weapon::Sword_3B:
+	case Weapon::Wand_3C:
+	case Weapon::Wand_3D:
+		hp = Constants::g_HpHigh; break;
+	default: break;
+	}
+
+	return hp;
+}
+
+int Helper::getMaxXPBasedOnWeaponLevel(Weapon::Type weaponType) {
+	int xp{};
+
+	switch (weaponType) {
+	case Weapon::Fist_1:
+	case Weapon::MaxType:
+		xp = Constants::g_XpLow; break;
+	case Weapon::Sword_2A:
+	case Weapon::Wand_2B:
+		xp = Constants::g_XpMedium; break;
+	case Weapon::Sword_3A:
+	case Weapon::Sword_3B:
+	case Weapon::Wand_3C:
+	case Weapon::Wand_3D:
+		xp = Constants::g_XpHigh; break;
+	default: break;
+	}
+
+	return xp;
+}

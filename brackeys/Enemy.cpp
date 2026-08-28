@@ -73,7 +73,7 @@ void Enemy::generateInput(const Vector2& playerPosition) {
 }
 
 void Enemy::think() {
-	m_speed = Helper::getSpeedBasedOnWeaponLevel(m_entity.getWeapon().type());
+	changeWeaponAndStatistics();
 
 	if (Helper::Length(m_inputVector) > 1) {
 		m_inputVector = Helper::Normalized(m_inputVector);
@@ -108,6 +108,7 @@ void Enemy::init(Vector2 position) {
 	m_entity.reloadTextures();
 
 	m_entity.setWeapon(Weapon::Sword_2A);
+	changeWeaponAndStatistics();
 
 	if (Random::get(0, 1)) m_entity.setTint(Constants::g_FAKEFRIEND);
 	else m_entity.setTint(RED);
@@ -121,5 +122,17 @@ void Enemy::setMode(Mode mode) {
 		m_clock = -1.0f;
 		m_inputVector = Vector2{ 0.0f, 0.0f };
 		m_randomDuration = double{};
+	}
+}
+
+// If weapon type changed, set m_currentWeaponType and statistics accordingly
+void Enemy::changeWeaponAndStatistics() {
+	if (m_currentWeaponType != entity().getWeapon().type()) {
+		m_currentWeaponType = entity().getWeapon().type();
+
+		m_maxHp = Helper::getMaxHPBasedOnWeaponLevel(m_currentWeaponType);
+		heal();
+
+		m_speed = Helper::getSpeedBasedOnWeaponLevel(m_currentWeaponType);
 	}
 }

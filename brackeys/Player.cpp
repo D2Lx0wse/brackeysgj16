@@ -23,6 +23,9 @@ void Player::init() {
 	getEntity().reloadTextures();
 	getEntity().setTint(WHITE);
 	std::cout << "player birth" << std::endl;
+
+	changeWeaponAndStatistics();
+
 	m_arrow.loadFromFile(s_ArrowTexture);
 }
 
@@ -82,7 +85,7 @@ void Player::takeInput(const Camera2D& camera)
 
 void Player::think()
 {
-	m_speed = Helper::getSpeedBasedOnWeaponLevel(m_entity.getWeapon().type());
+	changeWeaponAndStatistics();
 
 	if (Helper::Length(m_inputVector) > 1) {
 		m_inputVector = Helper::Normalized(m_inputVector);
@@ -108,4 +111,19 @@ void Player::render()
 	m_entity.Render();
 	//DrawRectangleV(getEntity().getPosition() + Vector2 { getEntity().getRadius(), getEntity().getRadius() } + (m_aimVector * Constants::g_ScalingSize*10 ), Vector2{ Constants::g_ScalingSize, Constants::g_ScalingSize }, RED);
 	
+}
+
+// If weapon type changed, set m_currentWeaponType and statistics accordingly
+void Player::changeWeaponAndStatistics() {
+	if (m_currentWeaponType != getEntity().getWeapon().type()) {
+		m_currentWeaponType = getEntity().getWeapon().type();
+
+		m_maxHp = Helper::getMaxHPBasedOnWeaponLevel(m_currentWeaponType);
+		heal();
+
+		m_maxXp = Helper::getMaxXPBasedOnWeaponLevel(m_currentWeaponType);
+		m_xp = 0;
+
+		m_speed = Helper::getSpeedBasedOnWeaponLevel(m_currentWeaponType);
+	}
 }

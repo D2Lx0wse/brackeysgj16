@@ -19,16 +19,24 @@ public:
 	int getMaxHP() { return m_maxHp; }
 	int getHP() { return m_hp; }
 
+	void heal() { m_hp = m_maxHp; }
+	void kill() { m_hp = 0; }
+
 	//returns REFERENCE to player entity
 	Entity& getEntity() { return m_entity; }
 
 private:
+	void changeWeaponAndStatistics();
+
 	Entity m_entity;
 
-	int m_xp{20};
-	int m_maxXp{100};
-	int m_level{};
-	int m_hp{75};
+	Weapon::Type m_currentWeaponType{};
+
+	// Default values for xp, hp and speed technically not needed since they get the correct values in Player::init()
+	int m_xp{ 0 };
+	int m_maxXp{ 100 };
+	
+	int m_hp{ 100 };
 	int m_maxHp{ 100 };
 
 	float m_speed{ Constants::g_SpeedSlow };

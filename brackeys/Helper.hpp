@@ -10,4 +10,6 @@ namespace Helper {
 	 Vector2 Lerp(const Vector2& vecA, const Vector2& vecB, float lerp);
 	 float Dot(const Vector2& vecA, const Vector2& vecB);
 	 float getSpeedBasedOnWeaponLevel(Weapon::Type weaponType);
+	 int getMaxHPBasedOnWeaponLevel(Weapon::Type weaponType);
+	 int getMaxXPBasedOnWeaponLevel(Weapon::Type weaponType);
 }

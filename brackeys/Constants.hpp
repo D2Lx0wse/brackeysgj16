@@ -14,6 +14,14 @@ namespace Constants {
 	constexpr float g_SpeedMedium{ g_SpeedSlow * 1.5f };
 	constexpr float g_SpeedFast{ g_SpeedMedium * 1.5f };
 
+	constexpr int g_HpLow{ 100 };
+	constexpr int g_HpMedium{ g_HpLow * 2 };
+	constexpr int g_HpHigh{ g_HpMedium * 2 };
+
+	constexpr int g_XpLow{ 100 };
+	constexpr int g_XpMedium{ g_XpLow * 3 };
+	constexpr int g_XpHigh{ g_XpMedium * 3 };
+
 	constexpr Color g_DARKRED{ 100, 0, 0 ,255 };
 	constexpr Color g_QUARTERALPHA{ 255, 255, 255, 64 };
 	constexpr Color g_FAKEFRIEND{ 99, 155, 255, 255 };
