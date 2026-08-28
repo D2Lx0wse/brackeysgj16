@@ -47,6 +47,8 @@ public:
 	bool getShouldShoot() const { return m_shouldShoot; }
 	void setShouldShootFalse() { m_shouldShoot = false; }
 
+	bool isWeaponAtMaxLevel() const;
+
 	void attack();
 	void shoot();
 

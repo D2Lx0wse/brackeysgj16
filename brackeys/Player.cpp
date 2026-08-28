@@ -138,6 +138,13 @@ void Player::render()
 	
 }
 
+void Player::increaseXP(int xp) {
+	m_xp += xp;
+
+	if (m_xp > m_maxXp)
+		m_xp = m_maxXp;
+}
+
 // If weapon type changed, set m_currentWeaponType and statistics accordingly
 void Player::changeWeaponAndStatistics() {
 	if (m_currentWeaponType != getEntity().getWeapon().type()) {

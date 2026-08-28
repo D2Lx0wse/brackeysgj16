@@ -146,3 +146,10 @@ Entity::Entity(Vector2 position, std::string_view path_horiz, std::string_view p
 	m_textureVert.loadFromFile(m_textureVertPath);
 	setRadius(radius);
 }
+
+bool Entity::isWeaponAtMaxLevel() const {
+	return (m_weapon.type() == Weapon::Sword_3A ||
+			m_weapon.type() == Weapon::Sword_3B ||
+			m_weapon.type() == Weapon::Wand_3C ||
+			m_weapon.type() == Weapon::Wand_3D);
+}

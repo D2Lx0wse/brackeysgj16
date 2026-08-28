@@ -84,6 +84,10 @@ private:
 
 	bool m_isInUpgradeScreen{ false };
 
+	// Used to determine which upgrade is chosen in handleInput(). Then logic() will check both of them to see which weapon upgrade to give the player
+	bool m_choseLeftUpgradeSlot{ false };
+	bool m_choseRightUpgradeSlot{ false };
+
 	// Upgrade box
 	BrackeysText m_upgradeBoxTitle{ "UPGRADE", m_font };
 

@@ -17,9 +17,11 @@ public:
 	//getters
 	int getMaxXP() const { return m_maxXp; }
 	int getXP() const { return m_xp; }
+	void increaseXP(int xp); // Increases XP. If it surpasses XP cap, set it back to the max
+	void setXPToZero() { m_xp = 0; }
+
 	int getMaxHP() const { return m_maxHp; }
 	int getHP() const { return m_hp; }
-
 	void heal() { m_hp = m_maxHp; }
 	void kill() { m_hp = 0; }
 

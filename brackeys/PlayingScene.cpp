@@ -57,6 +57,8 @@ PlayingScene::PlayingScene()
 	, m_background{}
 	, m_player{}
 	, m_enemies{ {}, {} } // Number of enemies is a placeholder
+	, m_choseLeftUpgradeSlot{ false }
+	, m_choseRightUpgradeSlot{ false }
 {
 }
 
@@ -72,12 +74,28 @@ void PlayingScene::handleInput() {
 			m_nextScene = SceneTypes::MainMenu;
 	}
 
+	
+	if (m_isInUpgradeScreen) {
+		const Vector2 mousePosition{ GetMousePosition() };
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) &&
+			CheckCollisionRecs(	Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f },
+								s_UpgradeSlotOutlines[0]
+			))
+			m_choseLeftUpgradeSlot = true;
+		else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) &&
+			CheckCollisionRecs(Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f },
+				s_UpgradeSlotOutlines[1]
+			))
+			m_choseRightUpgradeSlot = true;
+
+	}
+
 #ifdef _DEBUG
 	if (IsKeyPressed(KEY_L))
 		m_isInDeathScreen = !m_isInDeathScreen;
 
 	if (IsKeyPressed(KEY_U))
-		m_isInUpgradeScreen = !m_isInUpgradeScreen;
+		m_player.increaseXP(50);
 #endif
 }
 SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scenes) {
@@ -87,6 +105,56 @@ SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scenes) {
 		exit();
 
 		return m_nextScene;
+	}
+
+	// If player isn't at the max level and has reached max xp, ready the upgrade screen
+	if (m_player.getXP() >= m_player.getMaxXP() && !m_player.getEntity().isWeaponAtMaxLevel()) {
+		m_isInUpgradeScreen = true;
+
+		// Based on weapon chose, change the weapon to that and reset the upgrade values
+		if (m_choseLeftUpgradeSlot) {
+			m_isInUpgradeScreen = false;
+			m_choseLeftUpgradeSlot = false;
+
+			switch (m_player.getEntity().getWeapon().type()) {
+			case Weapon::Fist_1:
+				m_player.getEntity().setWeapon(Weapon::Sword_2A);
+				break;
+			case Weapon::Sword_2A:
+				m_player.getEntity().setWeapon(Weapon::Sword_3A);
+				break;
+			case Weapon::Wand_2B:
+				m_player.getEntity().setWeapon(Weapon::Wand_3C);
+				break;
+			default: break;
+			}
+			
+			// Kept as comment in case it is needed
+			/*m_player.think(); */
+		}
+		else if (m_choseRightUpgradeSlot) {
+			m_isInUpgradeScreen = false;
+			m_choseRightUpgradeSlot = false;
+
+			switch (m_player.getEntity().getWeapon().type()) {
+			case Weapon::Fist_1:
+				m_player.getEntity().setWeapon(Weapon::Wand_2B);
+				break;
+			case Weapon::Sword_2A:
+				m_player.getEntity().setWeapon(Weapon::Sword_3B);
+				break;
+			case Weapon::Wand_2B:
+				m_player.getEntity().setWeapon(Weapon::Wand_3D);
+				break;
+			default: break;
+			}
+
+			/*m_player.think(); */
+		}
+
+		// If nothing was chosen yet, return so the rest of the code isn't ran
+		else
+			return SceneTypes::Playing;
 	}
 
 	m_player.think();
@@ -140,6 +208,9 @@ void PlayingScene::init() {
 
 	m_isInUpgradeScreen = false;
 	m_isInDeathScreen = false;
+
+	m_choseLeftUpgradeSlot = false;
+	m_choseRightUpgradeSlot = false;
 
 	m_font = GetFontDefault();
 	m_camera = Camera2D{ Vector2{0.0f,0.0f }, Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, 0.0f, 1.0f };
