@@ -14,17 +14,6 @@ int main() {
 	Scenes scenes{};
 	SceneTypes currentScene{ SceneTypes::MainMenu };
 
-	int choice{};
-	std::cout << "Choose scene: ";
-	std::cin >> choice;
-
-	if (choice == 1)
-		currentScene = SceneTypes::MainMenu;
-	else if (choice == 2)
-		currentScene = SceneTypes::Playing;
-	else if (choice == 3)
-		currentScene = SceneTypes::Credits;
-
 	switch (currentScene) {
 	case SceneTypes::MainMenu: scenes.mainMenu.init(); break;
 

@@ -151,6 +151,7 @@
     <ClCompile Include="MainMenuScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayingScene.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Scenes.cpp" />
     <ClCompile Include="Vector2Overloads.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="MainMenuScene.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="PlayingScene.hpp" />
+    <ClInclude Include="Projectile.hpp" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Scenes.hpp" />
     <ClInclude Include="SceneTypes.hpp" />
