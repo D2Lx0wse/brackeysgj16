@@ -6,21 +6,31 @@
 class Projectile
 {
 public:
-	Projectile()=delete;
+	struct Data
+	{
+		float speed;
+		float damage;
+		//hit box type?????
+	};
+public:
+
+
+
+	Projectile() {};
 	
 
 	void calc();
 	void init();
 
 private:
-	float m_speed{};
-	bool m_isAlive{};
+
+	bool m_isAlive{false};
 	Vector2 m_direction{};
 	float m_degrees{};
 	Entity* m_owner{nullptr};
 	std::vector<Entity*> m_hits{nullptr};
-	float m_damage{};
 	float m_lifetime{};
+	Data m_data{};
 
 	//hitbox stuff here
 

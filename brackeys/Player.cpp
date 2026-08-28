@@ -96,7 +96,7 @@ void Player::think()
 	m_entity.Move(m_movementVector);
 
 	if (m_willAttack) {
-		m_entity.shouldAttack();
+		m_entity.setAttackingTrue();
 		m_willAttack = false;
 	}
 

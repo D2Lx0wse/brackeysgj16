@@ -1,6 +1,7 @@
 #pragma once
 #include "raylib.h"
 #include "Entity.hpp"
+#include "Projectile.hpp"
 
 class Player
 {
@@ -49,6 +50,8 @@ private:
 	bool m_willAttack{ false };
 
 	Brackeys2DTexture m_arrow{};
+
+	Projectile m_currProjectile{};
 
 	constexpr static std::string_view s_HorizontalTexture{ "assets/images/player_horiz.png" };
 	constexpr static std::string_view s_VerticalTexture{ "assets/images/player_vert.png" };

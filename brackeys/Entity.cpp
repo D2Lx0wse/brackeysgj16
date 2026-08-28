@@ -93,12 +93,12 @@ void Entity::attack() {
 		return;
 
 	static bool shouldGetTime{ true };
-	static double currentTime{};
+	static double attackStartTime{};
 
 	if (shouldGetTime)
-	currentTime = GetTime();
+	attackStartTime = GetTime();
 
-	if (GetTime() < currentTime + m_weapon.attackDuration()) {
+	if (GetTime() < attackStartTime + m_weapon.attackDuration()) {
 		shouldGetTime = false;
 
 	}

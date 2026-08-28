@@ -93,3 +93,20 @@ int Helper::getMaxXPBasedOnWeaponLevel(Weapon::Type weaponType) {
 
 	return xp;
 }
+
+Projectile::Data Helper::getProjectileDataBasedOnWeaponType(Weapon::Type weaponType) {
+	Projectile::Data data{ -1.f,-1.f };
+
+	switch (weaponType) {
+	case Weapon::Sword_3B:
+		data = { 10.f * Constants::g_ScalingSize , 10.f}; break;
+	case Weapon::Wand_2B:
+		data = { 7.5f * Constants::g_ScalingSize, 20.f }; break;
+	case Weapon::Wand_3C:
+		data = { 12.5f * Constants::g_ScalingSize, 30.f }; break;
+	default:
+		break;
+	}
+
+	return data;
+}

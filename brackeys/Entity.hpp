@@ -42,7 +42,7 @@ public:
 	void setTint(Color tint) { m_tint = tint; }
 	void setAimData(Vector2 vector, float degrees) { m_aimingVector = vector; m_aimingDegrees = degrees; }
 
-	void shouldAttack() { m_isAttacking = true; }
+	void setAttackingTrue() { m_isAttacking = true; }
 
 	void attack();
 
