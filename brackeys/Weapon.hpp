@@ -26,6 +26,7 @@ public:
 	const static std::vector<int> s_WeaponDamages;
 	const static std::vector<std::string_view> s_TextureFilepaths;
 	const static std::vector<std::string_view> s_AttackTextureFilepaths;
+	const static std::vector<double> s_AttackDurations;
 
 	// Constructor. Calls load()
 	Weapon();
@@ -39,6 +40,8 @@ public:
 	// Gives access to the private member
 	Brackeys2DTexture& texture() { return m_currentTexture; } 
 	Brackeys2DTexture& attackTexture() { return m_currentAttackTexture; }
+	double attackDuration() const { return m_attackDuration; }
+
 private:
 	// Changes weapon based on m_type
 	void load();
@@ -50,4 +53,6 @@ private:
 	Brackeys2DTexture m_currentTexture{};
 
 	Brackeys2DTexture m_currentAttackTexture{};
+
+	double m_attackDuration{};
 };

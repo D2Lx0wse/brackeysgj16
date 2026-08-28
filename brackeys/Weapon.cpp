@@ -24,10 +24,16 @@ const std::vector<std::string_view> Weapon::s_AttackTextureFilepaths{
 	"assets/images/pellet_3b.png",																	// Magic sword pellet
 };
 
+const std::vector<double> Weapon::s_AttackDurations{
+	0.5, // Fists, Swords, placeholder
+	3.0, // Staffs
+};
+
 Weapon::Weapon()
 	: m_type{}
 	, m_weaponDamage{}
 	, m_currentTexture{}
+	, m_attackDuration{}
 {
 }
 
@@ -49,4 +55,24 @@ void Weapon::load() {
 	m_currentTexture.loadFromFile(Weapon::s_TextureFilepaths[m_type]);
 
 	m_currentAttackTexture.loadFromFile(Weapon::s_AttackTextureFilepaths[m_type]);
+
+	switch (m_type) {
+	case Type::Fist_1:
+
+	case Type::Sword_2A:
+	case Type::Sword_3A:
+	case Type::Sword_3B:
+
+	case Type::MaxType:
+		m_attackDuration = s_AttackDurations[0];
+		break;
+
+	case Type::Wand_2B:
+	case Type::Wand_3C:
+	case Type::Wand_3D:
+		m_attackDuration = s_AttackDurations[1];
+		break;
+
+	default: break;
+	}
 }

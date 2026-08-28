@@ -98,7 +98,7 @@ void Entity::attack() {
 	if (shouldGetTime)
 	currentTime = GetTime();
 
-	if (GetTime() < currentTime + 0.5) {
+	if (GetTime() < currentTime + m_weapon.attackDuration()) {
 		shouldGetTime = false;
 
 	}
