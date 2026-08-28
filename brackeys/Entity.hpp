@@ -42,9 +42,9 @@ public:
 	void setTint(Color tint) { m_tint = tint; }
 	void setAimData(Vector2 vector, float degrees) { m_aimingVector = vector; m_aimingDegrees = degrees; }
 
-	void setAttackingTrue() { m_isAttacking = true; }
+	void setAttackingTrue() { if (m_weapon.type() != Weapon::Wand_2B && m_weapon.type() != Weapon::Wand_3C) m_isAttacking = true; }
 
-	bool getShouldShoot() { return m_shouldShoot; }
+	bool getShouldShoot() const { return m_shouldShoot; }
 	void setShouldShootFalse() { m_shouldShoot = false; }
 
 	void attack();

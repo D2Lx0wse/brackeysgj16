@@ -97,7 +97,7 @@ private:
 
 	// Death screen button to go back to the main menu
 	BrackeysText m_deathScreenButton{ "Go back to the main menu", m_font };
-
+	BrackeysText m_deathScreenFlavor{ "", m_font };
 	BrackeysText m_deathScreenTitle{ "You died.", m_font };
 
 	void renderWorld(Camera2D& camera);

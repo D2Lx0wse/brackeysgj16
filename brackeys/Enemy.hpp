@@ -35,8 +35,8 @@ public:
 	
 	Entity& entity() { return m_entity; } // Careful use
 
-	int getHP() { return m_hp; }
-	int getMaxHP() { return m_maxHp; }
+	int getHP() const { return m_hp; }
+	int getMaxHP() const { return m_maxHp; }
 
 	void heal() { m_hp = m_maxHp; }
 	void kill() { m_hp = 0; }

@@ -71,6 +71,14 @@ void PlayingScene::handleInput() {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && CheckCollisionRecs(Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f }, Rectangle{ m_deathScreenButton.textPosition().x, m_deathScreenButton.textPosition().y, m_deathScreenButton.textSize().x, m_deathScreenButton.textSize().y }))
 			m_nextScene = SceneTypes::MainMenu;
 	}
+
+#ifdef _DEBUG
+	if (IsKeyPressed(KEY_L))
+		m_isInDeathScreen = !m_isInDeathScreen;
+
+	if (IsKeyPressed(KEY_U))
+		m_isInUpgradeScreen = !m_isInUpgradeScreen;
+#endif
 }
 SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scenes) {
 	if (m_nextScene != SceneTypes::MaxValue) {
@@ -197,8 +205,8 @@ void PlayingScene::renderUpgrade() {
 			m_upgradeSlotTitles[0].setText("Sword");
 			m_upgradeSlotTitles[1].setText("Staff");
 
-			m_upgradeSlotDescriptions[0].setText("This sword has\ninsane reach!");
-			m_upgradeSlotDescriptions[1].setText("This staff can\ndeal insane damage!");
+			m_upgradeSlotDescriptions[0].setText("This sword can\ndeal insane damage!");
+			m_upgradeSlotDescriptions[1].setText("Get ready to throw\nenormous spells!");
 
 			weaponIcons[0].loadFromFile("assets/images/sword_2a.png");
 			weaponIcons[1].loadFromFile("assets/images/staff_2b.png");
@@ -207,8 +215,8 @@ void PlayingScene::renderUpgrade() {
 			m_upgradeSlotTitles[0].setText("Super Sword");
 			m_upgradeSlotTitles[1].setText("Magic Sword");
 
-			m_upgradeSlotDescriptions[0].setText("Super Sword!");
-			m_upgradeSlotDescriptions[1].setText("Magic Sword!");
+			m_upgradeSlotDescriptions[0].setText("Strike with\nunimaginable force!");
+			m_upgradeSlotDescriptions[1].setText("Super fast and\nfrequent projectiles!");
 
 			weaponIcons[0].loadFromFile("assets/images/sword_3a.png");
 			weaponIcons[1].loadFromFile("assets/images/sword_3b.png");
@@ -217,8 +225,8 @@ void PlayingScene::renderUpgrade() {
 			m_upgradeSlotTitles[0].setText("Super Staff");
 			m_upgradeSlotTitles[1].setText("Fire Staff");
 
-			m_upgradeSlotDescriptions[0].setText("Super Staff!");
-			m_upgradeSlotDescriptions[1].setText("Fire Staff!");
+			m_upgradeSlotDescriptions[0].setText("Totally not the\nsame thing\nbut bigger!");
+			m_upgradeSlotDescriptions[1].setText("Evaporate your\nenemies with a\nsuper long-range\nblast!");
 
 			weaponIcons[0].loadFromFile("assets/images/staff_3c.png");
 			weaponIcons[1].loadFromFile("assets/images/staff_3d.png");
@@ -276,6 +284,16 @@ void PlayingScene::renderUpgrade() {
 }
 
 void PlayingScene::renderDeathScreen() {
+	// Get flavor text based on weapon you died with
+	const std::vector<std::string_view> flavorTexts{
+		"Might want to invest in a weapon! :)",														// Fists
+		"It's at least stronger than before ;)", "Expected more? :O", "It's better than nothing! :D",// Swords
+		"It gets bigger! ;)", "Not big enough? :O", "It's longer than slashes! :D",					// Wands
+		"...How? o_O"																				// Placeholder
+	};
+	m_deathScreenFlavor.setText(flavorTexts[m_player.getEntity().getWeapon().type()]);
+	m_deathScreenFlavor.setPosition(Vector2{ (Constants::g_ScreenWidth - m_deathScreenFlavor.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 33.3f * 1.625f });
+
 	DrawRectangle(0, 0, Constants::g_ScreenWidth, Constants::g_ScreenHeight, RED);
 
 	const Vector2 mousePosition{ GetMousePosition() };
@@ -285,6 +303,8 @@ void PlayingScene::renderDeathScreen() {
 		m_deathScreenButton.setColor(BLACK);
 
 	m_deathScreenButton.render(m_font);
+
+	m_deathScreenFlavor.render(m_font);
 
 	m_deathScreenTitle.render(m_font);
 }
@@ -329,6 +349,9 @@ void PlayingScene::initUI() {
 	m_deathScreenButton.setColor(BLACK);
 	m_deathScreenButton.setPosition(Vector2{ (Constants::g_ScreenWidth - m_deathScreenButton.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 66.7f });
 
+	m_deathScreenFlavor.setFontSize(Constants::g_FontSize64 * 0.5f, m_font);
+	m_deathScreenFlavor.setColor(Constants::g_DARKRED);
+	
 	m_deathScreenTitle.setText("You died.");
 	m_deathScreenTitle.setFontSize(Constants::g_FontSize64 * 1.5f, m_font);
 	m_deathScreenTitle.setColor(WHITE);

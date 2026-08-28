@@ -15,10 +15,10 @@ public:
 	void init();
 
 	//getters
-	int getMaxXP(){ return m_maxXp; }
-	int getXP() { return m_xp; }
-	int getMaxHP() { return m_maxHp; }
-	int getHP() { return m_hp; }
+	int getMaxXP() const { return m_maxXp; }
+	int getXP() const { return m_xp; }
+	int getMaxHP() const { return m_maxHp; }
+	int getHP() const { return m_hp; }
 
 	void heal() { m_hp = m_maxHp; }
 	void kill() { m_hp = 0; }
