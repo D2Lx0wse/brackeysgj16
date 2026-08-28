@@ -37,7 +37,7 @@ public:
 	Vector2 getPosition() const { return m_position; }
 	void setPosition(const Vector2& position) { m_position = position; }
 	Weapon& getWeapon() { return m_weapon; }
-	void setWeapon(Weapon::Type weaponType) { m_weapon.setWeapon(weaponType); }
+	void setWeapon(Weapon::Type weaponType, bool isEnemy = false) { m_weapon.setWeapon(weaponType, isEnemy); }
 	void setTextures(std::string_view path_horizontal, std::string_view path_vertical);
 	void setTint(Color tint) { m_tint = tint; }
 	void setAimData(Vector2 vector, float degrees) { m_aimingVector = vector; m_aimingDegrees = degrees; }

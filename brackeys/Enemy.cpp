@@ -128,7 +128,7 @@ void Enemy::init(Vector2 position) {
 	m_entity.setTextures(s_HorizontalTexture, s_VerticalTexture);
 	m_entity.reloadTextures();
 
-	m_entity.setWeapon(Weapon::Sword_2A);
+	m_entity.setWeapon(static_cast<Weapon::Type>(Random::get(0, Weapon::MaxType-1)), true);
 	changeWeaponAndStatistics();
 
 	if (Random::get(0, 1)) m_entity.setTint(Constants::g_FAKEFRIEND);

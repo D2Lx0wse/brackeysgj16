@@ -116,8 +116,9 @@ void Entity::shoot() {
 void Entity::reloadTextures() {
 	m_textureHoriz.loadFromFile(m_textureHorizPath);
 	m_textureVert.loadFromFile(m_textureVertPath);
-
-	m_weapon.setWeapon(Weapon::Sword_2A);
+	
+	// Decomment if weapons do not work
+	// m_weapon.setWeapon(Weapon::Fist_1);
 	//m_weapon.texture().loadFromFile(Weapon::s_TextureFilepaths[m_weapon.type()]);
 }
 

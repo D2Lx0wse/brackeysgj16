@@ -32,7 +32,8 @@ public:
 	Weapon();
 
 	// Sets a new weapon based on the given type
-	void setWeapon(Weapon::Type weaponType);
+	// If isEnemy is set to true, red punch/fist textures will be used instead
+	void setWeapon(Weapon::Type weaponType, bool isEnemy = false);
 
 	// Getters
 	Type type() const { return m_type; }
@@ -44,9 +45,9 @@ public:
 
 private:
 	// Changes weapon based on m_type
-	void load();
+	void load(bool isEnemy = false);
 
-	Type m_type{ Type::Fist_1 };
+	Type m_type{ Type::MaxType };
 
 	int m_weaponDamage{};
 

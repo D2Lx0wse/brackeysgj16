@@ -21,10 +21,10 @@ void Player::init() {
 
 	getEntity().setTextures("assets/images/player_horiz.png", "assets/images/player_vert.png");
 	getEntity().reloadTextures();
+	m_entity.setWeapon(Weapon::Fist_1);
+	changeWeaponAndStatistics();
 	getEntity().setTint(WHITE);
 	std::cout << "player birth" << std::endl;
-
-	changeWeaponAndStatistics();
 
 	m_currProjectile = Projectile{};
 
