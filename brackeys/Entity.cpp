@@ -89,31 +89,28 @@ void Entity::Move(Vector2 vector) {
 }
 
 void Entity::attack() {
-	if (not m_isAttacking)
-		return;
+	if (not m_isAttacking) { return; }
 	//from here on out WE ARE ATTACKING
-	static bool shouldGetTime{ true };
-	static double attackStartTime{};
-	static bool hasShot{ false };
+	 
+	//here lie two static local variables that were being used by multiple entities at the same time
 
-	if (not hasShot) {
-		m_shouldShoot = true;
-		hasShot = true;
-	}
+	if (m_shouldGetTime)
+		m_attackStartTime = GetTime();
 
-	if (shouldGetTime)
-	attackStartTime = GetTime();
+	if (GetTime() < m_attackStartTime + m_weapon.attackDuration()) {
 
-	if (GetTime() < attackStartTime + m_weapon.attackDuration()) {
-
-		shouldGetTime = false;
+		std::cout << "Curr time is " << GetTime() << " and we started attacking at " << m_attackStartTime << " and we will attack again at " << m_attackStartTime + m_weapon.attackDuration() << "\n";
+		m_shouldGetTime = false;
 
 	}
 	else {//finish attack
 		m_isAttacking = false;
-		shouldGetTime = true;
-		hasShot = false;
+		m_shouldGetTime = true;
 	}
+}
+
+void Entity::shoot() {
+	m_shouldShoot = true;
 }
 
 void Entity::reloadTextures() {

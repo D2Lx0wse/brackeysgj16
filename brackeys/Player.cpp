@@ -47,6 +47,7 @@ void Player::takeInput(const Camera2D& camera)
 		m_inputVector += { 1.0f, 0.0f };
 	}
 
+#if _DEBUG
 	if (IsKeyDown(KEY_ONE))
 		m_entity.setWeapon(Weapon::Fist_1);
 	else if (IsKeyDown(KEY_TWO))
@@ -63,7 +64,8 @@ void Player::takeInput(const Camera2D& camera)
 		m_entity.setWeapon(Weapon::Wand_3D);
 	else if (IsKeyDown(KEY_ZERO))
 		m_entity.setWeapon(Weapon::MaxType);
-	
+#endif
+
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
 		m_willAttack = true;
 
@@ -99,23 +101,26 @@ void Player::think()
 
 	if (m_willAttack) {
 		m_entity.setAttackingTrue();
+		m_entity.shoot();
 		m_willAttack = false;
 	}
-
+	
 	m_entity.attack();
 
 	if (m_entity.getShouldShoot())
 	{	
 		Projectile::Data projDate{ Helper::getProjectileDataBasedOnWeaponType(m_currentWeaponType) };
-		if (projDate.speed == -1.f);
-		else
-		{
-			m_currProjectile.init(m_aimVector, m_aimDegrees, &m_entity, projDate);
-			//make a projectile here
-			
+		if (projDate.speed == -1.f){}
+		else {
+			m_currProjectile.init(m_aimVector, m_aimDegrees, &m_entity, projDate, m_entity.getPosition());
 		}
 
 		m_entity.setShouldShootFalse();
+	}
+
+	if (m_currProjectile.isAlive())
+	{
+		m_currProjectile.calc();
 	}
 }
 
@@ -125,6 +130,10 @@ void Player::render()
 	//std::cout << "Aim angle CC: " << m_aimDegrees << "\n";
 	m_arrow.render(getEntity().getPosition() + m_aimVector * Constants::g_ScalingSize * 10.0f , Vector2{}, m_aimDegrees, Constants::g_QUARTERALPHA);
 	m_entity.Render();
+	if (m_currProjectile.isAlive())
+	{
+		m_currProjectile.render();
+	}
 	//DrawRectangleV(getEntity().getPosition() + Vector2 { getEntity().getRadius(), getEntity().getRadius() } + (m_aimVector * Constants::g_ScalingSize*10 ), Vector2{ Constants::g_ScalingSize, Constants::g_ScalingSize }, RED);
 	
 }

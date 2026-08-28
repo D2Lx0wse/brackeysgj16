@@ -48,6 +48,7 @@ public:
 	void setShouldShootFalse() { m_shouldShoot = false; }
 
 	void attack();
+	void shoot();
 
 private:
 	Vector2 m_position{};
@@ -63,5 +64,8 @@ private:
 	Weapon m_weapon{};
 	bool m_isAttacking{ false };
 	bool m_shouldShoot{ false };
+
+	bool m_shouldGetTime{ true };
+	double m_attackStartTime{};
 };
 

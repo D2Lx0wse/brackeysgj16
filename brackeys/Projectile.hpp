@@ -21,10 +21,14 @@ public:
 	
 
 	void calc();
-	void init(Vector2 direction, float degrees, Entity* owner, Data projectileData);
+	void init(Vector2 direction, float degrees, Entity* owner, Data projectileData, Vector2 position);
+	void render();
+
+	//getters and setter
+	bool isAlive(){ return m_isAlive; }
 
 private:
-
+	Vector2 m_position{};
 	Vector2 m_direction{};
 	float m_degrees{};
 	Entity* m_owner{nullptr};
