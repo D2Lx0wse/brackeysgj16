@@ -31,5 +31,15 @@ void Projectile::calc() {
 }
 
 void Projectile::render() {
-	m_texture.render(m_position);
+	m_texture.render(m_position +
+		(m_direction * 8.0f * Constants::g_ScalingSize * 3.0f) - //g_scaling size *8.0f is a made up value, but it works
+		Vector2{ (
+			m_texture.width()
+			- (8.0f * Constants::g_ScalingSize * 2.0f)
+			) / 2.0f
+		,	(m_texture.height()
+			- (8.0f * Constants::g_ScalingSize * 2.0f)
+			) / 2.0f
+		}
+	, Vector2{}, m_degrees);
 }
