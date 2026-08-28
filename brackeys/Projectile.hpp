@@ -11,6 +11,8 @@ public:
 	{
 		float speed;
 		float damage;
+		std::string_view texturePath;
+		float lifetime;
 		//hit box type?????
 	};
 public:
@@ -19,20 +21,17 @@ public:
 	
 
 	void calc();
-	void init();
+	void init(Vector2 direction, float degrees, Entity* owner, Data projectileData);
 
 private:
 
-	std::string_view m_texturePath{};
 	Vector2 m_direction{};
 	float m_degrees{};
 	Entity* m_owner{nullptr};
+	Data m_data{};
 
 	bool m_isAlive{false};
 	std::vector<Entity*> m_hits{nullptr};
-	float m_lifetime{};
-	Data m_data{};
-	
 	Brackeys2DTexture m_texture{};
 
 	//hitbox stuff here
