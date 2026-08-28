@@ -2,6 +2,7 @@
 
 #include "raylib.h"
 #include "Weapon.hpp"
+#include "Projectile.hpp"
 
 namespace Helper {
 	 bool isColorTheSameBetween(const Color& c1, const Color& c2);
@@ -12,4 +13,5 @@ namespace Helper {
 	 float getSpeedBasedOnWeaponLevel(Weapon::Type weaponType);
 	 int getMaxHPBasedOnWeaponLevel(Weapon::Type weaponType);
 	 int getMaxXPBasedOnWeaponLevel(Weapon::Type weaponType);
+	 Projectile::Data getProjectileDataBasedOnWeaponType(Weapon::Type weaponType);
 }

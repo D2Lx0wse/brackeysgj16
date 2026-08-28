@@ -26,6 +26,8 @@ void Player::init() {
 
 	changeWeaponAndStatistics();
 
+	m_currProjectile = Projectile{};
+
 	m_arrow.loadFromFile(s_ArrowTexture);
 }
 
@@ -96,17 +98,31 @@ void Player::think()
 	m_entity.Move(m_movementVector);
 
 	if (m_willAttack) {
-		m_entity.shouldAttack();
+		m_entity.setAttackingTrue();
 		m_willAttack = false;
 	}
 
 	m_entity.attack();
+
+	if (m_entity.getShouldShoot())
+	{	
+		Projectile::Data projDate{ Helper::getProjectileDataBasedOnWeaponType(m_currentWeaponType) };
+		if (projDate.speed == -1.f);
+		else
+		{
+			m_currProjectile.init(m_aimVector, m_aimDegrees, &m_entity, projDate);
+			//make a projectile here
+			
+		}
+
+		m_entity.setShouldShootFalse();
+	}
 }
 
 void Player::render()
 {
 	//draw arrow here
-	std::cout << "Aim angle CC: " << m_aimDegrees << "\n";
+	//std::cout << "Aim angle CC: " << m_aimDegrees << "\n";
 	m_arrow.render(getEntity().getPosition() + m_aimVector * Constants::g_ScalingSize * 10.0f , Vector2{}, m_aimDegrees, Constants::g_QUARTERALPHA);
 	m_entity.Render();
 	//DrawRectangleV(getEntity().getPosition() + Vector2 { getEntity().getRadius(), getEntity().getRadius() } + (m_aimVector * Constants::g_ScalingSize*10 ), Vector2{ Constants::g_ScalingSize, Constants::g_ScalingSize }, RED);

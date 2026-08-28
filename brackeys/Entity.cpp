@@ -89,22 +89,30 @@ void Entity::Move(Vector2 vector) {
 }
 
 void Entity::attack() {
-	if (!m_isAttacking)
+	if (not m_isAttacking)
 		return;
-
+	//from here on out WE ARE ATTACKING
 	static bool shouldGetTime{ true };
-	static double currentTime{};
+	static double attackStartTime{};
+	static bool hasShot{ false };
+
+	if (not hasShot) {
+		m_shouldShoot = true;
+		hasShot = true;
+	}
 
 	if (shouldGetTime)
-	currentTime = GetTime();
+	attackStartTime = GetTime();
 
-	if (GetTime() < currentTime + m_weapon.attackDuration()) {
+	if (GetTime() < attackStartTime + m_weapon.attackDuration()) {
+
 		shouldGetTime = false;
 
 	}
-	else {
+	else {//finish attack
 		m_isAttacking = false;
 		shouldGetTime = true;
+		hasShot = false;
 	}
 }
 

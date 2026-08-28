@@ -42,7 +42,10 @@ public:
 	void setTint(Color tint) { m_tint = tint; }
 	void setAimData(Vector2 vector, float degrees) { m_aimingVector = vector; m_aimingDegrees = degrees; }
 
-	void shouldAttack() { m_isAttacking = true; }
+	void setAttackingTrue() { m_isAttacking = true; }
+
+	bool getShouldShoot() { return m_shouldShoot; }
+	void setShouldShootFalse() { m_shouldShoot = false; }
 
 	void attack();
 
@@ -59,7 +62,6 @@ private:
 	Color m_tint;
 	Weapon m_weapon{};
 	bool m_isAttacking{ false };
-
-	bool m_renderAttack{ false };
+	bool m_shouldShoot{ false };
 };
 

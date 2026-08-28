@@ -107,7 +107,7 @@ void Enemy::think() {
 
 	
 	if (m_willAttack) {
-		m_entity.shouldAttack();
+		m_entity.setAttackingTrue();
 		m_willAttack = false;
 	}
 
