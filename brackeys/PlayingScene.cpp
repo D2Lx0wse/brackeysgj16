@@ -5,7 +5,7 @@
 
 //this is so sad
 #include <iostream>
-
+#include <string>
 #include <cmath>
 #include <cassert>
 
@@ -157,11 +157,27 @@ void PlayingScene::initUI() {
 	m_xpBackgroundInnerPos = { m_xpBackgroundPos + Vector2{Constants::g_ScalingSize, Constants::g_ScalingSize} };
 	m_xpBackgroundInnerSize = { m_xpBackgroundSize - Vector2{Constants::g_ScalingSize * 2, Constants::g_ScalingSize * 2} };
 
+	m_xpBarTitle.setText("XP");
+	m_xpBarTitle.setColor(ORANGE);
+	m_xpBarTitle.setFontSize(40.0f, GetFontDefault());
+	m_xpBarTitle.setPosition(m_xpBackgroundPos + Vector2{ m_xpBackgroundSize.x - m_xpBarTitle.textSize().x, -m_xpBarTitle.spacing()-m_xpBarTitle.textSize().y });
+
+	m_xpBarValue.setColor(ORANGE);
+	m_xpBarValue.setFontSize(40.0f, GetFontDefault());
+
 	m_hpBackgroundPos = { s_hpBarSideDistance, (Constants::g_ScreenHeight - s_hpBarHeight) / 2 };
 	m_hpBackgroundSize = { s_hpBarWidth , s_hpBarHeight };
 	m_hpBackgroundInnerPos = { m_hpBackgroundPos + Vector2{Constants::g_ScalingSize, Constants::g_ScalingSize} };
 	m_hpBackgroundInnerSize = { m_hpBackgroundSize - Vector2{Constants::g_ScalingSize * 2, Constants::g_ScalingSize * 2} };
 
+	m_hpBarTitle.setText("HP");
+	m_hpBarTitle.setColor(RED);
+	m_hpBarTitle.setFontSize(40.0f, GetFontDefault());
+	m_hpBarTitle.setPosition(Vector2 {s_hpBarSideDistance, m_hpBackgroundPos.y-m_hpBarTitle.spacing()-m_hpBarTitle.textSize().y});
+	
+	m_hpBarValue.setColor(RED);
+	m_hpBarValue.setFontSize(40.0f, GetFontDefault());
+	m_hpBarValue.setPosition(Vector2{ s_hpBarSideDistance, m_hpBackgroundPos.y + m_hpBackgroundSize.y + m_hpBarValue.spacing() + m_hpBarValue.textSize().y/2 });
 }
 
 void PlayingScene::renderUI() {
@@ -170,6 +186,11 @@ void PlayingScene::renderUI() {
 	DrawRectangleV(m_xpBackgroundPos, m_xpBackgroundSize, ORANGE);
 	DrawRectangleV(m_xpBackgroundInnerPos, m_xpBackgroundInnerSize, GRAY);
 	DrawRectangleV(m_xpBackgroundInnerPos, Vector2{ m_xpBarLength, m_xpBackgroundInnerSize.y }, YELLOW);
+	m_xpBarTitle.render(GetFontDefault());
+	std::string xpString{ std::to_string(m_player.getXP()) + "/" + std::to_string(m_player.getMaxXP()) };
+	m_xpBarValue.setText(xpString);
+	m_xpBarValue.setPosition(m_xpBackgroundPos + Vector2{ 0.0f, -m_xpBarTitle.spacing() - m_xpBarTitle.textSize().y });
+	m_xpBarValue.render(GetFontDefault());
 
 	// HP bar
 	//m_hpBarLength = m_player.getXP() / static_cast<float>(m_player.getMaxXP()) * m_xpBackgroundInnerSize.x;
@@ -178,4 +199,8 @@ void PlayingScene::renderUI() {
 	DrawRectangleV(m_hpBackgroundInnerPos, m_hpBackgroundInnerSize, GRAY);
 	// To-Do (Polish): Make it start from the bottom (requires math to change pos and size)
 	DrawRectangleV(m_hpBackgroundInnerPos, Vector2{m_hpBackgroundInnerSize.x, m_hpBarLength}, RED);
+	m_hpBarTitle.render(GetFontDefault());
+	std::string hpString{ std::to_string(m_player.getHP()) + "/\n" + std::to_string(m_player.getMaxHP()) };
+	m_hpBarValue.setText(hpString);
+	m_hpBarValue.render(GetFontDefault());
 }

@@ -30,6 +30,8 @@ public:
 	// Setters
 	// Uses font to gauge the size of the font (also based on font size and spacing)
 	void setText(std::string_view text, const Font& font);
+	//Same as set text but always GetDefaultfont
+	void setText(std::string_view text);
 	void setPosition(const Vector2& textPosition);
 
 	// Spacing is one tenth of the font size

@@ -59,6 +59,9 @@ void BrackeysText::setText(std::string_view text, const Font& font) {
 
 	m_textSize = MeasureTextEx(font, BrackeysText::text().data(), fontSize(), spacing());
 }
+void BrackeysText::setText(std::string_view text) {
+	setText(text, GetFontDefault());
+}
 
 void BrackeysText::setPosition(const Vector2& textPosition) {
 	m_textPosition = textPosition;

@@ -1,6 +1,7 @@
 #pragma once
 #include "raylib.h"
 #include "Brackeys2DTexture.hpp"
+#include "BrackeysText.hpp"
 #include "Constants.hpp"
 #include "SceneTypes.hpp"
 #include "Entity.hpp"
@@ -62,12 +63,16 @@ private:
 	Vector2 m_xpBackgroundInnerPos{};
 	Vector2 m_xpBackgroundInnerSize{};
 	float m_xpBarLength{};
+	BrackeysText m_xpBarTitle{};
+	BrackeysText m_xpBarValue{};
 
 	Vector2 m_hpBackgroundPos{};
 	Vector2 m_hpBackgroundSize{};
 	Vector2 m_hpBackgroundInnerPos{};
 	Vector2 m_hpBackgroundInnerSize{};
 	float m_hpBarLength{};
+	BrackeysText m_hpBarTitle{};
+	BrackeysText m_hpBarValue{};
 
 	void renderWorld(Camera2D& camera);
 	void renderUI();
