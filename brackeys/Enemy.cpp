@@ -1,6 +1,7 @@
 #include "Enemy.hpp"
 
 #include <iostream>
+#include <numbers>
 
 #include "Helper.hpp"
 #include "Vector2Overloads.hpp"
@@ -11,6 +12,7 @@ Enemy::Enemy()
 	: m_mode{ Mode::Roaming }
 	, m_clock { -1.0 }
 	, m_randomDuration{}
+	, m_willAttack{ false }
 {
 }
 
@@ -18,6 +20,7 @@ Enemy::Enemy(const Enemy& enemy) {
 	m_mode = enemy.m_mode;
 	m_clock = enemy.m_clock;
 	m_randomDuration = enemy.m_randomDuration;
+	m_willAttack = enemy.m_willAttack;
 }
 
 void Enemy::generateInput(const Vector2& playerPosition) {
@@ -57,6 +60,25 @@ void Enemy::generateInput(const Vector2& playerPosition) {
 			Rectangle{ playerPosition.x, playerPosition.y, m_entity.getRadius() * 2.0f, m_entity.getRadius() * 2.0f }))
 			m_inputVector = Vector2{ 0.0f, 0.0f };
 
+		m_willAttack = Random::get(0, 1);
+		if (m_willAttack) {
+			Vector2 currpos{ entity().getPosition() };
+			Vector2 centerOffset{ entity().getRadius(), entity().getRadius() };
+			m_aimVector = Vector2{ Helper::Normalized(playerPosition - (currpos + centerOffset)) };
+
+			float theta{ std::acos(Helper::Dot(Vector2{ 0.0f, 1.0f }, m_aimVector)) };
+			m_aimDegrees = std::numbers::pi_v<float>;
+			//right of player
+			if (m_aimVector.x > 0) { m_aimDegrees += theta; }
+			//left of player
+			else { m_aimDegrees = std::numbers::pi_v<float> -theta; }
+
+			m_aimDegrees = m_aimDegrees / std::numbers::pi_v<float> *180;
+			m_aimDegrees *= -1; //ideally remove this if time allows
+
+			entity().setAimData(m_aimVector, m_aimDegrees);
+		}
+
 		break;
 	default: break;
 	}
@@ -83,14 +105,13 @@ void Enemy::think() {
 		m_inputVector.y * GetFrameTime() * m_speed }; //placholder speed scaling
 	m_entity.Move(m_movementVector);
 
-	/*
+	
 	if (m_willAttack) {
 		m_entity.shouldAttack();
 		m_willAttack = false;
 	}
 
 	m_entity.attack();
-	*/
 }
 
 void Enemy::render() {

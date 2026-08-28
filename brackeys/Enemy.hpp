@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string_view>
+
 #include "Entity.hpp"
 #include "Constants.hpp"
 
@@ -57,9 +58,15 @@ private:
 	// Enemy speed
 	float m_speed{ Constants::g_SpeedSlow };
 
+	float m_aimDegrees{};
+
 	// Used for movement
 	Vector2 m_inputVector{};
 	Vector2 m_movementVector{};
+
+	Vector2 m_aimVector{};
+
+	bool m_willAttack{ false };
 
 	// Paths to the enemies sprites
 	constexpr static std::string_view s_HorizontalTexture{ "assets/images/enemy_horiz.png" };
