@@ -51,6 +51,8 @@ private:
 	// Tells if two entities are near, based on distanceBetween
 	bool areTwoEntitiesNear(Vector2 position1, Vector2 position2, const Vector2& distanceBetween);
 
+	SceneTypes m_nextScene{ SceneTypes::MaxValue };
+
 	Font m_font{};
 	Camera2D m_camera{ };
 	/*
@@ -80,6 +82,8 @@ private:
 	BrackeysText m_hpBarTitle{};
 	BrackeysText m_hpBarValue{};
 
+	bool m_isInUpgradeScreen{ false };
+
 	// Upgrade box
 	BrackeysText m_upgradeBoxTitle{ "UPGRADE", m_font };
 
@@ -88,9 +92,18 @@ private:
 	std::vector<BrackeysText> m_upgradeSlotTitles{ { "", m_font }, {"", m_font } };
 	std::vector<BrackeysText> m_upgradeSlotDescriptions{ { "", m_font }, {"", m_font } };
 
+
+	bool m_isInDeathScreen{ false };
+
+	// Death screen button to go back to the main menu
+	BrackeysText m_deathScreenButton{ "Go back to the main menu", m_font };
+
+	BrackeysText m_deathScreenTitle{ "You died.", m_font };
+
 	void renderWorld(Camera2D& camera);
 
 	void renderUpgrade();
+	void renderDeathScreen();
 
 	void renderUI();
 	void initUI();

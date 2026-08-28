@@ -65,8 +65,22 @@ void PlayingScene::handleInput() {
 
 	for (auto& enemy : m_enemies)
 		enemy.generateInput(m_player.getEntity().getPosition());
+
+	if (m_isInDeathScreen) {
+		const Vector2 mousePosition{ GetMousePosition() };
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && CheckCollisionRecs(Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f }, Rectangle{ m_deathScreenButton.textPosition().x, m_deathScreenButton.textPosition().y, m_deathScreenButton.textSize().x, m_deathScreenButton.textSize().y }))
+			m_nextScene = SceneTypes::MainMenu;
+	}
 }
-SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scene) {
+SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scenes) {
+	if (m_nextScene != SceneTypes::MaxValue) {
+		initNextScene(m_nextScene, scenes);
+
+		exit();
+
+		return m_nextScene;
+	}
+
 	m_player.think();
 	
 	for (auto& enemy : m_enemies)
@@ -103,7 +117,11 @@ void PlayingScene::render() {
 
 	renderUI();
 
-	// renderUpgrade();
+	if (m_isInUpgradeScreen)
+		renderUpgrade();
+
+	if (m_isInDeathScreen)
+		renderDeathScreen();
 
 	EndDrawing();
 }
@@ -111,6 +129,9 @@ void PlayingScene::render() {
 // Readies/closes scene
 void PlayingScene::init() {
 	*this = PlayingScene{};
+
+	m_isInUpgradeScreen = false;
+	m_isInDeathScreen = false;
 
 	m_font = GetFontDefault();
 	m_camera = Camera2D{ Vector2{0.0f,0.0f }, Vector2{Constants::g_ScreenWidth / 2, Constants::g_ScreenHeight / 2}, 0.0f, 1.0f };
@@ -254,6 +275,20 @@ void PlayingScene::renderUpgrade() {
 	}
 }
 
+void PlayingScene::renderDeathScreen() {
+	DrawRectangle(0, 0, Constants::g_ScreenWidth, Constants::g_ScreenHeight, RED);
+
+	const Vector2 mousePosition{ GetMousePosition() };
+	if (CheckCollisionRecs(Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f }, Rectangle{ m_deathScreenButton.textPosition().x, m_deathScreenButton.textPosition().y, m_deathScreenButton.textSize().x, m_deathScreenButton.textSize().y }))
+		m_deathScreenButton.setColor(WHITE);
+	else
+		m_deathScreenButton.setColor(BLACK);
+
+	m_deathScreenButton.render(m_font);
+
+	m_deathScreenTitle.render(m_font);
+}
+
 void PlayingScene::initUI() {
 	m_xpBackgroundPos = { (Constants::g_ScreenWidth - s_xpBarWidth) / 2,
 						Constants::g_ScreenHeight - (s_xpBarHeight + s_xpBarBtmDistance) };
@@ -286,6 +321,18 @@ void PlayingScene::initUI() {
 	m_upgradeBoxTitle.setColor(RED);
 	const Vector2 upgradeBoxTitlePosition{ (Constants::g_ScreenWidth - m_upgradeBoxTitle.textSize().x) / 2.0f, s_UpgradeBoxPosition.y + (s_UpgradeBoxSize.y / 100.0f) * 2.5f };
 	m_upgradeBoxTitle.setPosition(upgradeBoxTitlePosition);
+
+
+	// Death screen init
+	m_deathScreenButton.setText("Go back to the main menu");
+	m_deathScreenButton.setFontSize(Constants::g_FontSize64 * 0.75f, m_font);
+	m_deathScreenButton.setColor(BLACK);
+	m_deathScreenButton.setPosition(Vector2{ (Constants::g_ScreenWidth - m_deathScreenButton.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 66.7f });
+
+	m_deathScreenTitle.setText("You died.");
+	m_deathScreenTitle.setFontSize(Constants::g_FontSize64 * 1.5f, m_font);
+	m_deathScreenTitle.setColor(WHITE);
+	m_deathScreenTitle.setPosition(Vector2{ (Constants::g_ScreenWidth - m_deathScreenTitle.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 33.3f });
 }
 
 void PlayingScene::renderUI() {
