@@ -16,4 +16,5 @@ namespace Constants {
 
 	constexpr Color g_DARKRED{ 100, 0, 0 ,255 };
 	constexpr Color g_QUARTERALPHA{ 255, 255, 255, 64 };
+	constexpr Color g_FAKEFRIEND{ 99, 155, 255, 255 };
 }

@@ -13,26 +13,26 @@ void Entity::Render() {
 
 	switch (m_direction) {
 	case up:
-		m_textureVert.render(m_position, Vector2{}, 180.f);
+		m_textureVert.render(m_position, Vector2{}, 180.f, m_tint);
 
 		weaponRotation = 0.0f;
 		weaponPosition += Vector2{ getRadius() * -1.0f, getRadius() * -1.0f };
 		weaponSize.x *= -1.0f;
 		break;
 	case right:
-		m_textureHoriz.render(m_position, Vector2{ -m_textureHoriz.width(), 0.0f });
+		m_textureHoriz.render(m_position, Vector2{ -m_textureHoriz.width(), 0.0f }, 0.0f, m_tint);
 
 		weaponRotation = 90.0f;
 		weaponPosition += Vector2{ getRadius(), getRadius() };
 		break;
 	case down:
-		m_textureVert.render(m_position);
+		m_textureVert.render(m_position, Vector2{}, 0.0f, m_tint);
 		
 		weaponRotation = 180.0f;
 		weaponPosition += Vector2{ getRadius(), getRadius() };
 		break;
 	case left:
-		m_textureHoriz.render(m_position);
+		m_textureHoriz.render(m_position, Vector2{}, 0.0f, m_tint);
 
 		weaponRotation = -90.0f;
 		weaponPosition += Vector2{ getRadius() * -1.0f, getRadius() };

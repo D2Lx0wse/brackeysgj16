@@ -39,7 +39,7 @@ public:
 	Weapon& getWeapon() { return m_weapon; }
 	void setWeapon(Weapon::Type weaponType) { m_weapon.setWeapon(weaponType); }
 	void setTextures(std::string_view path_horizontal, std::string_view path_vertical);
-
+	void setTint(Color tint) { m_tint = tint; }
 	void setAimData(Vector2 vector, float degrees) { m_aimingVector = vector; m_aimingDegrees = degrees; }
 
 	void shouldAttack() { m_isAttacking = true; }
@@ -56,7 +56,7 @@ private:
 	std::string m_textureHorizPath{};
 	std::string m_textureVertPath{};
 	float m_radius{};
-	
+	Color m_tint;
 	Weapon m_weapon{};
 	bool m_isAttacking{ false };
 

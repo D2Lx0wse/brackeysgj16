@@ -21,6 +21,7 @@ void Player::init() {
 
 	getEntity().setTextures("assets/images/player_horiz.png", "assets/images/player_vert.png");
 	getEntity().reloadTextures();
+	getEntity().setTint(WHITE);
 	std::cout << "player birth" << std::endl;
 	m_arrow.loadFromFile(s_ArrowTexture);
 }

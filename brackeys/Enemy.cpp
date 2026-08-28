@@ -108,6 +108,9 @@ void Enemy::init(Vector2 position) {
 	m_entity.reloadTextures();
 
 	m_entity.setWeapon(Weapon::Sword_2A);
+
+	if (Random::get(0, 1)) m_entity.setTint(Constants::g_FAKEFRIEND);
+	else m_entity.setTint(RED);
 }
 
 void Enemy::setMode(Mode mode) {
