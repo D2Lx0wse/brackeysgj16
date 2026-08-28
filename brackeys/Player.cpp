@@ -101,6 +101,18 @@ void Player::think()
 	}
 
 	m_entity.attack();
+
+	if (m_entity.getShouldShoot())
+	{	
+		Projectile::Data projDate{ Helper::getProjectileDataBasedOnWeaponType(m_currentWeaponType) };
+		if (projDate.speed == -1.f);
+		else
+		{
+			//make a projectile here
+		}
+
+		m_entity.setShouldShootFalse();
+	}
 }
 
 void Player::render()

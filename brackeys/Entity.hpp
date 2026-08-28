@@ -44,6 +44,9 @@ public:
 
 	void setAttackingTrue() { m_isAttacking = true; }
 
+	bool getShouldShoot() { return m_shouldShoot; }
+	void setShouldShootFalse() { m_shouldShoot = false; }
+
 	void attack();
 
 private:
@@ -59,7 +62,6 @@ private:
 	Color m_tint;
 	Weapon m_weapon{};
 	bool m_isAttacking{ false };
-
-	bool m_renderAttack{ false };
+	bool m_shouldShoot{ false };
 };
 
