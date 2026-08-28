@@ -16,15 +16,21 @@ public:
 	static constexpr SceneTypes s_Scene{ SceneTypes::Playing };
 
 	constexpr static float s_SceneWidth{ Constants::g_ScreenWidth * 4.0f };
-	constexpr static float s_SceneHeight{ Constants::g_ScreenWidth * 4.0f  };
-	
+	constexpr static float s_SceneHeight{ Constants::g_ScreenWidth * 4.0f };
+
 	constexpr static float s_xpBarWidth{ Constants::g_ScreenWidth / 2.0f };
-	constexpr static float s_xpBarHeight{50.0f};
-	constexpr static float s_xpBarBtmDistance{10.0f};
+	constexpr static float s_xpBarHeight{ 50.0f };
+	constexpr static float s_xpBarBtmDistance{ 10.0f };
 	constexpr static float s_hpBarWidth{ 50.0f };
 	constexpr static float s_hpBarHeight{ Constants::g_ScreenHeight / 2.0f };
 	constexpr static float s_hpBarSideDistance{ 10.0f };
 
+	constexpr static Vector2 s_UpgradeBoxSize{ (Constants::g_ScreenWidth / 100.0f) * 80.0f, (Constants::g_ScreenHeight / 100.0f) * 80.0f };
+	constexpr static Vector2 s_UpgradeBoxPosition{ (Constants::g_ScreenWidth - s_UpgradeBoxSize.x) / 2.0f, (Constants::g_ScreenHeight - s_UpgradeBoxSize.y) / 2.0f };
+
+	constexpr static Vector2 s_UpgradeSlotSize{ (s_UpgradeBoxSize.x / 100.0f) * 45.0f, (s_UpgradeBoxSize.y / 100.0f) * 80.0f };
+	constexpr static float s_UpgradeSlotTitleFontSize{ 24.0f };
+	constexpr static float s_UpgradeSlotTextFontSize{ 16.0f };
 
 	PlayingScene();
 
@@ -74,7 +80,18 @@ private:
 	BrackeysText m_hpBarTitle{};
 	BrackeysText m_hpBarValue{};
 
+	// Upgrade box
+	BrackeysText m_upgradeBoxTitle{ "UPGRADE", m_font };
+
+	const static std::vector<Rectangle> s_UpgradeSlotOutlines;
+
+	std::vector<BrackeysText> m_upgradeSlotTitles{ { "", m_font }, {"", m_font } };
+	std::vector<BrackeysText> m_upgradeSlotDescriptions{ { "", m_font }, {"", m_font } };
+
 	void renderWorld(Camera2D& camera);
+
+	void renderUpgrade();
+
 	void renderUI();
 	void initUI();
 };

@@ -9,6 +9,14 @@
 #include <cmath>
 #include <cassert>
 
+const std::vector<Rectangle> PlayingScene::s_UpgradeSlotOutlines{ Rectangle{s_UpgradeBoxPosition.x + (s_UpgradeBoxSize.x / 100.0f) * 2.5f,
+																			s_UpgradeBoxPosition.y + (s_UpgradeBoxSize.y / 100.0f) * 15.0f,
+																			s_UpgradeSlotSize.x, s_UpgradeSlotSize.y },
+																Rectangle{	s_UpgradeBoxPosition.x + (s_UpgradeBoxSize.x / 100.0f) * 7.5f + s_UpgradeSlotSize.x,
+																			s_UpgradeBoxPosition.y + (s_UpgradeBoxSize.y / 100.0f) * 15.0f,
+																			s_UpgradeSlotSize.x, s_UpgradeSlotSize.y }
+															};
+
 // Keeps player character in bounds of the level
 void PlayingScene::keepEntityInBounds(Entity& entity) {
 	if (entity.getPosition().x < 0.0f)
@@ -94,9 +102,8 @@ void PlayingScene::render() {
 	renderWorld(m_camera);
 
 	renderUI();
-#if _DEBUG
-	std::cout << "FPS: " << GetFPS() << '\n';
-#endif
+
+	// renderUpgrade();
 
 	EndDrawing();
 }
@@ -150,6 +157,103 @@ void PlayingScene::renderWorld(Camera2D& camera) {
 	EndMode2D();
 }
 
+void PlayingScene::renderUpgrade() {
+	static std::vector<Brackeys2DTexture> weaponIcons{ {}, {} };
+	std::vector<Vector2> weaponIconPositions{ {}, {} };
+
+	// Initial render of the main brown upgrade box with the outline
+	DrawRectangle(static_cast<int>(s_UpgradeBoxPosition.x), static_cast<int>(s_UpgradeBoxPosition.y), static_cast<int>(s_UpgradeBoxSize.x), static_cast<int>(s_UpgradeBoxSize.y), DARKBROWN);
+	DrawRectangleLinesEx(Rectangle{ s_UpgradeBoxPosition.x, s_UpgradeBoxPosition.y, s_UpgradeBoxSize.x, s_UpgradeBoxSize.y }, 4.0f, Constants::g_DARKRED);
+
+
+	// Gets info on the upgrades based on current weapon
+	static Weapon::Type currentWeaponType{ Weapon::MaxType };
+	if (currentWeaponType != m_player.getEntity().getWeapon().type()) {
+		currentWeaponType = m_player.getEntity().getWeapon().type();
+
+		switch (currentWeaponType) {
+		case Weapon::Fist_1:
+			m_upgradeSlotTitles[0].setText("Sword");
+			m_upgradeSlotTitles[1].setText("Staff");
+
+			m_upgradeSlotDescriptions[0].setText("This sword has\ninsane reach!");
+			m_upgradeSlotDescriptions[1].setText("This staff can\ndeal insane damage!");
+
+			weaponIcons[0].loadFromFile("assets/images/sword_2a.png");
+			weaponIcons[1].loadFromFile("assets/images/staff_2b.png");
+			break;
+		case Weapon::Sword_2A:
+			m_upgradeSlotTitles[0].setText("Super Sword");
+			m_upgradeSlotTitles[1].setText("Magic Sword");
+
+			m_upgradeSlotDescriptions[0].setText("Super Sword!");
+			m_upgradeSlotDescriptions[1].setText("Magic Sword!");
+
+			weaponIcons[0].loadFromFile("assets/images/sword_3a.png");
+			weaponIcons[1].loadFromFile("assets/images/sword_3b.png");
+			break;
+		case Weapon::Wand_2B:
+			m_upgradeSlotTitles[0].setText("Super Staff");
+			m_upgradeSlotTitles[1].setText("Fire Staff");
+
+			m_upgradeSlotDescriptions[0].setText("Super Staff!");
+			m_upgradeSlotDescriptions[1].setText("Fire Staff!");
+
+			weaponIcons[0].loadFromFile("assets/images/staff_3c.png");
+			weaponIcons[1].loadFromFile("assets/images/staff_3d.png");
+			break;
+		default: break;
+		}
+	}
+
+	// Sets attributes of various elements to change their look
+	m_upgradeBoxTitle.setPosition(Vector2{ (Constants::g_ScreenWidth - m_upgradeBoxTitle.textSize().x) / 2.0f, s_UpgradeBoxPosition.y + (s_UpgradeBoxSize.y / 100.0f) * 2.5f });
+	m_upgradeBoxTitle.setFontSize(Constants::g_FontSize64, m_font);
+	m_upgradeBoxTitle.setColor(Constants::g_DARKRED);
+
+	std::vector<Color> upgradeSlotOutlineColors{ {}, {} };
+	const Vector2 weaponIconSize{ weaponIcons[0].width() * Constants::g_ScalingSize / 2.5f, weaponIcons[0].height() * Constants::g_ScalingSize / 2.5f };
+	for (unsigned int i{ 0 }; i < 2; ++i) {
+		upgradeSlotOutlineColors[i] = BLACK;
+
+		m_upgradeSlotTitles[i].setFontSize(40.0f, m_font);
+		m_upgradeSlotTitles[i].setColor(BLACK);
+
+		m_upgradeSlotDescriptions[i].setFontSize(24.0f, m_font);
+		m_upgradeSlotDescriptions[i].setColor(BLACK);
+
+		m_upgradeSlotTitles[i].setPosition(Vector2{ s_UpgradeSlotOutlines[i].x + (s_UpgradeSlotOutlines[i].width - m_upgradeSlotTitles[i].textSize().x) / 2, s_UpgradeSlotOutlines[i].y + s_UpgradeSlotOutlines[i].height / 2.0f });
+
+		m_upgradeSlotDescriptions[i].setPosition(Vector2{ s_UpgradeSlotOutlines[i].x + (s_UpgradeSlotOutlines[i].width - m_upgradeSlotDescriptions[i].textSize().x) / 2, m_upgradeSlotTitles[i].textPosition().y + m_upgradeSlotTitles[i].textSize().y + m_upgradeSlotTitles[i].textSize().y / 2.0f });
+
+		weaponIconPositions[i].x = s_UpgradeSlotOutlines[i].x + (s_UpgradeSlotOutlines[i].width - weaponIconSize.x) / 2;
+		weaponIconPositions[i].y = s_UpgradeSlotOutlines[i].y + (s_UpgradeSlotOutlines[i].width / 100.0f) * 5.0f;
+	}
+
+	// Make outlines and text white on hover
+	for (unsigned int i{ 0 }; i < 2; ++i) {
+		Vector2 mousePosition{ GetMousePosition() };
+
+		if (CheckCollisionRecs(Rectangle{ mousePosition.x, mousePosition.y, 0.0f, 0.0f }, s_UpgradeSlotOutlines[i])) {
+			upgradeSlotOutlineColors[i] = WHITE;
+			m_upgradeSlotTitles[i].setColor(WHITE);
+			m_upgradeSlotDescriptions[i].setColor(WHITE);
+		}
+	}
+
+	// Renders
+	m_upgradeBoxTitle.render(m_font);
+	for (unsigned int i{ 0 }; i < 2; ++i) {
+		DrawRectangleLinesEx(s_UpgradeSlotOutlines[i], 4.0f, upgradeSlotOutlineColors[i]);
+
+		m_upgradeSlotTitles[i].render(m_font);
+
+		m_upgradeSlotDescriptions[i].render(m_font);
+
+		weaponIcons[i].render(weaponIconPositions[i], weaponIconSize);
+	}
+}
+
 void PlayingScene::initUI() {
 	m_xpBackgroundPos = { (Constants::g_ScreenWidth - s_xpBarWidth) / 2,
 						Constants::g_ScreenHeight - (s_xpBarHeight + s_xpBarBtmDistance) };
@@ -178,6 +282,10 @@ void PlayingScene::initUI() {
 	m_hpBarValue.setColor(RED);
 	m_hpBarValue.setFontSize(40.0f, GetFontDefault());
 	m_hpBarValue.setPosition(Vector2{ s_hpBarSideDistance, m_hpBackgroundPos.y + m_hpBackgroundSize.y + m_hpBarValue.spacing() + m_hpBarValue.textSize().y/2 });
+
+	m_upgradeBoxTitle.setColor(RED);
+	const Vector2 upgradeBoxTitlePosition{ (Constants::g_ScreenWidth - m_upgradeBoxTitle.textSize().x) / 2.0f, s_UpgradeBoxPosition.y + (s_UpgradeBoxSize.y / 100.0f) * 2.5f };
+	m_upgradeBoxTitle.setPosition(upgradeBoxTitlePosition);
 }
 
 void PlayingScene::renderUI() {
