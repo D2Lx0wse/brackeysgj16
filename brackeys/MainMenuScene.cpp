@@ -71,7 +71,7 @@ void MainMenuScene::render() {
 
 	ClearBackground(LIGHTGRAY);
 
-	m_titleTexture.render((Constants::g_ScreenWidth - m_titleTexture.width()) / 2.0f, (m_sceneHeight / 100.0f) * 5.0f);
+	m_titleTexture.render((Constants::g_ScreenWidth - m_titleTexture.width()*2.f)/2.f, (m_sceneHeight / 120.0f) * Constants::g_ScalingSize, Vector2{m_titleTexture.width()*2.f,m_titleTexture.height() * 2.f });
 
 	for (const auto& menuOption : m_menuOptions) {
 		menuOption.render(m_font);
@@ -100,7 +100,8 @@ void MainMenuScene::init() {
 	float verticalSpaceBetweenOptions{ Constants::g_FontSize64 / 2.0f };
 	for (auto& menuOption : m_menuOptions) {
 		menuOption.setPosition(
-			Vector2{ (Constants::g_ScreenWidth - menuOption.textSize().x) / 2.0f, (Constants::g_ScreenHeight - menuOption.textSize().y) / 2.0f + verticalSpaceBetweenOptions }
+			Vector2{ (Constants::g_ScreenWidth - menuOption.textSize().x) / 2.0f, 
+			(Constants::g_ScreenHeight - menuOption.textSize().y + 100.f) / 2.0f + verticalSpaceBetweenOptions }//100.f is a maagic value that offsets them down
 		);
 
 		verticalSpaceBetweenOptions += Constants::g_FontSize64;

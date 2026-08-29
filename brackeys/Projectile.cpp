@@ -47,7 +47,6 @@ void Projectile::calc(std::vector<Enemy>& enemies) {
 				enemy.decreaseHP(static_cast<int>(m_data.damage));
 				m_hits.push_back(&enemy.entity());
 			}
-			//enemy.kill();
 		}
 	}
 }
