@@ -46,7 +46,7 @@ public:
 	void setTint(Color tint) { m_tint = tint; }
 	void setAimData(Vector2 vector, float degrees) { m_aimingVector = vector; m_aimingDegrees = degrees; }
 
-	void setAttackingTrue() { if (m_weapon.type() != Weapon::Wand_2B && m_weapon.type() != Weapon::Wand_3C) m_isAttacking = true; }
+	void setAttackingTrue() { if (m_weapon.type() != Weapon::MaxType ) m_isAttacking = true; }
 
 	bool getShouldShoot() const { return m_shouldShoot; }
 	void setShouldShootFalse() { m_shouldShoot = false; }
