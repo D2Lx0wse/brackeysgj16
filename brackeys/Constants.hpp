@@ -13,6 +13,7 @@ namespace Constants {
 	constexpr float g_SpeedSlow{ 100.0f };
 	constexpr float g_SpeedMedium{ g_SpeedSlow * 1.5f };
 	constexpr float g_SpeedFast{ g_SpeedMedium * 1.5f };
+	constexpr float g_EnemySpeedMultiplier{ 0.9f };
 
 	constexpr int g_HpLow{ 100 };
 	constexpr int g_HpMedium{ g_HpLow * 2 };

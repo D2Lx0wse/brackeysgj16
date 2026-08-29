@@ -109,8 +109,8 @@ void Enemy::think() {
 		m_inputVector = Helper::Normalized(m_inputVector);
 	}
 	m_movementVector = Vector2{
-		m_inputVector.x * GetFrameTime() * m_speed,
-		m_inputVector.y * GetFrameTime() * m_speed }; //placholder speed scaling
+		m_inputVector.x * GetFrameTime() * m_speed * Constants::g_EnemySpeedMultiplier,
+		m_inputVector.y * GetFrameTime() * m_speed * Constants::g_EnemySpeedMultiplier}; //placholder speed scaling
 	m_entity.Move(m_movementVector);
 
 	
