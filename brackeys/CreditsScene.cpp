@@ -58,6 +58,9 @@ void CreditsScene::render() {
 
 	m_goBackText.render(m_font);
 
+	HideCursor();
+	m_cursorTexture.render(GetMousePosition(), Vector2{ 24.0f, 24.0f });
+
 	EndDrawing();
 }
 
@@ -90,6 +93,8 @@ void CreditsScene::init() {
 	}
 
 	m_goBackText.setPosition(Vector2{ (m_sceneWidth / 100.0f) * 2.0f, m_sceneHeight - m_goBackText.textSize().y});
+
+	m_cursorTexture.loadFromFile("assets/images/cursor.png");
 }
 
 void CreditsScene::exit() {

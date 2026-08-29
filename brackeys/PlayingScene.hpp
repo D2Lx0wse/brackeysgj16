@@ -65,6 +65,7 @@ private:
 	std::vector<Enemy> m_enemies{};
 
 	Brackeys2DTexture m_background;
+	Brackeys2DTexture m_cursorTexture{};
 
 	Vector2 m_xpBackgroundPos{};
 	Vector2 m_xpBackgroundSize{};

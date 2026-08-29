@@ -45,6 +45,9 @@ void TutorialScene::render() {
 
 	m_tutorialButton.render(m_font);
 
+	HideCursor();
+	m_cursorTexture.render(GetMousePosition(), Vector2{ 24.0f, 24.0f });
+
 	EndDrawing();
 }
 
@@ -71,6 +74,8 @@ void TutorialScene::init() {
 	m_TutorialTitle.setPosition(Vector2{ (Constants::g_ScreenWidth - m_TutorialTitle.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 5.f });
 	m_TutorialText.setPosition(Vector2{ (Constants::g_ScreenWidth - m_TutorialText.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 27.5f });
 	m_tutorialButton.setPosition(Vector2{ (Constants::g_ScreenWidth - m_tutorialButton.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 85.f });
+
+	m_cursorTexture.loadFromFile("assets/images/cursor.png");
 }
 
 void TutorialScene::exit() {

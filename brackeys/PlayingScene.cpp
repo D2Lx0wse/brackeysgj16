@@ -250,6 +250,9 @@ void PlayingScene::render() {
 	if (m_isInDeathScreen)
 		renderDeathScreen();
 
+	HideCursor();
+	m_cursorTexture.render(GetMousePosition(), Vector2{ 24.0f, 24.0f });
+
 	EndDrawing();
 }
 
@@ -283,6 +286,8 @@ void PlayingScene::init() {
 	}
 
 	m_background.loadFromFile("assets/images/grass.png");
+
+	m_cursorTexture.loadFromFile("assets/images/cursor_battle.png");
 
 	m_isInEndingSequence = false;
 	m_endingSequenceOver = false;
@@ -570,4 +575,6 @@ void PlayingScene::renderUI() {
 	m_enemiesLeft.setPosition(Vector2{ Constants::g_ScreenWidth - m_enemiesLeft.textSize().x - (Constants::g_ScreenWidth / 100.0f) * 2.0f, (Constants::g_ScreenHeight / 100.0f) * 1.5f });
 
 	m_enemiesLeft.render(m_font);
+
+	
 }

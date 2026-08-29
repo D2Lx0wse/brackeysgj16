@@ -175,7 +175,7 @@ void Player::changeWeaponAndStatistics() {
 	if (m_currentWeaponType != getEntity().getWeapon().type()) {
 		m_currentWeaponType = getEntity().getWeapon().type();
 
-		m_maxHp = Helper::getMaxHPBasedOnWeaponLevel(m_currentWeaponType);
+		m_maxHp = Helper::getMaxHPBasedOnWeaponLevel(m_currentWeaponType)*3/2;
 		heal();
 
 		m_maxXp = Helper::getMaxXPBasedOnWeaponLevel(m_currentWeaponType);

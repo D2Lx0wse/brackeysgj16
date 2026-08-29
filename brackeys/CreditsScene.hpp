@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "raylib.h"
-
+#include "Brackeys2DTexture.hpp"
 #include "Constants.hpp"
 #include "BrackeysText.hpp"
 #include "SceneTypes.hpp"
@@ -39,4 +39,6 @@ private:
 	std::vector<BrackeysText> m_credits{};
 
 	BrackeysText m_goBackText{};
+
+	Brackeys2DTexture m_cursorTexture{};
 };

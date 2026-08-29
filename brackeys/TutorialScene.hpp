@@ -1,7 +1,7 @@
 #pragma once
 
 #include "raylib.h"
-
+#include "Brackeys2DTexture.hpp"
 #include "Constants.hpp"
 #include "BrackeysText.hpp"
 #include "SceneTypes.hpp"
@@ -35,4 +35,6 @@ private:
 	BrackeysText m_TutorialText{ "placeholder tutorial text", m_font };
 
 	BrackeysText m_tutorialButton{ "placeholder play button", m_font };
+
+	Brackeys2DTexture m_cursorTexture{};
 };
