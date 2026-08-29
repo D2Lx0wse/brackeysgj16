@@ -153,6 +153,7 @@
     <ClCompile Include="PlayingScene.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Scenes.cpp" />
+    <ClCompile Include="TutorialScene.cpp" />
     <ClCompile Include="Vector2Overloads.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
@@ -172,6 +173,7 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="Scenes.hpp" />
     <ClInclude Include="SceneTypes.hpp" />
+    <ClInclude Include="TutorialScene.hpp" />
     <ClInclude Include="Vector2Overloads.hpp" />
     <ClInclude Include="Weapon.hpp" />
   </ItemGroup>

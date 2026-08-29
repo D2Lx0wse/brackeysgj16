@@ -24,7 +24,7 @@ void MainMenuScene::handleInput() {
 			Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f },
 			Rectangle{ m_menuOptions[0].textPosition().x, m_menuOptions[0].textPosition().y, m_menuOptions[0].textSize().x, m_menuOptions[0].textSize().y })
 			)
-			m_nextScene = SceneTypes::Playing;
+			m_nextScene = SceneTypes::Tutorial;
 
 
 		if (CheckCollisionRecs(

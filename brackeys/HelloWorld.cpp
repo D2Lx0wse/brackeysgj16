@@ -21,6 +21,8 @@ int main() {
 
 	case SceneTypes::Playing: scenes.playing.init(); break;
 
+	case SceneTypes::Tutorial: scenes.tutorial.init(); break;
+
 	default: break;
 	}
 
@@ -35,6 +37,8 @@ int main() {
 
 		case SceneTypes::Playing: scenes.playing.handleInput(); break;
 
+		case SceneTypes::Tutorial: scenes.tutorial.handleInput(); break;
+
 		default: break;
 		}
 
@@ -44,6 +48,8 @@ int main() {
 		case SceneTypes::Credits: currentScene = scenes.credits.logic(scenes);  break;
 
 		case SceneTypes::Playing: currentScene = scenes.playing.logic(scenes); break;
+
+		case SceneTypes::Tutorial: currentScene = scenes.tutorial.logic(scenes); break;
 
 		default: break;
 		}
@@ -55,6 +61,8 @@ int main() {
 
 		case SceneTypes::Playing: scenes.playing.render(); break;
 
+		case SceneTypes::Tutorial: scenes.tutorial.render(); break;
+
 		default: break;
 		}
 	}
@@ -65,6 +73,8 @@ int main() {
 	case SceneTypes::Credits: scenes.credits.exit(); break;
 
 	case SceneTypes::Playing: scenes.playing.exit(); break;
+
+	case SceneTypes::Tutorial: scenes.tutorial.exit(); break;
 
 	default: break;
 	}

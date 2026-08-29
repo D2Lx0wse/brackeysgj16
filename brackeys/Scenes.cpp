@@ -8,6 +8,8 @@ void initNextScene(SceneTypes nextScene, Scenes& scenes) {
 
 	case SceneTypes::Playing: scenes.playing.init(); break;
 
+	case SceneTypes::Tutorial: scenes.tutorial.init(); break;
+
 	default: break;
 	}
 }

@@ -2,6 +2,7 @@
 #include "Brackeys2DTexture.hpp"
 #include "Scenes.hpp"
 #include "Vector2Overloads.hpp"
+#include "Random.h"
 
 //this is so sad
 #include <iostream>
@@ -56,7 +57,7 @@ PlayingScene::PlayingScene()
 	, m_camera{}
 	, m_background{}
 	, m_player{}
-	, m_enemies{ {}, {} } // Number of enemies is a placeholder
+	, m_enemies{ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} } // Number of enemies is a placeholder
 	, m_choseLeftUpgradeSlot{ false }
 	, m_choseRightUpgradeSlot{ false }
 {
@@ -246,10 +247,12 @@ void PlayingScene::init() {
 
 	m_player.init();
 
-	const std::vector<Vector2> enemyPositions{ Vector2{1.0f, 1.0f}, { 200.0f, 150.0f } };
-	assert(enemyPositions.size() == m_enemies.size() && "Error: There aren't as many enemies as there are positions for them.\n");
+	//const std::vector<Vector2> enemyPositions{ Vector2{1.0f, 1.0f}, { 200.0f, 150.0f } };
+	Vector2 enemyPositionsRandom{};
+	//assert(enemyPositions.size() == m_enemies.size() && "Error: There aren't as many enemies as there are positions for them.\n");
 	for (unsigned int i{ 0 }; i < m_enemies.size(); ++i) {
-		m_enemies[i].init(enemyPositions[i]);
+		enemyPositionsRandom = Vector2{ static_cast<float>(Random::get(0, static_cast<int>(s_SceneWidth))), static_cast<float>(Random::get(0, static_cast<int>(s_SceneHeight))) };
+		m_enemies[i].init(enemyPositionsRandom);
 	}
 
 	m_background.loadFromFile("assets/images/grass.png");

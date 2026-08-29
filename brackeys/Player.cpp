@@ -26,6 +26,7 @@ void Player::init() {
 
 	m_isDead = false;
 
+	m_xp = 0;
 	m_entity.setWeapon(Weapon::Fist_1);
 	changeWeaponAndStatistics();
 
