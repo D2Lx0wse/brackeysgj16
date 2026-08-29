@@ -1,4 +1,4 @@
-#include "Player.hpp"
+﻿#include "Player.hpp"
 #include "Vector2Overloads.hpp"
 #include "Helper.hpp"
 #include <cmath>
@@ -28,7 +28,9 @@ void Player::init() {
 
 	m_xp = 0;
 	m_entity.setWeapon(Weapon::Fist_1);
+	m_maxHp = Helper::getMaxHPBasedOnWeaponLevel(m_currentWeaponType) * 3 / 2; //😭
 	changeWeaponAndStatistics();
+	heal();//😭
 
 	m_currProjectile = Projectile{};
 
