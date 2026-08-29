@@ -150,7 +150,10 @@ void Enemy::init(Vector2 position) {
 	m_entity.setTextures(s_HorizontalTexture, s_VerticalTexture);
 	m_entity.reloadTextures();
 
-	m_entity.setWeapon(static_cast<Weapon::Type>(Random::get(0, Weapon::MaxType-1)), true);
+	// If the enemy gets one of the ranged wands, reroll the weapon
+	do {
+		m_entity.setWeapon(static_cast<Weapon::Type>(Random::get(0, Weapon::MaxType - 1)), true);
+	} while (m_entity.getWeapon().type() == Weapon::Wand_2B || m_entity.getWeapon().type() == Weapon::Wand_3C);
 	changeWeaponAndStatistics();
 
 	if (Random::get(0, 1)) m_entity.setTint(Constants::g_FAKEFRIEND);
