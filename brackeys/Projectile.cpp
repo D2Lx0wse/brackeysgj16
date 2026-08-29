@@ -25,6 +25,7 @@ void Projectile::init(Vector2 direction, float degrees, Entity* owner, Data proj
 void Projectile::calc() {
 	if (m_data.lifetime < 0.f){	
 		m_isAlive = false; return;}
+	m_data.lifetime -= GetFrameTime();
 	m_position += 
 		m_direction * Constants::g_ScalingSize * GetFrameTime() * m_data.speed;
 

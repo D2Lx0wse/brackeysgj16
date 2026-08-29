@@ -120,7 +120,7 @@ void Player::think()
 	{	
 		Projectile::Data projDate{ Helper::getProjectileDataBasedOnWeaponType(m_currentWeaponType) };
 		if (projDate.speed == -1.f){}
-		else {
+		else if (!m_currProjectile.isAlive()){
 			m_currProjectile.init(m_aimVector, m_aimDegrees, &m_entity, projDate, m_entity.getPosition());
 		}
 
