@@ -134,8 +134,13 @@ void Entity::slash(std::vector<Enemy>& enemies) {//it may look weird... but it w
 			}
 		};
 
+
+		float slashRadius{ m_weapon.attackTexture().width() };
+		if (m_weapon.type() == Weapon::Wand_3D)
+			slashRadius = m_weapon.attackTexture().height();
+
 		for (auto& enemy : enemies) {
-			if (CheckCollisionCircles(slashposition, m_weapon.attackTexture().width() / 2.f, enemy.entity().getPosition(), enemy.entity().getCircle().radius)) {
+			if (CheckCollisionCircles(slashposition, slashRadius / 2.f, enemy.entity().getPosition(), enemy.entity().getCircle().radius)) {
 #ifdef _DEBUG
 					std::cout << "Enemy hit!\n ";
 #endif
@@ -165,7 +170,11 @@ void Entity::slash(Player& player) {
 			}
 		};
 
-		if (CheckCollisionCircles(slashposition, m_weapon.attackTexture().width() / 2.f, player.getEntity().getPosition(), player.getEntity().getCircle().radius)) {
+		float slashRadius{ m_weapon.attackTexture().width() };
+		if (m_weapon.type() == Weapon::Wand_3D)
+			slashRadius = m_weapon.attackTexture().height();
+
+		if (CheckCollisionCircles(slashposition, slashRadius / 2.f, player.getEntity().getPosition(), player.getEntity().getCircle().radius)) {
 #ifdef _DEBUG
 			std::cout << "Player hit!\n ";
 #endif

@@ -92,6 +92,14 @@ void PlayingScene::handleInput() {
 	}
 
 #ifdef _DEBUG
+	if (IsKeyPressed(KEY_T)) {
+		int enemiesAliveCounter{ 20 };
+		for (const auto& enemy : m_enemies)
+			if (enemy.isDead())
+				--enemiesAliveCounter;
+		std::cout << "Enemies alive: " << enemiesAliveCounter << '\n';
+	}
+
 	if (IsKeyPressed(KEY_L))
 		m_player.decreaseHP(50);
 
@@ -111,6 +119,16 @@ void PlayingScene::handleInput() {
 #endif
 }
 SceneTypes PlayingScene::logic(Scenes& scenes) {
+	bool areAllEnemiesDead{ true };
+	for (const auto& enemy : m_enemies)
+		areAllEnemiesDead = enemy.isDead();
+
+	if (areAllEnemiesDead) {
+#ifdef _DEBUG
+		std::cout << "You win!\n";
+#endif
+		m_nextScene = SceneTypes::MainMenu;
+	}
 	if (m_nextScene != SceneTypes::MaxValue) {
 		initNextScene(m_nextScene, scenes);
 
