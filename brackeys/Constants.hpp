@@ -23,6 +23,8 @@ namespace Constants {
 	constexpr int g_XpMedium{ g_XpLow * 3 };
 	constexpr int g_XpHigh{ g_XpMedium * 3 };
 
+	constexpr int g_EnemyAttackEffort{ 10 }; //every frame a number between -this and 1 is picked, if 1 enemy attack
+
 	constexpr Color g_DARKRED{ 100, 0, 0 ,255 };
 	constexpr Color g_QUARTERALPHA{ 255, 255, 255, 64 };
 	constexpr Color g_FAKEFRIEND{ 99, 155, 255, 255 };

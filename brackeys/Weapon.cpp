@@ -3,8 +3,8 @@
 #include <assert.h>
 
 const std::vector<int> Weapon::s_WeaponDamages{
-	25,			// Fist
-	50, 100, 90,// Swords
+	12,			// Fist
+	40, 100, 70,// Swords
 	0, 0, 70,	// Staffs
 	10			// Placeholder
 };

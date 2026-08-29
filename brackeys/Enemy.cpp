@@ -33,7 +33,7 @@ void Enemy::generateInput(const Vector2& playerPosition) {
 		return;
 
 	Vector2 randomDirection{};
-	
+	int gambleAttack{ Random::get(-Constants::g_EnemyAttackEffort, 1) };
 	switch (m_mode) {
 	case Mode::Roaming:
 		if (m_clock < 0.0) {
@@ -68,7 +68,10 @@ void Enemy::generateInput(const Vector2& playerPosition) {
 			Rectangle{ playerPosition.x, playerPosition.y, m_entity.getRadius() * 2.0f, m_entity.getRadius() * 2.0f }))
 			m_inputVector = Vector2{ 0.0f, 0.0f };
 
-		m_willAttack = Random::get(0, 1);
+		
+		if (gambleAttack < 0)
+			gambleAttack = 0;
+		m_willAttack = gambleAttack;
 		if (m_willAttack) {
 			Vector2 currpos{ entity().getPosition() };
 			Vector2 centerOffset{ entity().getRadius(), entity().getRadius() };
