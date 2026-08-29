@@ -60,6 +60,9 @@ PlayingScene::PlayingScene()
 	, m_enemies{ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} } // Number of enemies is a placeholder
 	, m_choseLeftUpgradeSlot{ false }
 	, m_choseRightUpgradeSlot{ false }
+	, m_isInEndingSequence{ false }
+	, m_endingSequenceOver{ false }
+	, m_timeDuringEndingSequence{}
 {
 }
 
@@ -107,8 +110,8 @@ void PlayingScene::handleInput() {
 		m_player.increaseXP(50);
 
 	if (IsKeyPressed(KEY_Q)) {
-		m_enemies[0].kill();
-		//m_enemies[1].kill();
+		for (auto& enemy : m_enemies)
+			enemy.death();
 	}
 
 	if (IsKeyPressed(KEY_Z)) {
@@ -119,16 +122,10 @@ void PlayingScene::handleInput() {
 #endif
 }
 SceneTypes PlayingScene::logic(Scenes& scenes) {
-	bool areAllEnemiesDead{ true };
-	for (const auto& enemy : m_enemies)
-		areAllEnemiesDead = enemy.isDead();
-
-	if (areAllEnemiesDead) {
-#ifdef _DEBUG
-		std::cout << "You win!\n";
-#endif
+	if (!m_endingSequenceText.size()) {
 		m_nextScene = SceneTypes::MainMenu;
 	}
+
 	if (m_nextScene != SceneTypes::MaxValue) {
 		initNextScene(m_nextScene, scenes);
 
@@ -192,6 +189,13 @@ SceneTypes PlayingScene::logic(Scenes& scenes) {
 			return SceneTypes::Playing;
 	}
 
+	bool areAllEnemiesDead{ true };
+	for (const auto& enemy : m_enemies)
+		areAllEnemiesDead = enemy.isDead();
+
+	if (areAllEnemiesDead)
+		m_isInEndingSequence = true;
+
 	m_player.think(m_enemies);
 
 	
@@ -235,7 +239,10 @@ void PlayingScene::render() {
 
 	renderWorld(m_camera);
 
-	renderUI();
+	if (!m_isInEndingSequence)
+		renderUI();
+	else
+		renderEndingSequence();
 
 	if (m_isInUpgradeScreen)
 		renderUpgrade();
@@ -276,10 +283,15 @@ void PlayingScene::init() {
 	}
 
 	m_background.loadFromFile("assets/images/grass.png");
+
+	m_isInEndingSequence = false;
+	m_endingSequenceOver = false;
+	m_timeDuringEndingSequence = 0.0;
+
 	initUI();
 }
 void PlayingScene::exit() {
-	
+	m_font = Font{};
 }
 
 //rendering stuff
@@ -430,6 +442,14 @@ void PlayingScene::renderDeathScreen() {
 	m_deathScreenTitle.render(m_font);
 }
 
+
+void PlayingScene::renderEndingSequence() {
+	if (m_endingSequenceText.size()) {
+		m_endingSequenceText[m_endingSequenceText.size() - 1].render(m_font);
+		m_endingSequenceText.pop_back();
+	}
+}
+
 void PlayingScene::initUI() {
 	m_xpBackgroundPos = { (Constants::g_ScreenWidth - s_xpBarWidth) / 2,
 						Constants::g_ScreenHeight - (s_xpBarHeight + s_xpBarBtmDistance) };
@@ -459,6 +479,10 @@ void PlayingScene::initUI() {
 	m_hpBarValue.setFontSize(40.0f, GetFontDefault());
 	m_hpBarValue.setPosition(Vector2{ s_hpBarSideDistance, m_hpBackgroundPos.y + m_hpBackgroundSize.y + m_hpBarValue.spacing() + m_hpBarValue.textSize().y/2 });
 
+	m_enemiesLeft.setColor(WHITE);
+	m_enemiesLeft.setFontSize(40.0f, GetFontDefault());
+
+
 	m_upgradeBoxTitle.setColor(RED);
 	const Vector2 upgradeBoxTitlePosition{ (Constants::g_ScreenWidth - m_upgradeBoxTitle.textSize().x) / 2.0f, s_UpgradeBoxPosition.y + (s_UpgradeBoxSize.y / 100.0f) * 2.5f };
 	m_upgradeBoxTitle.setPosition(upgradeBoxTitlePosition);
@@ -477,6 +501,37 @@ void PlayingScene::initUI() {
 	m_deathScreenTitle.setFontSize(Constants::g_FontSize64 * 1.5f, m_font);
 	m_deathScreenTitle.setColor(WHITE);
 	m_deathScreenTitle.setPosition(Vector2{ (Constants::g_ScreenWidth - m_deathScreenTitle.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 33.3f });
+
+	// Ending sequence init
+	const std::vector<std::string> endingDialogue{
+		"..Is a nice trip back to the title screen :)",
+		"What you will actually get...",
+		"This game isn't actually fair!",
+		"There is no answer.",
+		"And the answer is,",
+		"You may ask, \"Why?\"",
+		" ",
+		"It was all a ploy to trick you.",
+		"Same thing for the \"team based nature\".",
+		"and crush them.",
+		"It was only mentioned to get your hopes up,",
+		"There is no boss fight.",
+		"....Fine, I'll give you the truth.",
+		"...",
+		" ",
+		"It's about to swarm you any second now!",
+		"Well, are you ready for that incredible boss fight?!",
+		"Huh, you actually manged to kill all of them..." };
+	/*
+		m_endingSequenceText.setText("");
+		*/
+
+	for (unsigned int i{ 0 }; i < endingDialogue.size(); ++i) {
+		m_endingSequenceText.push_back({ endingDialogue[i], m_font});
+		m_endingSequenceText[i].setFontSize(28.0f, m_font);
+		m_endingSequenceText[i].setPosition(Vector2{(Constants::g_ScreenWidth - m_endingSequenceText[i].textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 20.0f});
+		m_endingSequenceText[i].setColor(DARKBLUE);
+	}
 }
 
 void PlayingScene::renderUI() {
@@ -502,4 +557,17 @@ void PlayingScene::renderUI() {
 	std::string hpString{ std::to_string(m_player.getHP()) + "/\n" + std::to_string(m_player.getMaxHP()) };
 	m_hpBarValue.setText(hpString);
 	m_hpBarValue.render(GetFontDefault());
+
+	// Enemies left
+	int enemiesLeftCounter{ 0 };
+	for (const auto& enemy : m_enemies)
+		if (!enemy.isDead())
+			++enemiesLeftCounter;
+
+	std::string enemiesLeftString{ "Enemies left: " + std::to_string(enemiesLeftCounter) + '/' + std::to_string(m_enemies.size())};
+
+	m_enemiesLeft.setText(enemiesLeftString);
+	m_enemiesLeft.setPosition(Vector2{ Constants::g_ScreenWidth - m_enemiesLeft.textSize().x - (Constants::g_ScreenWidth / 100.0f) * 2.0f, (Constants::g_ScreenHeight / 100.0f) * 1.5f });
+
+	m_enemiesLeft.render(m_font);
 }

@@ -82,6 +82,8 @@ private:
 	BrackeysText m_hpBarTitle{};
 	BrackeysText m_hpBarValue{};
 
+	BrackeysText m_enemiesLeft{};
+
 	bool m_isInUpgradeScreen{ false };
 
 	// Used to determine which upgrade is chosen in handleInput(). Then logic() will check both of them to see which weapon upgrade to give the player
@@ -104,10 +106,19 @@ private:
 	BrackeysText m_deathScreenFlavor{ "", m_font };
 	BrackeysText m_deathScreenTitle{ "You died.", m_font };
 
+	bool m_isInEndingSequence{ false };
+	bool m_endingSequenceOver{ false };
+
+	double m_timeDuringEndingSequence{};
+
+	std::vector<BrackeysText> m_endingSequenceText{};
+
 	void renderWorld(Camera2D& camera);
 
 	void renderUpgrade();
 	void renderDeathScreen();
+
+	void renderEndingSequence();
 
 	void renderUI();
 	void initUI();
