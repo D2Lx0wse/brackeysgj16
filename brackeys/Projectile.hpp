@@ -4,7 +4,6 @@
 #include <vector>
 #include <string_view>
 #include "Enemy.hpp"
-
 class Projectile
 {
 public:
@@ -34,6 +33,7 @@ private:
 	float m_degrees{};
 	Entity* m_owner{nullptr};
 	Data m_data{};
+
 
 	bool m_isAlive{false};
 	std::vector<Entity*> m_hits{nullptr};

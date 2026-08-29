@@ -99,7 +99,7 @@ void Entity::attack() {
 
 	if (GetTime() < m_attackStartTime + m_weapon.attackDuration()) {
 
-		std::cout << "Curr time is " << GetTime() << " and we started attacking at " << m_attackStartTime << " and we will attack again at " << m_attackStartTime + m_weapon.attackDuration() << "\n";
+		//std::cout << "Curr time is " << GetTime() << " and we started attacking at " << m_attackStartTime << " and we will attack again at " << m_attackStartTime + m_weapon.attackDuration() << "\n";
 		m_shouldGetTime = false;
 
 	}

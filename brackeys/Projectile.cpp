@@ -34,7 +34,7 @@ void Projectile::calc(std::vector<Enemy>& enemies) {
 		m_direction * Constants::g_ScalingSize * GetFrameTime() * m_data.speed;
 
 	for (auto& enemy : enemies) {
-		if (CheckCollisionCircles(m_position, m_texture.width() / 2.f, enemy.entity().getCircle().center, enemy.entity().getCircle().radius)) {
+		if (CheckCollisionCircles(m_position, m_texture.width() / 2.f, enemy.entity().getPosition(), enemy.entity().getCircle().radius)) {
 			bool haveWeAlreadyHitThis{ false };
 			for (Entity*& hit : m_hits) {
 				if (hit == &enemy.entity()) {
@@ -43,6 +43,7 @@ void Projectile::calc(std::vector<Enemy>& enemies) {
 			}
 			if (haveWeAlreadyHitThis) { continue; }
 			else {
+				std::cout << "Enemy hit!\n ";
 				enemy.decreaseHP(static_cast<int>(m_data.damage));
 				m_hits.push_back(&enemy.entity());
 			}
