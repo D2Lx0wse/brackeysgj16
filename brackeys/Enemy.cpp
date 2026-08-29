@@ -10,6 +10,7 @@
 
 Enemy::Enemy()
 	: m_mode{ Mode::Roaming }
+	, m_currentWeaponType{ Weapon::MaxType }
 	, m_isDead { false }
 	, m_clock { -1.0 }
 	, m_randomDuration{}
@@ -19,6 +20,7 @@ Enemy::Enemy()
 
 Enemy::Enemy(const Enemy& enemy) {
 	m_mode = enemy.m_mode;
+	m_currentWeaponType = enemy.m_currentWeaponType;
 	m_isDead = enemy.m_isDead;
 	m_clock = enemy.m_clock;
 	m_randomDuration = enemy.m_randomDuration;
@@ -131,6 +133,8 @@ void Enemy::render() {
 
 void Enemy::init(Vector2 position) {
 	m_mode = Mode::Roaming;
+
+	m_currentWeaponType = Weapon::MaxType;
 
 	m_isDead = false;
 

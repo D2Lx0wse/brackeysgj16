@@ -57,7 +57,7 @@ private:
 
 	Entity m_entity{};
 
-	Weapon::Type m_currentWeaponType{};
+	Weapon::Type m_currentWeaponType{ Weapon::MaxType };
 
 	// Hp and speed technically don't need to have initializaiton values since they are assigned values properly in Enemy::init()
 	int m_hp{ 0 };
