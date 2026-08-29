@@ -27,6 +27,9 @@ public:
 
 	void init(Vector2 position);
 
+	// Death operations, such as setting m_isDead to true and the position to outside the scene
+	void death();
+
 	// Getters / Setters
 	void setPosition(Vector2 position) { m_entity.setPosition(position); }
 
@@ -37,6 +40,10 @@ public:
 
 	int getHP() const { return m_hp; }
 	int getMaxHP() const { return m_maxHp; }
+	bool isDead() const { return m_isDead; }
+
+	// Give out XP based on current weapon type
+	int dropXP();
 
 	void heal() { m_hp = m_maxHp; }
 	void kill() { m_hp = 0; }
@@ -54,6 +61,8 @@ private:
 	// Hp and speed technically don't need to have initializaiton values since they are assigned values properly in Enemy::init()
 	int m_hp{ 0 };
 	int m_maxHp{ 100 };
+
+	bool m_isDead{ false };
 
 	// Enemy speed
 	float m_speed{ Constants::g_SpeedSlow };

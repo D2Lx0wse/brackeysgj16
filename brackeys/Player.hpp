@@ -14,6 +14,8 @@ public:
 	void render();
 	void init();
 
+	void death();
+
 	//getters
 	int getMaxXP() const { return m_maxXp; }
 	int getXP() const { return m_xp; }
@@ -22,8 +24,9 @@ public:
 
 	int getMaxHP() const { return m_maxHp; }
 	int getHP() const { return m_hp; }
+	bool isDead() const { return m_isDead; }
 	void heal() { m_hp = m_maxHp; }
-	void kill() { m_hp = 0; }
+	void decreaseHP(int hp);
 
 	//returns REFERENCE to player entity
 	Entity& getEntity() { return m_entity; }
@@ -38,6 +41,8 @@ private:
 	// Default values for xp, hp and speed technically not needed since they get the correct values in Player::init()
 	int m_xp{ 0 };
 	int m_maxXp{ 100 };
+
+	bool m_isDead{ false };
 	
 	int m_hp{ 100 };
 	int m_maxHp{ 100 };

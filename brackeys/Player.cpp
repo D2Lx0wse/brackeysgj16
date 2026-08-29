@@ -21,10 +21,13 @@ void Player::init() {
 
 	getEntity().setTextures("assets/images/player_horiz.png", "assets/images/player_vert.png");
 	getEntity().reloadTextures();
-	m_entity.setWeapon(Weapon::Fist_1);
-	changeWeaponAndStatistics();
 	getEntity().setTint(WHITE);
 	std::cout << "player birth" << std::endl;
+
+	m_isDead = false;
+
+	m_entity.setWeapon(Weapon::Fist_1);
+	changeWeaponAndStatistics();
 
 	m_currProjectile = Projectile{};
 
@@ -33,6 +36,9 @@ void Player::init() {
 
 void Player::takeInput(const Camera2D& camera)
 {
+	if (isDead())
+		return;
+
 	m_inputVector = Vector2{};
 	if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) {
 		m_inputVector += Vector2{ 0.0f,-1.0f };
@@ -89,6 +95,9 @@ void Player::takeInput(const Camera2D& camera)
 
 void Player::think()
 {
+	if (isDead())
+		return;
+
 	changeWeaponAndStatistics();
 
 	if (Helper::Length(m_inputVector) > 1) {
@@ -126,6 +135,9 @@ void Player::think()
 
 void Player::render()
 {
+	if (isDead())
+		return;
+
 	//draw arrow here
 	//std::cout << "Aim angle CC: " << m_aimDegrees << "\n";
 	m_arrow.render(getEntity().getPosition() + m_aimVector * Constants::g_ScalingSize * 10.0f , Vector2{}, m_aimDegrees, Constants::g_QUARTERALPHA);
@@ -143,6 +155,17 @@ void Player::increaseXP(int xp) {
 
 	if (m_xp > m_maxXp)
 		m_xp = m_maxXp;
+}
+
+void Player::decreaseHP(int hp) {
+	m_hp -= hp;
+
+	if (m_hp < 0)
+		m_hp = 0;
+}
+
+void Player::death() {
+	m_isDead = true;
 }
 
 // If weapon type changed, set m_currentWeaponType and statistics accordingly

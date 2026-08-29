@@ -10,6 +10,7 @@
 
 Enemy::Enemy()
 	: m_mode{ Mode::Roaming }
+	, m_isDead { false }
 	, m_clock { -1.0 }
 	, m_randomDuration{}
 	, m_willAttack{ false }
@@ -18,12 +19,16 @@ Enemy::Enemy()
 
 Enemy::Enemy(const Enemy& enemy) {
 	m_mode = enemy.m_mode;
+	m_isDead = enemy.m_isDead;
 	m_clock = enemy.m_clock;
 	m_randomDuration = enemy.m_randomDuration;
 	m_willAttack = enemy.m_willAttack;
 }
 
 void Enemy::generateInput(const Vector2& playerPosition) {
+	if (isDead())
+		return;
+
 	Vector2 randomDirection{};
 	
 	switch (m_mode) {
@@ -95,6 +100,9 @@ void Enemy::generateInput(const Vector2& playerPosition) {
 }
 
 void Enemy::think() {
+	if (isDead())
+		return;
+
 	changeWeaponAndStatistics();
 
 	if (Helper::Length(m_inputVector) > 1) {
@@ -115,11 +123,16 @@ void Enemy::think() {
 }
 
 void Enemy::render() {
+	if (isDead())
+		return;
+
 	m_entity.Render();
 }
 
 void Enemy::init(Vector2 position) {
 	m_mode = Mode::Roaming;
+
+	m_isDead = false;
 
 	m_entity.setPosition(position);
 
@@ -135,6 +148,13 @@ void Enemy::init(Vector2 position) {
 	else m_entity.setTint(RED);
 }
 
+void Enemy::death() {
+	m_isDead = true;
+
+	// Outside the scene so that it is not visible/interactable
+	m_entity.setPosition(Vector2{ -1000.0f, -1000.0f });
+}
+
 void Enemy::setMode(Mode mode) {
 	if (m_mode != mode) {
 		m_mode = mode;
@@ -144,6 +164,27 @@ void Enemy::setMode(Mode mode) {
 		m_inputVector = Vector2{ 0.0f, 0.0f };
 		m_randomDuration = double{};
 	}
+}
+
+int Enemy::dropXP() {
+	int xpAmount{};
+
+	switch (m_entity.getWeapon().type()) {
+	case Weapon::Fist_1:
+	case Weapon::MaxType:
+		xpAmount = Constants::g_XpLow / 4; break;
+	case Weapon::Sword_2A:
+	case Weapon::Wand_2B:
+		xpAmount = Constants::g_XpMedium / 4; break;
+	case Weapon::Sword_3A:
+	case Weapon::Sword_3B:
+	case Weapon::Wand_3C:
+	case Weapon::Wand_3D:
+		xpAmount = Constants::g_XpHigh / 5; break;
+	default: break;
+	}
+
+	return xpAmount;
 }
 
 // If weapon type changed, set m_currentWeaponType and statistics accordingly

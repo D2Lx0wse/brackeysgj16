@@ -92,10 +92,21 @@ void PlayingScene::handleInput() {
 
 #ifdef _DEBUG
 	if (IsKeyPressed(KEY_L))
-		m_isInDeathScreen = !m_isInDeathScreen;
+		m_player.decreaseHP(50);
 
 	if (IsKeyPressed(KEY_U))
 		m_player.increaseXP(50);
+
+	if (IsKeyPressed(KEY_Q)) {
+		m_enemies[0].kill();
+		//m_enemies[1].kill();
+	}
+
+	if (IsKeyPressed(KEY_Z)) {
+		std::cout << m_player.getHP() << '/' << m_player.getMaxHP() << '\n';
+		std::cout << m_player.getXP() << '/' << m_player.getMaxXP() << '\n';
+	}
+
 #endif
 }
 SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scenes) {
@@ -105,6 +116,11 @@ SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scenes) {
 		exit();
 
 		return m_nextScene;
+	}
+
+	if (m_player.getHP() <= 0 && !m_player.isDead()) {
+		m_player.death();
+		m_isInDeathScreen = true;
 	}
 
 	// If player isn't at the max level and has reached max xp, ready the upgrade screen
@@ -158,9 +174,18 @@ SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scenes) {
 	}
 
 	m_player.think();
+
 	
-	for (auto& enemy : m_enemies)
-		enemy.think();
+	for (auto& enemy : m_enemies) {
+		// If enemy should be dead but the flag hasn't been set yet, call the death member function to render the enemy dead and give xp to the player
+		if (enemy.getHP() <= 0 && !enemy.isDead()) {
+			enemy.death();
+			m_player.increaseXP(enemy.dropXP());
+		}
+		// Otherwise do as normal
+		else
+			enemy.think();
+	}
 
 	keepEntityInBounds(m_player.getEntity());
 	
@@ -267,7 +292,9 @@ void PlayingScene::renderUpgrade() {
 
 
 	// Gets info on the upgrades based on current weapon
-	static Weapon::Type currentWeaponType{ Weapon::MaxType };
+	// This not being static worsens performance but fixes a bug.
+	// The bug: if it's static, the value doesn't reset, this causes text to not reappear for the first upgrade when you restart the game
+	Weapon::Type currentWeaponType{ Weapon::MaxType };
 	if (currentWeaponType != m_player.getEntity().getWeapon().type()) {
 		currentWeaponType = m_player.getEntity().getWeapon().type();
 
