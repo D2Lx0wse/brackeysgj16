@@ -51,6 +51,7 @@ public:
 
 	void attack();
 	void shoot();
+	void slash();
 
 private:
 	Vector2 m_position{};

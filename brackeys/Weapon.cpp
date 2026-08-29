@@ -25,7 +25,7 @@ const std::vector<std::string_view> Weapon::s_AttackTextureFilepaths{
 };
 
 const std::vector<double> Weapon::s_AttackDurations{
-	0.5, // Fists, Swords, placeholder
+	1.0, // Fists, Swords, placeholder
 	3.0, // Staffs
 };
 

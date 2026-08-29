@@ -110,6 +110,7 @@ void Player::think(std::vector<Enemy>& enemies)
 	m_entity.Move(m_movementVector);
 
 	if (m_willAttack) {
+		m_entity.slash();
 		m_entity.setAttackingTrue();
 		m_entity.shoot();
 		m_willAttack = false;

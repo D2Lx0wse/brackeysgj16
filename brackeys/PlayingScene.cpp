@@ -250,8 +250,10 @@ void PlayingScene::init() {
 	//const std::vector<Vector2> enemyPositions{ Vector2{1.0f, 1.0f}, { 200.0f, 150.0f } };
 	Vector2 enemyPositionsRandom{};
 	//assert(enemyPositions.size() == m_enemies.size() && "Error: There aren't as many enemies as there are positions for them.\n");
-	for (unsigned int i{ 0 }; i < m_enemies.size(); ++i) {
+	m_enemies.clear();
+	for (unsigned int i{ 0 }; i < 20u; ++i) {
 		enemyPositionsRandom = Vector2{ static_cast<float>(Random::get(0, static_cast<int>(s_SceneWidth))), static_cast<float>(Random::get(0, static_cast<int>(s_SceneHeight))) };
+		m_enemies.push_back(Enemy{});
 		m_enemies[i].init(enemyPositionsRandom);
 	}
 

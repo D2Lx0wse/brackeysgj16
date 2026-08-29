@@ -45,6 +45,7 @@ void Entity::Render() {
 
 	m_weapon.texture().render(weaponPosition, weaponSize, weaponRotation);
 
+	//good graphics
 	if (m_isAttacking)
 		m_weapon.attackTexture().render(
 			getPosition()  +
@@ -57,7 +58,10 @@ void Entity::Render() {
 				- (getRadius() * 2.0f)
 				) / 2.0f
 			}
-		, Vector2{}, m_aimingDegrees);//aiming degrees here last thing
+		, Vector2{}, m_aimingDegrees,//aiming degrees here last thing
+			Color{ 255,255,255, static_cast<unsigned char>(((std::pow(((m_attackStartTime - GetTime() + m_weapon.attackDuration() ) / m_weapon.attackDuration() ), 10.0f)*200.f)+
+														((m_attackStartTime - GetTime() + m_weapon.attackDuration()) / m_weapon.attackDuration())*55.f) )}
+			);
 }
 
 void Entity::Move(float vectorX, float vectorY) {
@@ -106,6 +110,12 @@ void Entity::attack() {
 	else {//finish attack
 		m_isAttacking = false;
 		m_shouldGetTime = true;
+	}
+}
+
+void Entity::slash() {//it may look weird... but it works
+	if (!m_isAttacking) {
+		std::cout << "slash sound effect\n";
 	}
 }
 
