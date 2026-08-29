@@ -68,7 +68,7 @@ private:
 	std::string m_textureHorizPath{};
 	std::string m_textureVertPath{};
 	float m_radius{};
-	Color m_tint;
+	Color m_tint{};
 	Weapon m_weapon{};
 	bool m_isAttacking{ false };
 	bool m_shouldShoot{ false };

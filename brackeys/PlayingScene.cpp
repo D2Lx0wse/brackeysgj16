@@ -57,11 +57,12 @@ PlayingScene::PlayingScene()
 	, m_camera{}
 	, m_background{}
 	, m_player{}
+	, m_isInvincible{ true }
+	, m_invincibilityTime{}
 	, m_enemies{ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} } // Number of enemies is a placeholder
 	, m_choseLeftUpgradeSlot{ false }
 	, m_choseRightUpgradeSlot{ false }
 	, m_isInEndingSequence{ false }
-	, m_endingSequenceOver{ false }
 	, m_timeDuringEndingSequence{}
 {
 }
@@ -196,7 +197,29 @@ SceneTypes PlayingScene::logic(Scenes& scenes) {
 	if (areAllEnemiesDead)
 		m_isInEndingSequence = true;
 
+	if (m_isInEndingSequence) {
+		/*
+		if (m_timeDuringEndingSequence <= 1.0) {
+			m_endingSequenceText.pop_back();
+			m_timeDuringEndingSequence = GetTime();
+		}*/
+
+		if (GetTime() >= m_timeDuringEndingSequence + 5.0) {
+			m_endingSequenceText.pop_back();
+			m_timeDuringEndingSequence = GetTime();
+		}
+	}
+
 	m_player.think(m_enemies);
+
+	if (m_isInvincible) {
+		m_invincibilityTime = GetTime();
+
+		m_isInvincible = false;
+	}
+
+	if (GetTime() <= m_invincibilityTime + 2.0)
+		m_player.heal();
 
 	
 	for (auto& enemy : m_enemies) {
@@ -204,6 +227,7 @@ SceneTypes PlayingScene::logic(Scenes& scenes) {
 		if (enemy.getHP() <= 0 && !enemy.isDead()) {
 			enemy.death();
 			m_player.increaseXP(enemy.dropXP());
+			m_player.healBy(m_player.getMaxHP() / 4);
 		}
 		// Otherwise do as normal
 		else
@@ -275,6 +299,9 @@ void PlayingScene::init() {
 
 	m_player.init();
 
+	m_isInvincible = true;
+	m_invincibilityTime = 0.0;
+
 	//const std::vector<Vector2> enemyPositions{ Vector2{1.0f, 1.0f}, { 200.0f, 150.0f } };
 	Vector2 enemyPositionsRandom{};
 	//assert(enemyPositions.size() == m_enemies.size() && "Error: There aren't as many enemies as there are positions for them.\n");
@@ -290,7 +317,7 @@ void PlayingScene::init() {
 	m_cursorTexture.loadFromFile("assets/images/cursor_battle.png");
 
 	m_isInEndingSequence = false;
-	m_endingSequenceOver = false;
+	
 	m_timeDuringEndingSequence = 0.0;
 
 	initUI();
@@ -451,7 +478,6 @@ void PlayingScene::renderDeathScreen() {
 void PlayingScene::renderEndingSequence() {
 	if (m_endingSequenceText.size()) {
 		m_endingSequenceText[m_endingSequenceText.size() - 1].render(m_font);
-		m_endingSequenceText.pop_back();
 	}
 }
 
@@ -527,9 +553,6 @@ void PlayingScene::initUI() {
 		"It's about to swarm you any second now!",
 		"Well, are you ready for that incredible boss fight?!",
 		"Huh, you actually manged to kill all of them..." };
-	/*
-		m_endingSequenceText.setText("");
-		*/
 
 	for (unsigned int i{ 0 }; i < endingDialogue.size(); ++i) {
 		m_endingSequenceText.push_back({ endingDialogue[i], m_font});
@@ -542,11 +565,18 @@ void PlayingScene::initUI() {
 void PlayingScene::renderUI() {
 	// XP bar
 	m_xpBarLength = m_player.getXP() / static_cast<float>(m_player.getMaxXP()) *m_xpBackgroundInnerSize.x;
+	if (m_player.getMaxXP() == 1)
+		m_xpBarLength = m_xpBackgroundInnerSize.x;
+
 	DrawRectangleV(m_xpBackgroundPos, m_xpBackgroundSize, ORANGE);
 	DrawRectangleV(m_xpBackgroundInnerPos, m_xpBackgroundInnerSize, GRAY);
 	DrawRectangleV(m_xpBackgroundInnerPos, Vector2{ m_xpBarLength, m_xpBackgroundInnerSize.y }, YELLOW);
 	m_xpBarTitle.render(GetFontDefault());
+	
 	std::string xpString{ std::to_string(m_player.getXP()) + "/" + std::to_string(m_player.getMaxXP()) };
+	if (m_player.getMaxXP() == 1)
+		xpString = "MAX";
+
 	m_xpBarValue.setText(xpString);
 	m_xpBarValue.setPosition(m_xpBackgroundPos + Vector2{ 0.0f, -m_xpBarTitle.spacing() - m_xpBarTitle.textSize().y });
 	m_xpBarValue.render(GetFontDefault());

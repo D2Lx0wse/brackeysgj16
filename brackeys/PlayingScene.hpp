@@ -62,6 +62,9 @@ private:
 
 	Player m_player;
 
+	bool m_isInvincible{ true };
+	double m_invincibilityTime{};
+
 	std::vector<Enemy> m_enemies{};
 
 	Brackeys2DTexture m_background;
@@ -108,7 +111,6 @@ private:
 	BrackeysText m_deathScreenTitle{ "You died.", m_font };
 
 	bool m_isInEndingSequence{ false };
-	bool m_endingSequenceOver{ false };
 
 	double m_timeDuringEndingSequence{};
 

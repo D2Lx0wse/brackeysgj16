@@ -26,6 +26,7 @@ public:
 	int getHP() const { return m_hp; }
 	bool isDead() const { return m_isDead; }
 	void heal() { m_hp = m_maxHp; }
+	void healBy(int amount);
 	void decreaseHP(int hp);
 
 	//returns REFERENCE to player entity

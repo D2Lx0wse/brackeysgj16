@@ -168,6 +168,13 @@ void Player::decreaseHP(int hp) {
 		m_hp = 0;
 }
 
+void Player::healBy(int amount) {
+	m_hp += amount;
+
+	if (m_hp > m_maxHp)
+		m_hp = m_maxHp;
+}
+
 void Player::death() {
 	m_isDead = true;
 }
@@ -181,6 +188,8 @@ void Player::changeWeaponAndStatistics() {
 		heal();
 
 		m_maxXp = Helper::getMaxXPBasedOnWeaponLevel(m_currentWeaponType);
+		if (m_maxXp == Constants::g_XpHigh)
+			m_maxXp = 1; // Sentinel value
 		m_xp = 0;
 
 		m_speed = Helper::getSpeedBasedOnWeaponLevel(m_currentWeaponType);
