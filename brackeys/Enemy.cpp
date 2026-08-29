@@ -7,6 +7,7 @@
 #include "Vector2Overloads.hpp"
 
 #include "Random.h"
+#include "Player.hpp"
 
 Enemy::Enemy()
 	: m_mode{ Mode::Roaming }
@@ -101,7 +102,7 @@ void Enemy::generateInput(const Vector2& playerPosition) {
 	*/
 }
 
-void Enemy::think() {
+void Enemy::think(Player& player) {
 	if (isDead())
 		return;
 
@@ -117,6 +118,7 @@ void Enemy::think() {
 
 	
 	if (m_willAttack) {
+		m_entity.slash(player);
 		m_entity.setAttackingTrue();
 		m_willAttack = false;
 	}

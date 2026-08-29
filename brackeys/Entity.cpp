@@ -4,6 +4,8 @@
 #include <cmath>
 
 #include "Vector2Overloads.hpp"
+#include "Enemy.hpp"
+#include "Player.hpp"
 
 void Entity::Render() {
 	float weaponRotation{};
@@ -113,9 +115,62 @@ void Entity::attack() {
 	}
 }
 
-void Entity::slash() {//it may look weird... but it works
+void Entity::slash(std::vector<Enemy>& enemies) {//it may look weird... but it works
 	if (!m_isAttacking) {
+#ifdef _DEBUG
 		std::cout << "slash sound effect\n";
+#endif
+
+		Vector2 slashposition{
+			getPosition() +
+			(m_aimingVector * getRadius() * 3.0f * ((m_weapon.type() == Weapon::Wand_3D) ? 2.f : 1.f)) - //aiming vector first thing here
+			Vector2{ (
+				m_weapon.attackTexture().width()
+				- (getRadius() * 2.0f)
+				) / 2.0f
+			,	(m_weapon.attackTexture().height()
+				- (getRadius() * 2.0f)
+				) / 2.0f
+			}
+		};
+
+		for (auto& enemy : enemies) {
+			if (CheckCollisionCircles(slashposition, m_weapon.attackTexture().width() / 2.f, enemy.entity().getPosition(), enemy.entity().getCircle().radius)) {
+#ifdef _DEBUG
+					std::cout << "Enemy hit!\n ";
+#endif
+					enemy.decreaseHP(static_cast<int>(m_weapon.weaponDamage()));
+			}
+		}
+	}
+}
+
+
+void Entity::slash(Player& player) {
+	if (!m_isAttacking) {
+#ifdef _DEBUG
+		std::cout << "slash sound effect\n";
+#endif
+
+		Vector2 slashposition{
+			getPosition() +
+			(m_aimingVector * getRadius() * 3.0f * ((m_weapon.type() == Weapon::Wand_3D) ? 2.f : 1.f)) - //aiming vector first thing here
+			Vector2{ (
+				m_weapon.attackTexture().width()
+				- (getRadius() * 2.0f)
+				) / 2.0f
+			,	(m_weapon.attackTexture().height()
+				- (getRadius() * 2.0f)
+				) / 2.0f
+			}
+		};
+
+		if (CheckCollisionCircles(slashposition, m_weapon.attackTexture().width() / 2.f, player.getEntity().getPosition(), player.getEntity().getCircle().radius)) {
+#ifdef _DEBUG
+			std::cout << "Player hit!\n ";
+#endif
+			player.decreaseHP(static_cast<int>(m_weapon.weaponDamage()));
+		}
 	}
 }
 

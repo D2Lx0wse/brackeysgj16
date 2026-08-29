@@ -110,7 +110,7 @@ void PlayingScene::handleInput() {
 
 #endif
 }
-SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scenes) {
+SceneTypes PlayingScene::logic(Scenes& scenes) {
 	if (m_nextScene != SceneTypes::MaxValue) {
 		initNextScene(m_nextScene, scenes);
 
@@ -185,7 +185,7 @@ SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scenes) {
 		}
 		// Otherwise do as normal
 		else
-			enemy.think();
+			enemy.think(m_player);
 	}
 
 	keepEntityInBounds(m_player.getEntity());

@@ -3,10 +3,10 @@
 #include <assert.h>
 
 const std::vector<int> Weapon::s_WeaponDamages{
-	1,			// Fist
-	3, 5, 4,	// Swords
-	2, 4, 3,	// Staffs
-	1			// Placeholder
+	25,			// Fist
+	50, 100, 90,	// Swords
+	40, 80, 70,	// Staffs
+	10			// Placeholder
 };
 
 const std::vector<std::string_view> Weapon::s_TextureFilepaths{ {

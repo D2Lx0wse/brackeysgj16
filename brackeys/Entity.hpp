@@ -4,8 +4,12 @@
 #include "Circle.hpp"
 #include <string_view>
 #include <string>
+#include <vector>
 
 #include "Weapon.hpp"
+
+class Enemy;
+class Player;
 
 class Entity
 {
@@ -51,7 +55,8 @@ public:
 
 	void attack();
 	void shoot();
-	void slash();
+	void slash(std::vector<Enemy>& enemies);
+	void slash(Player& player);
 
 private:
 	Vector2 m_position{};

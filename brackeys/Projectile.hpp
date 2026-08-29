@@ -25,7 +25,7 @@ public:
 	void render();
 
 	//getters and setter
-	bool isAlive(){ return m_isAlive; }
+	bool isAlive() const { return m_isAlive; }
 
 private:
 	Vector2 m_position{};
