@@ -30,9 +30,9 @@ private:
 	// Assets
 	Font m_font{ GetFontDefault() };
 
-	BrackeysText m_TutorialTitle{ "Tutorial!", m_font };
+	BrackeysText m_TutorialTitle{ "placeholder tutorial title", m_font };
 
-	BrackeysText m_TutorialText{ "- Move with WASD!\n- Aim and attack with the mouse!\n- Get upgrades as you defeat enemies!", m_font };
+	BrackeysText m_TutorialText{ "placeholder tutorial text", m_font };
 
-	BrackeysText m_tutorialButton{ "Play Game", m_font };
+	BrackeysText m_tutorialButton{ "placeholder play button", m_font };
 };

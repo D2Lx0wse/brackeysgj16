@@ -60,7 +60,7 @@ void TutorialScene::init() {
 	m_TutorialTitle.setColor(DARKBLUE);
 	m_TutorialTitle.setFontSize(Constants::g_FontSize64 * 2.0f, m_font);
 
-	m_TutorialText.setText("- Move with WASD!\n- Aim and attack with\nthe mouse!\n- Get upgrades as you\ndefeat enemies!");
+	m_TutorialText.setText("- Move with WASD!\n- Aim and attack with\nthe mouse!\n- Get upgrades as you\ndefeat enemies!\n- Prepare for the boss!");
 	m_TutorialText.setColor(BLUE);
 	m_TutorialText.setFontSize(Constants::g_FontSize64 * 0.8f, m_font);
 
@@ -68,9 +68,9 @@ void TutorialScene::init() {
 	m_tutorialButton.setColor(BLACK);
 	m_tutorialButton.setFontSize(Constants::g_FontSize64, m_font);
 
-	m_TutorialTitle.setPosition(Vector2{ (Constants::g_ScreenWidth - m_TutorialTitle.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 7.5f });
-	m_TutorialText.setPosition(Vector2{ (Constants::g_ScreenWidth - m_TutorialText.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 32.5f });
-	m_tutorialButton.setPosition(Vector2{ (Constants::g_ScreenWidth - m_tutorialButton.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 82.5f });
+	m_TutorialTitle.setPosition(Vector2{ (Constants::g_ScreenWidth - m_TutorialTitle.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 5.f });
+	m_TutorialText.setPosition(Vector2{ (Constants::g_ScreenWidth - m_TutorialText.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 27.5f });
+	m_tutorialButton.setPosition(Vector2{ (Constants::g_ScreenWidth - m_tutorialButton.textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 85.f });
 }
 
 void TutorialScene::exit() {
