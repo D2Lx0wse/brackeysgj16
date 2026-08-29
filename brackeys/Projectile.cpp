@@ -18,17 +18,37 @@ void Projectile::init(Vector2 direction, float degrees, Entity* owner, Data proj
 
 	m_hits.clear();
 
+
+
 	m_isAlive = true;
 	std::cout << "projectile is initted and alive! \n";
 }
 
-void Projectile::calc() {
+void Projectile::calc(std::vector<Enemy>& enemies) {
+	
 	if (m_data.lifetime < 0.f){	
 		m_isAlive = false; return;}
 	m_data.lifetime -= GetFrameTime();
+
 	m_position += 
 		m_direction * Constants::g_ScalingSize * GetFrameTime() * m_data.speed;
 
+	for (auto& enemy : enemies) {
+		if (CheckCollisionCircles(m_position, m_texture.width() / 2.f, enemy.entity().getCircle().center, enemy.entity().getCircle().radius)) {
+			bool haveWeAlreadyHitThis{ false };
+			for (Entity*& hit : m_hits) {
+				if (hit == &enemy.entity()) {
+					haveWeAlreadyHitThis = true;
+				}
+			}
+			if (haveWeAlreadyHitThis) { continue; }
+			else {
+				enemy.decreaseHP(static_cast<int>(m_data.damage));
+				m_hits.push_back(&enemy.entity());
+			}
+			//enemy.kill();
+		}
+	}
 }
 
 void Projectile::render() {

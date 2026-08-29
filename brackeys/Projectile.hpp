@@ -3,6 +3,7 @@
 #include "Entity.hpp"
 #include <vector>
 #include <string_view>
+#include "Enemy.hpp"
 
 class Projectile
 {
@@ -20,7 +21,7 @@ public:
 	Projectile() {};
 	
 
-	void calc();
+	void calc(std::vector<Enemy>& enemies);
 	void init(Vector2 direction, float degrees, Entity* owner, Data projectileData, Vector2 position);
 	void render();
 

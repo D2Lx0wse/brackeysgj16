@@ -93,7 +93,7 @@ void Player::takeInput(const Camera2D& camera)
 	getEntity().setAimData(m_aimVector, m_aimDegrees);
 }
 
-void Player::think()
+void Player::think(std::vector<Enemy>& enemies)
 {
 	if (isDead())
 		return;
@@ -129,7 +129,7 @@ void Player::think()
 
 	if (m_currProjectile.isAlive())
 	{
-		m_currProjectile.calc();
+		m_currProjectile.calc(enemies);
 	}
 }
 

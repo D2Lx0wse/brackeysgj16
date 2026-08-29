@@ -173,7 +173,7 @@ SceneTypes PlayingScene::logic([[maybe_unused]]Scenes& scenes) {
 			return SceneTypes::Playing;
 	}
 
-	m_player.think();
+	m_player.think(m_enemies);
 
 	
 	for (auto& enemy : m_enemies) {

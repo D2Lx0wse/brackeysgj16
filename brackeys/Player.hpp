@@ -10,7 +10,7 @@ public:
 	~Player();
 
 	void takeInput(const Camera2D& camera);
-	void think();
+	void think(std::vector<Enemy>& enemies);
 	void render();
 	void init();
 

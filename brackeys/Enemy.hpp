@@ -47,6 +47,7 @@ public:
 
 	void heal() { m_hp = m_maxHp; }
 	void kill() { m_hp = 0; }
+	void decreaseHP(int hp);
 
 private:
 	void changeWeaponAndStatistics();

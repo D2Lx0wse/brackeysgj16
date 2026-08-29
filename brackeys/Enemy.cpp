@@ -187,6 +187,14 @@ int Enemy::dropXP() {
 	return xpAmount;
 }
 
+void Enemy::decreaseHP(int hp) {
+	m_hp -= hp;
+
+	if (m_hp < 0)
+		m_hp = 0;
+}
+
+
 // If weapon type changed, set m_currentWeaponType and statistics accordingly
 void Enemy::changeWeaponAndStatistics() {
 	if (m_currentWeaponType != entity().getWeapon().type()) {
