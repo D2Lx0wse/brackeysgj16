@@ -49,7 +49,7 @@ void Entity::Render() {
 	if (m_isAttacking)
 		m_weapon.attackTexture().render(
 			getPosition()  +
-			(m_aimingVector *getRadius() * 3.0f) - //aiming vector first thing here
+			(m_aimingVector *getRadius() * 3.0f * ((m_weapon.type()==Weapon::Wand_3D)?2.f:1.f)) - //aiming vector first thing here
 			Vector2{ (
 				m_weapon.attackTexture().width() 
 				- (getRadius() * 2.0f)
