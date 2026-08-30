@@ -173,11 +173,20 @@
     <ClInclude Include="PlayingScene.hpp" />
     <ClInclude Include="Projectile.hpp" />
     <ClInclude Include="Random.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Scenes.hpp" />
     <ClInclude Include="SceneTypes.hpp" />
     <ClInclude Include="TutorialScene.hpp" />
     <ClInclude Include="Vector2Overloads.hpp" />
     <ClInclude Include="Weapon.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="brackeys.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\images\icon.ico" />
+    <Image Include="assets\images\player_vert.png" />
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

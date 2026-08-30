@@ -11,6 +11,9 @@ int main() {
 
 	SetTargetFPS(60);
 
+	Image windowIcon{ LoadImage("assets/images/player_vert.png") };
+	SetWindowIcon(windowIcon);
+
 	Scenes scenes{};
 	SceneTypes currentScene{ SceneTypes::MainMenu };
 
@@ -80,6 +83,7 @@ int main() {
 	}
 
 	CloseWindow();
+	UnloadImage(windowIcon);
 
 	return 0;
 }
