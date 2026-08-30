@@ -51,7 +51,12 @@ void Weapon::load(bool isEnemy) {
 	//assert(s_AttackTextureFilepaths.size() - 1 == Type::MaxType && "Error: s_AttackTextureFilepaths doesn't have as many file paths as there are weapon types\n");	
 
 	m_weaponDamage = s_WeaponDamages[m_type];
-		
+
+	if (!isEnemy) {
+		m_weaponDamage *= 3;
+		m_weaponDamage /= 2;
+	}
+
 	m_currentTexture.loadFromFile(Weapon::s_TextureFilepaths[m_type]);
 
 	m_currentAttackTexture.loadFromFile(Weapon::s_AttackTextureFilepaths[m_type]);

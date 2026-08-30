@@ -151,9 +151,22 @@ void Enemy::init(Vector2 position) {
 	m_entity.reloadTextures();
 
 	// If the enemy gets one of the ranged wands, reroll the weapon
-	do {
+
+	// 40% Chance to have fists, 50% chance to have the first sword type, 10% chance to have one of the max levelled swords or fire staff
+	int weaponChance{ Random::get(0, 30) };
+	if (weaponChance >= 0 && weaponChance <= 12)
+		m_entity.setWeapon(Weapon::Fist_1, true);
+	else if (weaponChance >= 13 && weaponChance <= 27)
+		m_entity.setWeapon(Weapon::Sword_2A, true);
+	else if (weaponChance >= 28 && weaponChance <= 30) {
+		do {
+			m_entity.setWeapon(static_cast<Weapon::Type>(Random::get(Weapon::Sword_3A, Weapon::MaxType - 1)), true);
+		} while (m_entity.getWeapon().type() == Weapon::Wand_2B || m_entity.getWeapon().type() == Weapon::Wand_3C);
+	}
+	/*do {
 		m_entity.setWeapon(static_cast<Weapon::Type>(Random::get(0, Weapon::MaxType - 1)), true);
-	} while (m_entity.getWeapon().type() == Weapon::Wand_2B || m_entity.getWeapon().type() == Weapon::Wand_3C);
+	} while (m_entity.getWeapon().type() == Weapon::Wand_2B || m_entity.getWeapon().type() == Weapon::Wand_3C);*/
+	
 	changeWeaponAndStatistics();
 
 	if (Random::get(0, 1)) m_entity.setTint(Constants::g_FAKEFRIEND);

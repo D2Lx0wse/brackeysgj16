@@ -191,8 +191,11 @@ SceneTypes PlayingScene::logic(Scenes& scenes) {
 	}
 
 	bool areAllEnemiesDead{ true };
-	for (const auto& enemy : m_enemies)
-		areAllEnemiesDead = enemy.isDead();
+	int enemyDeadCounter{ 0 };
+	do {
+		areAllEnemiesDead = m_enemies[static_cast<unsigned int>(enemyDeadCounter)].isDead();
+		++enemyDeadCounter;
+	} while (areAllEnemiesDead && enemyDeadCounter < m_enemies.size());
 
 	if (areAllEnemiesDead)
 		m_isInEndingSequence = true;
