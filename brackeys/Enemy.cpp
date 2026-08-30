@@ -33,7 +33,7 @@ void Enemy::generateInput(const Vector2& playerPosition) {
 		return;
 
 	Vector2 randomDirection{};
-	int gambleAttack{ Random::get(-Constants::g_EnemyAttackEffort, 1) };
+	int gambleAttack{ Random::get(static_cast<int>(-Constants::g_EnemyAttackEffort * (1.f - GetFrameTime())), 1)};
 	switch (m_mode) {
 	case Mode::Roaming:
 		if (m_clock < 0.0) {

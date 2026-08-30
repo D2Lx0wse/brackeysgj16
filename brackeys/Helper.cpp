@@ -99,11 +99,11 @@ Projectile::Data Helper::getProjectileDataBasedOnWeaponType(Weapon::Type weaponT
 
 	switch (weaponType) {
 	case Weapon::Sword_3B:
-		data = { 10.f * Constants::g_ScalingSize , 10.f, "assets/images/pellet_3b.png", 2.f  }; break;
+		data = { 10.f * Constants::g_ScalingSize , 40.f, "assets/images/pellet_3b.png", 2.f  }; break;
 	case Weapon::Wand_2B:
-		data = { 7.5f * Constants::g_ScalingSize, 20.f, "assets/images/pellet_2b.png", 2.f}; break;
+		data = { 7.5f * Constants::g_ScalingSize, 60.f, "assets/images/pellet_2b.png", 2.f}; break;
 	case Weapon::Wand_3C:
-		data = { 12.5f * Constants::g_ScalingSize, 30.f, "assets/images/pellet_3c.png", 2.f }; break;
+		data = { 12.5f * Constants::g_ScalingSize, 120.f, "assets/images/pellet_3c.png", 2.f }; break;
 	default:
 		break;
 	}

@@ -242,9 +242,9 @@ SceneTypes PlayingScene::logic(Scenes& scenes) {
 	for (auto& enemy : m_enemies)
 		keepEntityInBounds(enemy.entity());
 	
-	constexpr Vector2 ScreenSize{ static_cast<float>(Constants::g_ScreenWidth) / 2.0f, static_cast<float>(Constants::g_ScreenHeight) / 2.0f };
+	constexpr Vector2 EnemyViewDistance{ static_cast<float>(Constants::g_ScreenWidth) / 3.0f, static_cast<float>(Constants::g_ScreenHeight) / 3.0f };
 	for (auto& enemy : m_enemies) {
-		bool areNear{ areTwoEntitiesNear(m_player.getEntity().getPosition(), enemy.entity().getPosition(), ScreenSize) };
+		bool areNear{ areTwoEntitiesNear(m_player.getEntity().getPosition(), enemy.entity().getPosition(), EnemyViewDistance) };
 		if (areNear)
 			enemy.setMode(Enemy::Attacking);
 		else
