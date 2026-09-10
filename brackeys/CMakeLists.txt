@@ -42,3 +42,5 @@ if(PSP)
         VERSION 01.00
     )
 endif()
+
+file(COPY assets DESTINATION . )
