@@ -6,6 +6,12 @@
 #include "Scenes.hpp"
 #include "SceneTypes.hpp"
 
+#ifdef __PSP__
+#include "pspkernel.h"
+
+PSP_MODULE_INFO("fairio", 0, 1, 0);
+#endif
+
 int main() {
 	InitWindow(Constants::g_ScreenWidth, Constants::g_ScreenHeight, Constants::g_DefaultTitle.data());
 
