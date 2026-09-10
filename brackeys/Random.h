@@ -18,9 +18,17 @@ namespace Random
 		std::random_device rd{};
 
 		// Create seed_seq with clock and 7 random numbers from std::random_device
-		std::seed_seq ss{
+		#ifdef __PSP__
+			// the first arguments cast to std::seed_seq_::result_type led to compilation problems, so I changed it to unsigned int
+			// This should work without changing how the game plays
+			std::seed_seq ss{
+			static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count()),
+				rd(), rd(), rd(), rd(), rd(), rd(), rd() };
+		#else
+			std::seed_seq ss{
 			static_cast<std::seed_seq::result_type>(std::chrono::steady_clock::now().time_since_epoch().count()),
 				rd(), rd(), rd(), rd(), rd(), rd(), rd() };
+		#endif
 
 		return std::mt19937{ ss };
 	}
