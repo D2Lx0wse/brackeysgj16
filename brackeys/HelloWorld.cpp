@@ -10,6 +10,7 @@
 #include "pspkernel.h"
 
 PSP_MODULE_INFO("fairio", 0, 1, 0);
+PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_USER);
 #endif
 
 int main() {
