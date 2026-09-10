@@ -406,3 +406,4 @@ FodyWeavers.xsd
 *.bak
 /brackeys/raylib-6.0_win64_msvc16
 staging/*
+/brackeys/build
