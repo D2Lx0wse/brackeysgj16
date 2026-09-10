@@ -3,7 +3,13 @@
 #include "Helper.hpp"
 
 void TutorialScene::handleInput() {
+#ifdef __PSP__
+	if (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) )
+		m_nextScene = SceneTypes::Playing;
+#endif
+
 	const Vector2 mousePosition{ GetMousePosition() };
+
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 
 		if (CheckCollisionRecs(

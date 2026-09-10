@@ -14,6 +14,11 @@ CreditsScene::CreditsScene()
 }
 
 void CreditsScene::handleInput() {
+#ifdef __PSP__
+	if (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN) )
+		m_nextScene = SceneTypes::MainMenu;
+#endif
+
 	const Vector2 mousePosition{ GetMousePosition() };
 
 	if (IsMouseButtonPressed(0)) {
