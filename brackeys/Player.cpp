@@ -56,6 +56,20 @@ void Player::takeInput(const Camera2D& camera)
 		m_inputVector += { 1.0f, 0.0f };
 	}
 
+	const std::vector<GamepadButton> RightFaceGamepadButtons{
+		GAMEPAD_BUTTON_RIGHT_FACE_UP, GAMEPAD_BUTTON_RIGHT_FACE_DOWN, GAMEPAD_BUTTON_RIGHT_FACE_LEFT, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT
+	};
+
+	const std::vector<Vector2> inputVectorDirections{
+		{ 0.0f, -1.0f }, { 0.0f, 1.0f }, { -1.0f, 0.0f }, { 1.0f, 0.0f }
+	};
+
+	// Check each face button: if one of them is held down, then increase the input vector to the proper axis
+	for (unsigned int i{0}; i < 4; ++i)
+		if (IsGamepadButtonDown(0, RightFaceGamepadButtons[i]))
+			m_inputVector += inputVectorDirections[i];
+
+
 #if _DEBUG
 	if (IsKeyDown(KEY_ONE))
 		m_entity.setWeapon(Weapon::Fist_1);
