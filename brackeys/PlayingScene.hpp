@@ -19,9 +19,17 @@ public:
 	constexpr static float s_SceneHeight{ Constants::g_ScreenWidth * 4.0f };
 
 	constexpr static float s_xpBarWidth{ Constants::g_ScreenWidth / 2.0f };
+#ifdef __PSP__
+	constexpr static float s_xpBarHeight{ 22.7f };
+#else
 	constexpr static float s_xpBarHeight{ 50.0f };
+#endif
 	constexpr static float s_xpBarBtmDistance{ 10.0f };
+#ifdef __PSP__
+	constexpr static float s_hpBarWidth{ 22.7f };
+#else
 	constexpr static float s_hpBarWidth{ 50.0f };
+#endif
 	constexpr static float s_hpBarHeight{ Constants::g_ScreenHeight / 2.0f };
 	constexpr static float s_hpBarSideDistance{ 10.0f };
 
@@ -89,6 +97,9 @@ private:
 	BrackeysText m_enemiesLeft{};
 
 	bool m_isInUpgradeScreen{ false };
+
+	// Used in renderUpgrade() to get info on the upgrade weapons based on the current weapon type
+	Weapon::Type m_currentWeaponType{ Weapon::MaxType };
 
 	// Used to determine which upgrade is chosen in handleInput(). Then logic() will check both of them to see which weapon upgrade to give the player
 	bool m_choseLeftUpgradeSlot{ false };

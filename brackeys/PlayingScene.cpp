@@ -60,6 +60,7 @@ PlayingScene::PlayingScene()
 	, m_isInvincible{ true }
 	, m_invincibilityTime{}
 	, m_enemies{ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} } // Number of enemies is a placeholder
+	, m_currentWeaponType{ Weapon::MaxType }
 	, m_choseLeftUpgradeSlot{ false }
 	, m_choseRightUpgradeSlot{ false }
 	, m_isInEndingSequence{ false }
@@ -77,6 +78,11 @@ void PlayingScene::handleInput() {
 		const Vector2 mousePosition{ GetMousePosition() };
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && CheckCollisionRecs(Rectangle{ mousePosition.x, mousePosition.y, 1.0f, 1.0f }, Rectangle{ m_deathScreenButton.textPosition().x, m_deathScreenButton.textPosition().y, m_deathScreenButton.textSize().x, m_deathScreenButton.textSize().y }))
 			m_nextScene = SceneTypes::MainMenu;
+
+#ifdef __PSP__
+		if (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN))
+			m_nextScene = SceneTypes::MainMenu;
+#endif
 	}
 
 	
@@ -93,6 +99,12 @@ void PlayingScene::handleInput() {
 			))
 			m_choseRightUpgradeSlot = true;
 
+#ifdef __PSP__
+		if (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_TRIGGER_1))
+			m_choseLeftUpgradeSlot = true;
+		else if (IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1))
+			m_choseRightUpgradeSlot = true;
+#endif
 	}
 
 #ifdef _DEBUG
@@ -290,6 +302,8 @@ void PlayingScene::init() {
 	m_isInUpgradeScreen = false;
 	m_isInDeathScreen = false;
 
+	m_currentWeaponType = Weapon::MaxType;
+
 	m_choseLeftUpgradeSlot = false;
 	m_choseRightUpgradeSlot = false;
 
@@ -362,13 +376,10 @@ void PlayingScene::renderUpgrade() {
 
 
 	// Gets info on the upgrades based on current weapon
-	// This not being static worsens performance but fixes a bug.
-	// The bug: if it's static, the value doesn't reset, this causes text to not reappear for the first upgrade when you restart the game
-	Weapon::Type currentWeaponType{ Weapon::MaxType };
-	if (currentWeaponType != m_player.getEntity().getWeapon().type()) {
-		currentWeaponType = m_player.getEntity().getWeapon().type();
+	if (m_currentWeaponType != m_player.getEntity().getWeapon().type()) {
+		m_currentWeaponType = m_player.getEntity().getWeapon().type();
 
-		switch (currentWeaponType) {
+		switch (m_currentWeaponType) {
 		case Weapon::Fist_1:
 			m_upgradeSlotTitles[0].setText("Sword");
 			m_upgradeSlotTitles[1].setText("Staff");
@@ -413,10 +424,18 @@ void PlayingScene::renderUpgrade() {
 	for (unsigned int i{ 0 }; i < 2; ++i) {
 		upgradeSlotOutlineColors[i] = BLACK;
 
-		m_upgradeSlotTitles[i].setFontSize(40.0f, m_font);
+#ifdef __PSP__
+	m_upgradeSlotTitles[i].setFontSize(24.0f, m_font);
+#else
+	m_upgradeSlotTitles[i].setFontSize(40.0f, m_font);
+#endif
 		m_upgradeSlotTitles[i].setColor(BLACK);
 
-		m_upgradeSlotDescriptions[i].setFontSize(24.0f, m_font);
+#ifdef __PSP__
+	m_upgradeSlotDescriptions[i].setFontSize(14.0f, m_font);
+#else
+	m_upgradeSlotDescriptions[i].setFontSize(24.0f, m_font);
+#endif
 		m_upgradeSlotDescriptions[i].setColor(BLACK);
 
 		m_upgradeSlotTitles[i].setPosition(Vector2{ s_UpgradeSlotOutlines[i].x + (s_UpgradeSlotOutlines[i].width - m_upgradeSlotTitles[i].textSize().x) / 2, s_UpgradeSlotOutlines[i].y + s_UpgradeSlotOutlines[i].height / 2.0f });
@@ -493,11 +512,19 @@ void PlayingScene::initUI() {
 
 	m_xpBarTitle.setText("XP");
 	m_xpBarTitle.setColor(ORANGE);
+#ifdef __PSP__
+	m_xpBarTitle.setFontSize(18.0f, GetFontDefault());
+#else
 	m_xpBarTitle.setFontSize(40.0f, GetFontDefault());
+#endif
 	m_xpBarTitle.setPosition(m_xpBackgroundPos + Vector2{ m_xpBackgroundSize.x - m_xpBarTitle.textSize().x, -m_xpBarTitle.spacing()-m_xpBarTitle.textSize().y });
 
 	m_xpBarValue.setColor(ORANGE);
+#ifdef __PSP__
+	m_xpBarValue.setFontSize(18.0f, GetFontDefault());
+#else
 	m_xpBarValue.setFontSize(40.0f, GetFontDefault());
+#endif
 
 	m_hpBackgroundPos = { s_hpBarSideDistance, (Constants::g_ScreenHeight - s_hpBarHeight) / 2 };
 	m_hpBackgroundSize = { s_hpBarWidth , s_hpBarHeight };
@@ -506,15 +533,27 @@ void PlayingScene::initUI() {
 
 	m_hpBarTitle.setText("HP");
 	m_hpBarTitle.setColor(RED);
+#ifdef __PSP__
+	m_hpBarTitle.setFontSize(18.0f, GetFontDefault());
+#else
 	m_hpBarTitle.setFontSize(40.0f, GetFontDefault());
+#endif
 	m_hpBarTitle.setPosition(Vector2 {s_hpBarSideDistance, m_hpBackgroundPos.y-m_hpBarTitle.spacing()-m_hpBarTitle.textSize().y});
 	
 	m_hpBarValue.setColor(RED);
+#ifdef __PSP__
+	m_hpBarValue.setFontSize(18.0f, GetFontDefault());
+#else
 	m_hpBarValue.setFontSize(40.0f, GetFontDefault());
+#endif
 	m_hpBarValue.setPosition(Vector2{ s_hpBarSideDistance, m_hpBackgroundPos.y + m_hpBackgroundSize.y + m_hpBarValue.spacing() + m_hpBarValue.textSize().y/2 });
 
 	m_enemiesLeft.setColor(WHITE);
+#ifdef __PSP__
+	m_enemiesLeft.setFontSize(18.0f, GetFontDefault());
+#else
 	m_enemiesLeft.setFontSize(40.0f, GetFontDefault());
+#endif
 
 
 	m_upgradeBoxTitle.setColor(RED);

@@ -1,5 +1,10 @@
 #include "Brackeys2DTexture.hpp"
 
+#ifdef __PSP__
+// Only used for PSP-specific code
+#include <iostream>
+#endif
+
 Brackeys2DTexture::Brackeys2DTexture()
 	: m_texture{}
 {
@@ -26,6 +31,14 @@ void Brackeys2DTexture::exit() {
 bool Brackeys2DTexture::render(float x, float y, Vector2 scalingSize, float rotation, Color tint) const {
 	if (!isLoaded())
 		return false;
+
+#ifdef __PSP__
+	// Game-breaking bug where, if you seemingly render a texture that isn't a square, then memory corruption seems to be happening, leading to black squares and the game not working
+	if (width() != height()) {
+		std::cout << "Error width/height\n";
+		return false;
+	}
+#endif
 
 	Rectangle sourceRectangle{ 0.0f, 0.0f, static_cast<float>(m_texture.width), static_cast<float>(m_texture.height) };
 	Rectangle destinationRectangle{ x + width() / 2.0f, y + height() / 2.0f, static_cast<float>(width()), static_cast<float>(height())};

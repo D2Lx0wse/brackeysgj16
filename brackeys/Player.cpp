@@ -69,7 +69,6 @@ void Player::takeInput(const Camera2D& camera)
 		if (IsGamepadButtonDown(0, RightFaceGamepadButtons[i]))
 			m_inputVector += inputVectorDirections[i];
 
-
 #if _DEBUG
 	if (IsKeyDown(KEY_ONE))
 		m_entity.setWeapon(Weapon::Fist_1);

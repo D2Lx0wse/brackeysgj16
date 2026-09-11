@@ -2,15 +2,33 @@
 #include <string_view>
 
 namespace Constants {
+#ifdef __PSP__
+	constexpr int g_ScreenWidth{ 480 };
+	constexpr int g_ScreenHeight{ 272 };
+#else
 	constexpr int g_ScreenWidth{ 800 };
 	constexpr int g_ScreenHeight{ 600 };
+#endif
+
 	constexpr std::string_view g_DefaultTitle{ "Fair.io: The fairest .io team-based game! | Brackeys game jam 2026.2" };
 
-	constexpr float g_ScalingSize{ 5.0f }; // All textures size is multiplied by this value
+#ifdef __PSP__
+	constexpr float g_ScalingSize{ 2.27f }; // All textures size is multiplied by this value
+#else
+	constexpr float g_ScalingSize{ 5.0f  }; // All textures size is multiplied by this value
+#endif
 
-	constexpr float g_FontSize64{ 64.0f };
+#ifdef __PSP__
+	constexpr float g_FontSize64{ 29.0f }; // All textures size is multiplied by this value
+#else
+	constexpr float g_FontSize64{ 64.0f }; // All textures size is multiplied by this value
+#endif
 
+#ifdef __PSP__
+	constexpr float g_SpeedSlow{ 45.0f };
+#else
 	constexpr float g_SpeedSlow{ 100.0f };
+#endif
 	constexpr float g_SpeedMedium{ g_SpeedSlow * 1.5f };
 	constexpr float g_SpeedFast{ g_SpeedMedium * 1.5f };
 	constexpr float g_EnemySpeedMultiplier{ 0.9f };
