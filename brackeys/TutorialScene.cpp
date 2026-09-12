@@ -71,7 +71,11 @@ void TutorialScene::init() {
 	m_TutorialTitle.setColor(DARKBLUE);
 	m_TutorialTitle.setFontSize(Constants::g_FontSize64 * 2.0f, m_font);
 
+#ifdef __PSP__
+	m_TutorialText.setText("- Move with the face buttons!\n- Aim using the analog stick\nand attack with R1!\n- Get upgrades as you\ndefeat enemies!\n- Prepare for the boss!");
+#else
 	m_TutorialText.setText("- Move with WASD!\n- Aim and attack with\nthe mouse!\n- Get upgrades as you\ndefeat enemies!\n- Prepare for the boss!");
+#endif
 	m_TutorialText.setColor(BLUE);
 	m_TutorialText.setFontSize(Constants::g_FontSize64 * 0.8f, m_font);
 

@@ -351,9 +351,9 @@ void PlayingScene::exit() {
 void PlayingScene::renderWorld(Camera2D& camera) {
 	BeginMode2D(camera);
 	
-	constexpr float epsilon{ 0.001f }; // Used for rendering the grass texture specificially as many times as it needed, avoiding float accuracy issues
-	for (float i{ 0.0f }; i <= (s_SceneWidth - m_background.width() + epsilon); i += m_background.width()) {
-		for (float j{ 0.0f }; j <= (s_SceneHeight - m_background.height() + epsilon); j += m_background.height()) {
+	constexpr float epsilon{ 0.001f }; // Used to avoid floating point accuracy issues
+	for (float i{ 0.0f }; i <= (s_SceneWidth + epsilon); i += m_background.width()) {
+		for (float j{ 0.0f }; j <= (s_SceneHeight + epsilon); j += m_background.height()) {
 			m_background.render(Vector2{ i, j });
 		}
 	}
@@ -409,7 +409,11 @@ void PlayingScene::renderUpgrade() {
 			m_upgradeSlotTitles[1].setText("Fire Staff");
 
 			m_upgradeSlotDescriptions[0].setText("Totally not the\nsame thing\nbut bigger!");
+#ifdef __PSP__
+			m_upgradeSlotDescriptions[1].setText("Evaporate your\nenemies with a super\nlong-range blast!");
+#else
 			m_upgradeSlotDescriptions[1].setText("Evaporate your\nenemies with a\nsuper long-range\nblast!");
+#endif
 
 			weaponIcons[0].loadFromFile("assets/images/staff_3c.png");
 			weaponIcons[1].loadFromFile("assets/images/staff_3d.png");
@@ -424,27 +428,34 @@ void PlayingScene::renderUpgrade() {
 	m_upgradeBoxTitle.setColor(Constants::g_DARKRED);
 
 	std::vector<Color> upgradeSlotOutlineColors{ {}, {} };
+#ifdef __PSP__
+	const Vector2 weaponIconSize{ weaponIcons[0].width() * Constants::g_ScalingSize * 0.9f, weaponIcons[0].height() * Constants::g_ScalingSize * 0.9f };
+#else
 	const Vector2 weaponIconSize{ weaponIcons[0].width() * Constants::g_ScalingSize / 2.5f, weaponIcons[0].height() * Constants::g_ScalingSize / 2.5f };
+#endif
 	for (unsigned int i{ 0 }; i < 2; ++i) {
 		upgradeSlotOutlineColors[i] = BLACK;
 
 #ifdef __PSP__
-	m_upgradeSlotTitles[i].setFontSize(24.0f, m_font);
+		m_upgradeSlotTitles[i].setFontSize(24.0f, m_font);
 #else
-	m_upgradeSlotTitles[i].setFontSize(40.0f, m_font);
+		m_upgradeSlotTitles[i].setFontSize(40.0f, m_font);
 #endif
 		m_upgradeSlotTitles[i].setColor(BLACK);
 
 #ifdef __PSP__
-	m_upgradeSlotDescriptions[i].setFontSize(14.0f, m_font);
+		m_upgradeSlotDescriptions[i].setFontSize(14.0f, m_font);
 #else
-	m_upgradeSlotDescriptions[i].setFontSize(24.0f, m_font);
+		m_upgradeSlotDescriptions[i].setFontSize(24.0f, m_font);
 #endif
 		m_upgradeSlotDescriptions[i].setColor(BLACK);
-
-		m_upgradeSlotTitles[i].setPosition(Vector2{ s_UpgradeSlotOutlines[i].x + (s_UpgradeSlotOutlines[i].width - m_upgradeSlotTitles[i].textSize().x) / 2, s_UpgradeSlotOutlines[i].y + s_UpgradeSlotOutlines[i].height / 2.0f });
-
-		m_upgradeSlotDescriptions[i].setPosition(Vector2{ s_UpgradeSlotOutlines[i].x + (s_UpgradeSlotOutlines[i].width - m_upgradeSlotDescriptions[i].textSize().x) / 2, m_upgradeSlotTitles[i].textPosition().y + m_upgradeSlotTitles[i].textSize().y + m_upgradeSlotTitles[i].textSize().y / 2.0f });
+		
+		m_upgradeSlotTitles[i].setPosition(Vector2{ s_UpgradeSlotOutlines[i].x + (s_UpgradeSlotOutlines[i].width - m_upgradeSlotTitles[i].textSize().x) / 2.0f, s_UpgradeSlotOutlines[i].y + s_UpgradeSlotOutlines[i].height / 2.0f });
+#ifdef __PSP__
+		m_upgradeSlotDescriptions[i].setPosition(Vector2{ s_UpgradeSlotOutlines[i].x + (s_UpgradeSlotOutlines[i].width - m_upgradeSlotDescriptions[i].textSize().x) / 2.0f, m_upgradeSlotTitles[i].textPosition().y + m_upgradeSlotTitles[i].textSize().y + m_upgradeSlotTitles[i].textSize().y / 4.0f });
+#else
+		m_upgradeSlotDescriptions[i].setPosition(Vector2{ s_UpgradeSlotOutlines[i].x + (s_UpgradeSlotOutlines[i].width - m_upgradeSlotDescriptions[i].textSize().x) / 2.0f, m_upgradeSlotTitles[i].textPosition().y + m_upgradeSlotTitles[i].textSize().y + m_upgradeSlotTitles[i].textSize().y / 2.0f });
+#endif
 
 		weaponIconPositions[i].x = s_UpgradeSlotOutlines[i].x + (s_UpgradeSlotOutlines[i].width - weaponIconSize.x) / 2;
 		weaponIconPositions[i].y = s_UpgradeSlotOutlines[i].y + (s_UpgradeSlotOutlines[i].width / 100.0f) * 5.0f;
@@ -602,7 +613,11 @@ void PlayingScene::initUI() {
 
 	for (unsigned int i{ 0 }; i < endingDialogue.size(); ++i) {
 		m_endingSequenceText.push_back({ endingDialogue[i], m_font});
+#ifdef __PSP__
+		m_endingSequenceText[i].setFontSize(16.0f, m_font);
+#else
 		m_endingSequenceText[i].setFontSize(28.0f, m_font);
+#endif
 		m_endingSequenceText[i].setPosition(Vector2{(Constants::g_ScreenWidth - m_endingSequenceText[i].textSize().x) / 2.0f, (Constants::g_ScreenHeight / 100.0f) * 20.0f});
 		m_endingSequenceText[i].setColor(DARKBLUE);
 	}

@@ -1,10 +1,5 @@
 #include "Brackeys2DTexture.hpp"
 
-#ifdef __PSP__
-// Only used for PSP-specific code
-#include <iostream>
-#endif
-
 Brackeys2DTexture::Brackeys2DTexture()
 	: m_texture{}
 {

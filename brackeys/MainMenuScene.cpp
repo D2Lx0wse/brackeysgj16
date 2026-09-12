@@ -115,10 +115,17 @@ void MainMenuScene::init() {
 
 	float verticalSpaceBetweenOptions{ Constants::g_FontSize64 / 2.0f };
 	for (auto& menuOption : m_menuOptions) {
+#ifdef __PSP__
 		menuOption.setPosition(
 			Vector2{ (Constants::g_ScreenWidth - menuOption.textSize().x) / 2.0f, 
-			(Constants::g_ScreenHeight - menuOption.textSize().y + 100.f) / 2.0f + verticalSpaceBetweenOptions }//100.f is a maagic value that offsets them down
+			(Constants::g_ScreenHeight - menuOption.textSize().y + 45.f) / 2.0f + verticalSpaceBetweenOptions }
 		);
+#else
+		menuOption.setPosition(
+			Vector2{ (Constants::g_ScreenWidth - menuOption.textSize().x) / 2.0f, 
+			(Constants::g_ScreenHeight - menuOption.textSize().y + 100.f) / 2.0f + verticalSpaceBetweenOptions }//100.f is a magic value that offsets them down
+		);
+#endif
 
 		verticalSpaceBetweenOptions += Constants::g_FontSize64;
 	}
