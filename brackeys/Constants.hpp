@@ -24,11 +24,7 @@ namespace Constants {
 	constexpr float g_FontSize64{ 64.0f }; // All textures size is multiplied by this value
 #endif
 
-#ifdef __PSP__
-	constexpr float g_SpeedSlow{ 45.0f };
-#else
-	constexpr float g_SpeedSlow{ 100.0f };
-#endif
+	constexpr float g_SpeedSlow{ 20.0f * g_ScalingSize };
 	constexpr float g_SpeedMedium{ g_SpeedSlow * 1.5f };
 	constexpr float g_SpeedFast{ g_SpeedMedium * 1.5f };
 	constexpr float g_EnemySpeedMultiplier{ 0.9f };
