@@ -91,10 +91,22 @@ void Player::takeInput(const Camera2D& camera)
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
 		m_willAttack = true;
 
+	if (IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1))//separate so it can be easily put in a ifdef if needed
+		m_willAttack = true;
+
 	Vector2 currpos{ getEntity().getPosition() };
 	Vector2 centerOffset{ getEntity().getRadius(), getEntity().getRadius() };
 	Vector2 mouseWorldPos{ GetScreenToWorld2D(GetMousePosition(), camera) };//unoptimal?
+#ifndef __PSP__
 	m_aimVector = Vector2 { Helper::Normalized(mouseWorldPos-(currpos+centerOffset))};
+#else
+	const std::vector<GamepadAxis> LeftStickAxis{
+		GAMEPAD_AXIS_LEFT_X, GAMEPAD_AXIS_LEFT_Y
+	};
+
+	m_aimVector = {GetGamepadAxisMovement(0, LeftStickAxis[0]), GetGamepadAxisMovement(0, LeftStickAxis[1]) };
+	m_aimVector = Helper::Normalized(m_aimVector);
+#endif
 
 	float theta{ std::acos(Helper::Dot(Vector2{ 0.0f, 1.0f }, m_aimVector)) };
 	m_aimDegrees = std::numbers::pi_v<float>;
