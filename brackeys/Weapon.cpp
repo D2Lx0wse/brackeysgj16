@@ -16,6 +16,15 @@ const std::vector<std::string_view> Weapon::s_TextureFilepaths{ {
 	"assets/images/weapon_placeholder.png"														// Placeholder
 } };
 
+#ifdef __PSP__
+const std::vector<std::string_view> Weapon::s_AttackTextureFilepaths{
+	"assets/images/punch_blue_1.png",															// Fist
+	"assets/images/PSP/slash_2a.png", "assets/images/PSP/slash_3a.png", "assets/images/PSP/slash_3b.png",	// Swords
+	"", "", "assets/images/PSP/pellet_3d.png",														// Staffs
+	"assets/images/attack_placeholder.png",														// Placeholder
+	"assets/images/pellet_3b.png",																// Magic sword pellet
+};
+#else
 const std::vector<std::string_view> Weapon::s_AttackTextureFilepaths{
 	"assets/images/punch_blue_1.png",															// Fist
 	"assets/images/slash_2a.png", "assets/images/slash_3a.png", "assets/images/slash_3b.png",	// Swords
@@ -23,6 +32,7 @@ const std::vector<std::string_view> Weapon::s_AttackTextureFilepaths{
 	"assets/images/attack_placeholder.png",														// Placeholder
 	"assets/images/pellet_3b.png",																// Magic sword pellet
 };
+#endif
 
 const std::vector<double> Weapon::s_AttackDurations{
 	1.0, // Fists, Swords, placeholder

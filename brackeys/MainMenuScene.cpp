@@ -85,8 +85,10 @@ void MainMenuScene::render() {
 		menuOption.render(m_font);
 	}
 
+#ifndef __PSP__
 	HideCursor();
 	m_cursorTexture.render(GetMousePosition(), Vector2{24.0f, 24.0f});
+#endif
 
 	EndDrawing();
 }
@@ -94,9 +96,15 @@ void MainMenuScene::render() {
 void MainMenuScene::init() {
 	*this = MainMenuScene{};
 
+#ifndef __PSP__
 	m_cursorTexture.loadFromFile("assets/images/cursor.png");
+#endif
 
+#ifdef __PSP__
+	constexpr std::string_view titleImageFilePath{ "assets/images/PSP/title.png" };
+#else
 	constexpr std::string_view titleImageFilePath{ "assets/images/title.png" };
+#endif
 	m_titleTexture.loadFromFile(titleImageFilePath.data());
 
 	m_font = GetFontDefault();
@@ -117,10 +125,10 @@ void MainMenuScene::init() {
 }
 
 void MainMenuScene::exit() {
-	m_titleTexture.exit();
-
+#ifndef __PSP__
 	m_cursorTexture.exit();
 	ShowCursor();
+#endif
 
 	m_font = Font{};
 }

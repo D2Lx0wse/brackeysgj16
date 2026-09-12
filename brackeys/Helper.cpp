@@ -103,7 +103,11 @@ Projectile::Data Helper::getProjectileDataBasedOnWeaponType(Weapon::Type weaponT
 	case Weapon::Wand_2B:
 		data = { 7.5f * Constants::g_ScalingSize, 60.f, "assets/images/pellet_2b.png", 2.f}; break;
 	case Weapon::Wand_3C:
+#ifdef __PSP__
+		data = { 12.5f * Constants::g_ScalingSize, 120.f, "assets/images/PSP/pellet_3c.png", 2.f }; break;
+#else
 		data = { 12.5f * Constants::g_ScalingSize, 120.f, "assets/images/pellet_3c.png", 2.f }; break;
+#endif
 	default:
 		break;
 	}
